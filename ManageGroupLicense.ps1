@@ -23,7 +23,7 @@ function ManageGroupLicense
         $displayNameText.show()
         $expirationDateTimeText.show()
         $mailText.show()
-        $groupTypesText.show()
+        $groupTypeText.show()
         $membershipRuleText.show()
 
         $displayNameText.text($graphGroup.displayName)
