@@ -16,8 +16,20 @@ function ManageGroupLicense
         }
 
         $displayName.show() 
+        $expirationDateTime.Show()
+        $mail.show()
+        $groupTypes.show()
+        $membershipRule.show()
+        $displayNameText.show()
+        $expirationDateTimeText.show()
+        $mailText.show()
+        $groupTypesText.show()
+        $membershipRuleText.show()
 
-    
+        $displayNameText.text($graphGroup.displayName)
+        $mailText.text($graphGroup.mail)
+        $membershipRuleText.text($graphGroup.membershipRule)
+        $groupTypeText.text($graphGroup.GroupTypes)
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
