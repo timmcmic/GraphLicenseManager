@@ -53,12 +53,11 @@ function ManageGroupLicense
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
             }
 
-            $rootNode = New-Object System.Windows.Forms.TreeNode
-            $rootNode.text = $graphGroup.DisplayName
-            $rootNode.name = $graphGroup.DisplayName
-            [void]$groupMembersView.nodes.add($rootNode)
+            $groupMembers.Show()
+            $groupMembersView.show()
 
-            $GroupMembersView.show()
+            $groupMembersView.columns.add("UserID")
+            $groupMembers.id | foreach-Object {[void]$groupMembersView.items.add("UserID").subItems($_)}
 
             foreach ($member in $groupMembers)
             {

@@ -12,8 +12,8 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.TextBox]$GroupTypeText = $null
 [System.Windows.Forms.Label]$MembershipRule = $null
 [System.Windows.Forms.TextBox]$MembershipRuleText = $null
-[System.Windows.Forms.TreeView]$GroupMembersView = $null
-[System.Windows.Forms.Label]$Label2 = $null
+[System.Windows.Forms.Label]$GroupMembers = $null
+[System.Windows.Forms.ListView]$GroupMemberView = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -29,8 +29,8 @@ $GroupTypes = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupTypeText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $MembershipRule = (New-Object -TypeName System.Windows.Forms.Label)
 $MembershipRuleText = (New-Object -TypeName System.Windows.Forms.TextBox)
-$GroupMembersView = (New-Object -TypeName System.Windows.Forms.TreeView)
-$Label2 = (New-Object -TypeName System.Windows.Forms.Label)
+$GroupMembers = (New-Object -TypeName System.Windows.Forms.Label)
+$GroupMemberView = (New-Object -TypeName System.Windows.Forms.ListView)
 $Form2.SuspendLayout()
 #
 #Label1
@@ -155,29 +155,30 @@ $MembershipRuleText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentLi
 $MembershipRuleText.TabIndex = [System.Int32]12
 $MembershipRuleText.Visible = $false
 #
-#GroupMembersView
+#GroupMembers
 #
-$GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]211))
-$GroupMembersView.Name = [System.String]'GroupMembersView'
-$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]447,[System.Int32]576))
-$GroupMembersView.TabIndex = [System.Int32]13
-$GroupMembersView.Visible = $false
+$GroupMembers.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]185))
+$GroupMembers.Name = [System.String]'GroupMembers'
+$GroupMembers.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
+$GroupMembers.TabIndex = [System.Int32]14
+$GroupMembers.Text = [System.String]'Group Members'
+$GroupMembers.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
+$GroupMembers.Visible = $false
 #
-#Label2
+#GroupMemberView
 #
-$Label2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]185))
-$Label2.Name = [System.String]'Label2'
-$Label2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]447,[System.Int32]23))
-$Label2.TabIndex = [System.Int32]14
-$Label2.Text = [System.String]'Group Members'
-$Label2.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
-$Label2.Visible = $false
+$GroupMemberView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
+$GroupMemberView.Name = [System.String]'GroupMemberView'
+$GroupMemberView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]576))
+$GroupMemberView.TabIndex = [System.Int32]15
+$GroupMemberView.UseCompatibleStateImageBehavior = $false
+$GroupMemberView.Visible = $false
 #
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]799))
-$Form2.Controls.Add($Label2)
-$Form2.Controls.Add($GroupMembersView)
+$Form2.Controls.Add($GroupMemberView)
+$Form2.Controls.Add($GroupMembers)
 $Form2.Controls.Add($MembershipRuleText)
 $Form2.Controls.Add($MembershipRule)
 $Form2.Controls.Add($GroupTypeText)
@@ -206,7 +207,7 @@ Add-Member -InputObject $Form2 -Name GroupTypes -Value $GroupTypes -MemberType N
 Add-Member -InputObject $Form2 -Name GroupTypeText -Value $GroupTypeText -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name MembershipRule -Value $MembershipRule -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name MembershipRuleText -Value $MembershipRuleText -MemberType NoteProperty
-Add-Member -InputObject $Form2 -Name GroupMembersView -Value $GroupMembersView -MemberType NoteProperty
-Add-Member -InputObject $Form2 -Name Label2 -Value $Label2 -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name GroupMembers -Value $GroupMembers -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name GroupMemberView -Value $GroupMemberView -MemberType NoteProperty
 }
 . InitializeComponent

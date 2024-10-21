@@ -11,7 +11,7 @@
 'GroupTypeText.Name' = 'GroupTypeText'
 'TextBox1.Name' = 'TextBox1'
 '$this.Name' = 'Form2'
-'DisplayName.Name' = 'DisplayName'
+'GroupMembersView.Name' = 'GroupMembersView'
 'Label4.Name' = 'Label4'
 'GroupTypes.Name' = 'GroupTypes'
 'MembershipRuleText.Name' = 'MembershipRuleText'
@@ -19,10 +19,12 @@
 'ExpirationDateTimeText.Name' = 'ExpirationDateTimeText'
 'Button1.Name' = 'Button1'
 'MembershipRule.Name' = 'MembershipRule'
-'ExpirationDateTime.Name' = 'ExpirationDateTime'
+'DisplayName.Name' = 'DisplayName'
 'TextBox5.Name' = 'TextBox5'
 'GroupObjectIDText.Name' = 'GroupObjectIDText'
 'TextBox4.Name' = 'TextBox4'
-'GroupMembersView.Name' = 'GroupMembersView'
+'ExpirationDateTime.Name' = 'ExpirationDateTime'
+'GroupMemberView.Name' = 'GroupMemberView'
+'GroupMembers.Name' = 'GroupMembers'
 }
 }
