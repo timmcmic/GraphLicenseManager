@@ -14,7 +14,6 @@ function ManageGroupLicense
         write-host $skuID.SkuId
     }
 
-    $parent = New-Object System.Windows.Forms.TreeNode($skuID.SkuId)
     $TreeView1.Nodes.Add($parent)
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
