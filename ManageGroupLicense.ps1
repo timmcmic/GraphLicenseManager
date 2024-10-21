@@ -22,6 +22,7 @@ function ManageGroupLicense
         $mailText.clear()
         $groupTypeText.clear()
         $membershipRuleText.clear()
+        $GroupMembersView.clear()
 
         $displayName.show() 
         $expirationDateTime.Show()
