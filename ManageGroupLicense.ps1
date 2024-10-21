@@ -66,6 +66,11 @@ function ManageGroupLicense
 
             $groupMembersView.columns.add("DisplayName")
             $groupMembersView.columns[0].width = -2
+
+            foreach ($id in $groupMemberID)
+            {
+                [void]$groupMembersView.items.add("ID").subItems.add($id)
+            }
         }
     }
 
