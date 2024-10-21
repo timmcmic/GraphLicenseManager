@@ -53,7 +53,7 @@ function ManageGroupLicense
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
             }
 
-            $groupMembers.Show()
+            $GroupMembersName.Show()
             $groupMembersView.show()
 
             $groupMembersView.columns.add("UserID")

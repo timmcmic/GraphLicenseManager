@@ -12,7 +12,7 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.TextBox]$GroupTypeText = $null
 [System.Windows.Forms.Label]$MembershipRule = $null
 [System.Windows.Forms.TextBox]$MembershipRuleText = $null
-[System.Windows.Forms.Label]$GroupMembers = $null
+[System.Windows.Forms.Label]$GroupMembersName = $null
 [System.Windows.Forms.ListView]$GroupMemberView = $null
 function InitializeComponent
 {
@@ -29,7 +29,7 @@ $GroupTypes = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupTypeText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $MembershipRule = (New-Object -TypeName System.Windows.Forms.Label)
 $MembershipRuleText = (New-Object -TypeName System.Windows.Forms.TextBox)
-$GroupMembers = (New-Object -TypeName System.Windows.Forms.Label)
+$GroupMembersName = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupMemberView = (New-Object -TypeName System.Windows.Forms.ListView)
 $Form2.SuspendLayout()
 #
@@ -155,15 +155,15 @@ $MembershipRuleText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentLi
 $MembershipRuleText.TabIndex = [System.Int32]12
 $MembershipRuleText.Visible = $false
 #
-#GroupMembers
+#GroupMembersName
 #
-$GroupMembers.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]185))
-$GroupMembers.Name = [System.String]'GroupMembers'
-$GroupMembers.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
-$GroupMembers.TabIndex = [System.Int32]14
-$GroupMembers.Text = [System.String]'Group Members'
-$GroupMembers.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
-$GroupMembers.Visible = $false
+$GroupMembersName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]185))
+$GroupMembersName.Name = [System.String]'GroupMembersName'
+$GroupMembersName.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
+$GroupMembersName.TabIndex = [System.Int32]14
+$GroupMembersName.Text = [System.String]'Group Members'
+$GroupMembersName.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
+$GroupMembersName.Visible = $false
 #
 #GroupMemberView
 #
@@ -178,7 +178,7 @@ $GroupMemberView.Visible = $false
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]799))
 $Form2.Controls.Add($GroupMemberView)
-$Form2.Controls.Add($GroupMembers)
+$Form2.Controls.Add($GroupMembersName)
 $Form2.Controls.Add($MembershipRuleText)
 $Form2.Controls.Add($MembershipRule)
 $Form2.Controls.Add($GroupTypeText)
@@ -207,7 +207,7 @@ Add-Member -InputObject $Form2 -Name GroupTypes -Value $GroupTypes -MemberType N
 Add-Member -InputObject $Form2 -Name GroupTypeText -Value $GroupTypeText -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name MembershipRule -Value $MembershipRule -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name MembershipRuleText -Value $MembershipRuleText -MemberType NoteProperty
-Add-Member -InputObject $Form2 -Name GroupMembers -Value $GroupMembers -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name GroupMembersName -Value $GroupMembersName -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name GroupMemberView -Value $GroupMemberView -MemberType NoteProperty
 }
 . InitializeComponent
