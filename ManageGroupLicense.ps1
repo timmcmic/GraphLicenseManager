@@ -67,7 +67,7 @@ function ManageGroupLicense
             $groupMembersView.columns.add("DisplayName")
             $groupMembersView.columns[0].width = -2
 
-            foreach ($id in $groupMemberID)
+            foreach ($id in $groupMembersID)
             {
                 write-host "Here"
                 [void]$groupMembersView.items.add("ID").subItems.add($id)
