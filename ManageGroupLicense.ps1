@@ -59,7 +59,9 @@ function ManageGroupLicense
         $rootNode.name = $graphGroup.DisplayName
         [void]$groupMembersView.nodes.add($rootNode)
 
-        $groupMembersView.show()
+        $GroupMembersView.show()
+
+        write-host "Here"
 
         foreach ($member in $groupMembers)
         {
