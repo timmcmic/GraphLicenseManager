@@ -14,8 +14,10 @@ function ManageGroupLicense
             $errorText=$_
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
-        
-        write-host $groupID
+
+        $displayName.show() 
+
+    
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
