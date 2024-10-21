@@ -69,8 +69,7 @@ function ManageGroupLicense
 
             foreach ($id in $groupMembersID)
             {
-                write-host "Here"
-                [void]$groupMembersView.items.add("ID").subItems.add($id)
+                [void]$GroupMembersView.Items.Add($id)
             }
         }
     }
