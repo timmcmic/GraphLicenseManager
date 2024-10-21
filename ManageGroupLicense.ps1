@@ -6,6 +6,6 @@ function ManageGroupLicense
         write-host "GroupID"
     }
 
-    . (Join-Path $PSScriptRoot 'establishgraphconnection.designer.ps1')
+    . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
     $Form2.ShowDialog()
 }
