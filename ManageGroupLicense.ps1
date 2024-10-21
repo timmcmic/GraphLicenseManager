@@ -4,6 +4,7 @@ function ManageGroupLicense
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
+        $getGroupFailure = $FALSE
 
         try
         {
@@ -11,6 +12,7 @@ function ManageGroupLicense
         }
         catch
         {
+            $getGroupFailure=$true
             $errorText=$_
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
@@ -36,6 +38,31 @@ function ManageGroupLicense
         $mailText.appendtext($graphGroup.mail)
         $membershipRuleText.appendtext($graphGroup.membershipRule)
         $groupTypeText.appendtext($graphGroup.GroupTypes)
+    }
+
+    if ($getGroupFailure -eq $false)
+    {
+        try
+        {
+            $groupMembers = get-mgGroupMember -groupID $groupID -errorAction STOP
+            $getGroupFailure=$false
+        }
+        catch
+        {
+            $getGroupFailure=$true
+            $errorText=$_
+            [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
+        }
+
+        $rootNode = New-Object System.Windows.Forms.TreeNode
+        $rootNode.text = $graphGroup.DisplayName
+        $rootNode.name = $graphGroup.DisplayName
+        [void]$groupMembersView.nodes.add($rootNode)
+
+        foreach ($member in $groupMembers)
+        {
+
+        }
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
