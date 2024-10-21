@@ -69,6 +69,7 @@ function ManageGroupLicense
 
             foreach ($id in $groupMemberID)
             {
+                write-host "Here"
                 [void]$groupMembersView.items.add("ID").subItems.add($id)
             }
         }
