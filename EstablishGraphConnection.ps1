@@ -41,8 +41,7 @@ function EstablishGraphConnection
         {
             try {
                 Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -errorAction Stop
-                #$Form1.close()
-                #ManageGroupLicense
+                $Form1.close()
             }
             catch {
                 $errorText=$_
