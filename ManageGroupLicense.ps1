@@ -10,6 +10,7 @@ function ManageGroupLicense
 
     foreach ($skuID in $skus)
     {
+        write-host "Test"
         write-host $skuID.tostring()
     }
 
