@@ -10,8 +10,7 @@ function ManageGroupLicense
 
     foreach ($skuID in $skus)
     {
-        $parent = New-Object System.Windows.Forms.TreeNode($skuID.SkuId.toString())
-        $treeView1.Nodes.Add($parent)
+        write-host $skuID
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
