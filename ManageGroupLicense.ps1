@@ -26,10 +26,10 @@ function ManageGroupLicense
         $groupTypeText.show()
         $membershipRuleText.show()
 
-        $displayNameText.text($graphGroup.displayName)
-        $mailText.text($graphGroup.mail)
-        $membershipRuleText.text($graphGroup.membershipRule)
-        $groupTypeText.text($graphGroup.GroupTypes)
+        $displayNameText.appendtext($graphGroup.displayName)
+        $mailText.appendtext($graphGroup.mail)
+        $membershipRuleText.appendtext($graphGroup.membershipRule)
+        $groupTypeText.appendtext($graphGroup.GroupTypes)
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
