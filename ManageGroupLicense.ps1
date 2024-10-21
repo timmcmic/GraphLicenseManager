@@ -54,10 +54,10 @@ function ManageGroupLicense
             }
 
             $GroupMembersName.Show()
-            $groupMemberView.show()
+            $GroupMembersView.show()
 
             $groupMembersView.columns.add("ID")
-            $groupMembers.id | foreach-Object {[void]$groupMembersView.items.add("ID").subItems($_)}
+            $groupMembers.id | foreach-Object {[void]$GroupMembersView.items.add("ID").subItems($_)}
 
             foreach ($member in $groupMembers)
             {
