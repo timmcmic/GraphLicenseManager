@@ -10,7 +10,7 @@ function ManageGroupLicense
 
     foreach ($skuID in $skus)
     {
-        write-host $skuID
+        write-host $skuID.tostring()
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
