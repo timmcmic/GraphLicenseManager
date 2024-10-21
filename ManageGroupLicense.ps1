@@ -7,17 +7,11 @@ $Label1_Click = {
 function ManageGroupLicense
 {
     $skus = Get-MgSubscribedSku
-    $skuID = @()
-    
-    foreach ($sku in $skus)
-    {
-        $skuID +=$sku.SkuId
-    }
 
-    foreach ($id in $skuID)
+    foreach ($skuID in $skus)
     {
-        $parent = New-Object System.Windows.Forms.TreeNode($id)
-        $treeView1.Nodes.Add($parent)
+        $parent = New-Object System.Windows.Forms.TreeNode($skuID.SkuId)
+        $treeView.Nodes.Add($parent)
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
