@@ -7,7 +7,7 @@ function ManageGroupLicense
 
         try
         {
-            $graphGroup = get-MGGroup -groupObjectID $groupID -errorAction STOP
+            $graphGroup = get-MGGroup -groupID $groupID -errorAction STOP
         }
         catch
         {
