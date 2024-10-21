@@ -15,6 +15,12 @@ function ManageGroupLicense
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
 
+        $displayNameText.clear()
+        $expirationDateTimeText.clear()
+        $mailText.clear()
+        $groupTypeText.clear()
+        $membershipRuleText.clear()
+
         $displayName.show() 
         $expirationDateTime.Show()
         $mail.show()
