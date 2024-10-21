@@ -56,13 +56,16 @@ function ManageGroupLicense
             $GroupMembersName.Show()
             $GroupMembersView.show()
 
+            $groupMembersView.GridLines = $true
+
+            $groupMembersID = $groupMembers | select-object Id
+
+            $groupMembersView.GridLines = $true
             $groupMembersView.columns.add("ID")
-            $groupMembers.id | foreach-Object {[void]$GroupMembersView.items.add("ID").subItems($_)}
+            $groupMembersView.columns[0].width = -2
 
-            foreach ($member in $groupMembers)
-            {
-
-            }
+            $groupMembersView.columns.add("DisplayName")
+            $groupMembersView.columns[0].width = -2
         }
     }
 
