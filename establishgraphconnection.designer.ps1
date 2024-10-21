@@ -8,6 +8,9 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$Label3 = $null
 [System.Windows.Forms.RadioButton]$RadioButton2 = $null
 [System.Windows.Forms.Button]$Button1 = $null
+[System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
+[System.Windows.Forms.ToolStripStatusLabel]$ToolStripStatusLabel1 = $null
+
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -19,6 +22,9 @@ $TextBox3 = (New-Object -TypeName System.Windows.Forms.TextBox)
 $Label3 = (New-Object -TypeName System.Windows.Forms.Label)
 $RadioButton2 = (New-Object -TypeName System.Windows.Forms.RadioButton)
 $Button1 = (New-Object -TypeName System.Windows.Forms.Button)
+$StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
+$ToolStripStatusLabel1 = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
+$StatusStrip1.SuspendLayout()
 $Form1.SuspendLayout()
 #
 #Label1
@@ -40,6 +46,7 @@ $TextBox1.TabIndex = [System.Int32]1
 #
 #RadioButton1
 #
+$RadioButton1.Checked = $true
 $RadioButton1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]55))
 $RadioButton1.Name = [System.String]'RadioButton1'
 $RadioButton1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]152,[System.Int32]24))
@@ -90,23 +97,38 @@ $RadioButton2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentLis
 $RadioButton2.Name = [System.String]'RadioButton2'
 $RadioButton2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]152,[System.Int32]24))
 $RadioButton2.TabIndex = [System.Int32]7
-$RadioButton2.TabStop = $true
 $RadioButton2.Text = [System.String]'Interactive Credentials'
 $RadioButton2.UseVisualStyleBackColor = $true
 $RadioButton2.add_CheckedChanged($RadioButton2_CheckedChanged)
 #
 #Button1
 #
-$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]223))
+$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]213))
 $Button1.Name = [System.String]'Button1'
 $Button1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]788,[System.Int32]23))
 $Button1.TabIndex = [System.Int32]8
-$Button1.Text = [System.String]'Button1'
+$Button1.Text = [System.String]'Connect Microsoft Graph'
 $Button1.UseVisualStyleBackColor = $true
+$Button1.add_Click($Button1_Click)
+#
+#StatusStrip1
+#
+$StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($ToolStripStatusLabel1))
+$StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]239))
+$StatusStrip1.Name = [System.String]'StatusStrip1'
+$StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]22))
+$StatusStrip1.TabIndex = [System.Int32]9
+$StatusStrip1.Text = [System.String]'StatusStrip1'
+#
+#ToolStripStatusLabel1
+#
+$ToolStripStatusLabel1.Name = [System.String]'ToolStripStatusLabel1'
+$ToolStripStatusLabel1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]0,[System.Int32]17))
 #
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]261))
+$Form1.Controls.Add($StatusStrip1)
 $Form1.Controls.Add($Button1)
 $Form1.Controls.Add($RadioButton2)
 $Form1.Controls.Add($Label3)
@@ -117,6 +139,8 @@ $Form1.Controls.Add($RadioButton1)
 $Form1.Controls.Add($TextBox1)
 $Form1.Controls.Add($Label1)
 $Form1.Text = [System.String]'Connect Microsoft Graph'
+$StatusStrip1.ResumeLayout($false)
+$StatusStrip1.PerformLayout()
 $Form1.ResumeLayout($false)
 $Form1.PerformLayout()
 Add-Member -InputObject $Form1 -Name Label1 -Value $Label1 -MemberType NoteProperty
@@ -128,5 +152,7 @@ Add-Member -InputObject $Form1 -Name TextBox3 -Value $TextBox3 -MemberType NoteP
 Add-Member -InputObject $Form1 -Name Label3 -Value $Label3 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name RadioButton2 -Value $RadioButton2 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name Button1 -Value $Button1 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name ToolStripStatusLabel1 -Value $ToolStripStatusLabel1 -MemberType NoteProperty
 }
 . InitializeComponent
