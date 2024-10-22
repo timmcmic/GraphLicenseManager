@@ -66,16 +66,31 @@ function ManageGroupLicense
             }
         }
 
+        out-logfile -string "Generate the list of unique sku ids..."
         $skuIDArray = $global:skuTracking | select-object skuID -Unique
 
-        foreach ($id in $skuIDArray)
+        $skusToRemove=@()
+
+        out-logfile -string "Begin to look for skus that have been removed..."
+
+        foreach ($id in $skuIDArray.skuID)
         {
-            out-logfile -string $id
+            $test = $global:skuTracking | where {$_.skuID -eq $id}
+            out-logfile -string ("Count of objects that contain the skuID: "+$test.count.tostring())
+
+            $testDisabled = $global:skuTracking | where {(($_.skuID -eq $id) -and ($_.enabledNew -eq $FALSE))}
+
+            out-logfile -string ("Count ofo bjects that contain the skuID and are disabled: "+$testDisabled.count.tostring())
+
+            if ($test.count -eq $testDisabled.Count)
+            {
+                $skusToRemove+=$id
+            }
         }
 
-        foreach ($skuID in $skuIDArray.skuID)
+        foreach ($id in $skusToRemove)
         {
-            out-logfile -string $skuID
+            out-logfile -string $id
         }
 
         exit
