@@ -265,7 +265,7 @@ function ManageGroupLicense
 
                 [void]$licenseList.nodes.add($rootNode)
 
-                foreach ($servicePlan in $skus.servicePlans)
+                foreach ($servicePlan in $sku.servicePlans)
                 {
                     $subnode = New-Object System.Windows.Forms.TreeNode
                     $subnode.text = $servicePlan.ServicePlanName
