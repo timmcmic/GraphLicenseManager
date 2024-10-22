@@ -15,15 +15,15 @@ function PrintTree($printNode,$rootNodeName)
 
         $functionObject = New-Object PSObject -Property @{
             SkuPartNumber = $rootNodeName
-            SkuPartNumber_ServicePlanName = $rootNodeName+"_"+$node.text
+            SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.text)
             SerivicePlanName = $node.text
             EnabledNew = $node.checked
         }
 
         $returnArray += $functionObject
-
-        return $returnArray
     }
+
+    return $returnArray
 }
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
