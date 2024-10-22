@@ -13,13 +13,13 @@ function ManageGroupLicense
 {
     out-logfile -string "Entered manage group license..."
 
+    $statusStrip1.text = "Pending input and group search information..."
+
     $commit_Click = {
     }
     $exit_Click = {
         $form2.close()
     }
-
-    $statusLabel.text = "Pending group input..."
 
     $Button1_Click = {
 

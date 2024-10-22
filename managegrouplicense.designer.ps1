@@ -19,7 +19,6 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$exit = $null
 [System.Windows.Forms.Button]$commit = $null
 [System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
-[System.Windows.Forms.ToolStripStatusLabel]$StatusLabel = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -42,9 +41,7 @@ $LicenseList = (New-Object -TypeName System.Windows.Forms.TreeView)
 $exit = (New-Object -TypeName System.Windows.Forms.Button)
 $commit = (New-Object -TypeName System.Windows.Forms.Button)
 $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
-$StatusLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
-$StatusStrip1.SuspendLayout()
 $Form2.SuspendLayout()
 #
 #Label1
@@ -235,18 +232,11 @@ $commit.add_Click($commit_Click)
 #
 #StatusStrip1
 #
-$StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($StatusLabel))
 $StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]597))
 $StatusStrip1.Name = [System.String]'StatusStrip1'
 $StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]22))
 $StatusStrip1.TabIndex = [System.Int32]21
 $StatusStrip1.Text = [System.String]'StatusStrip1'
-#
-#StatusLabel
-#
-$StatusLabel.Name = [System.String]'StatusLabel'
-$StatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]39,[System.Int32]17))
-$StatusLabel.Text = [System.String]'Status'
 #
 #Form2
 #
@@ -277,8 +267,6 @@ $Form2.MinimizeBox = $false
 $Form2.ShowIcon = $false
 $Form2.Text = [System.String]'Graph License Manager'
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).EndInit()
-$StatusStrip1.ResumeLayout($false)
-$StatusStrip1.PerformLayout()
 $Form2.ResumeLayout($false)
 $Form2.PerformLayout()
 Add-Member -InputObject $Form2 -Name Label1 -Value $Label1 -MemberType NoteProperty
@@ -301,6 +289,5 @@ Add-Member -InputObject $Form2 -Name LicenseList -Value $LicenseList -MemberType
 Add-Member -InputObject $Form2 -Name exit -Value $exit -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name commit -Value $commit -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
-Add-Member -InputObject $Form2 -Name StatusLabel -Value $StatusLabel -MemberType NoteProperty
 }
 . InitializeComponent
