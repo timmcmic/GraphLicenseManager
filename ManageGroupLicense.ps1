@@ -86,12 +86,8 @@ function ManageGroupLicense
 
             foreach ($sku in $skus)
             {
+                write-host $sku.SkuPartNumber
                 $item = New-Object System.Windows.Forms.ListViewItem($sku.SkuPartNumber)
-
-                foreach ($servicePlan in $sku.servicePlans)
-                {
-                    $item.Subitems.add($servicePlan.servicePlanName)
-                }
 
                 $listView.Items.Add($item)
             }
