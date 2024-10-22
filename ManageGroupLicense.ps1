@@ -1,6 +1,8 @@
 
 function PrintTree($printNode,$rootNodeName)
 {
+    $returnArray=@()
+
     foreach ($node in $printNode)
     {
         out-logfile -string $rootNodeName
@@ -10,6 +12,17 @@ function PrintTree($printNode,$rootNodeName)
         {
             out-logfile -string "IsChecked:TRUE"
         }
+
+        $functionObject = New-Object PSObject -Property @{
+            SkuPartNumber = $rootNodeName
+            SkuPartNumber_ServicePlanName = $rootNodeName+"_"+$node.text
+            SerivicePlanName = $node.text
+            EnabledNew = $node.checked
+        }
+
+        $returnArray += $functionObject
+
+        return $returnArray
     }
 }
 function CheckAllChildNodes($treeNode, $nodeChecked){
@@ -23,6 +36,7 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    $planArray = @()
     out-logfile -string "Entered manage group license..."
 
     $commit_Click = {
@@ -31,10 +45,14 @@ function ManageGroupLicense
         foreach ($rootNode in $licenseList.Nodes)
         {
             out-logfile -string $rootNode.Text
-            PrintTree $rootNode.nodes $rootNode.text
+            $planArray +=PrintTree $rootNode.nodes $rootNode.text
+        }
+
+        foreach ($plan in $planArray)
+        {
+            out-logfile -string $plan
         }
     }
-
 
     $exit_Click = {
         $form2.close()
@@ -126,6 +144,7 @@ function ManageGroupLicense
                         $functionObject = New-Object PSObject -Property @{
                             SkuID = $sku.SkuId
                             SkuPartNumber = $sku.SkuPartNumber
+                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
                             ServicePlanID = $servicePlan.ServicePlanId
                             SerivicePlanName = $servicePlan.ServicePlanName
                             EnabledOnGroup = $false
