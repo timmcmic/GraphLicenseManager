@@ -1,30 +1,6 @@
 
 function ManageGroupLicense
 {
-    function CheckAllChildNodes($treeNode, $nodeChecked){
-        foreach($node in $treeNode.Nodes){
-            $node.Checked = $nodeChecked
-            if($node.Nodes.Count -gt 0){
-                CheckAllChildNodes $node $nodeChecked
-            }
-        }
-    }
-    
-    $licenseList.add_AfterCheck{
-        write-host "Check box"
-    #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
-        if($_.Action -ne 'Unknown'){
-            if($_.Node.Nodes.Count -gt 0){
-                CheckAllChildNodes $_.Node $_.Node.Checked
-            }
-        }
-    }
-
-    $licenseList.add_BeforeExpand{
-        #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
-            if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
-    }
-
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
@@ -136,6 +112,30 @@ function ManageGroupLicense
                     $subnode.text = $servicePlan.ServicePlanName
                     [void]$rootnode.Nodes.Add($subnode)
                 }
+            }
+
+            function CheckAllChildNodes($treeNode, $nodeChecked){
+                foreach($node in $treeNode.Nodes){
+                    $node.Checked = $nodeChecked
+                    if($node.Nodes.Count -gt 0){
+                        CheckAllChildNodes $node $nodeChecked
+                    }
+                }
+            }
+            
+            $licenseList.add_AfterCheck{
+                write-host "Check box"
+            #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
+                if($_.Action -ne 'Unknown'){
+                    if($_.Node.Nodes.Count -gt 0){
+                        CheckAllChildNodes $_.Node $_.Node.Checked
+                    }
+                }
+            }
+        
+            $licenseList.add_BeforeExpand{
+                #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
+                    if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
             }
         }
     }
