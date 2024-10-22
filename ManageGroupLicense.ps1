@@ -63,7 +63,7 @@ function ManageGroupLicense
         $mailText.clear()
         $groupTypeText.clear()
         $membershipRuleText.clear()
-        $GroupMembersView.clear()
+        $GroupMembersView.rows.clear()
         $LicenseList.clear()
 
         if ($getGroupFailure -eq $false)
