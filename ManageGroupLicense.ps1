@@ -73,22 +73,7 @@ function ManageGroupLicense
 
         out-logfile -string "Begin to look for skus that have been removed..."
 
-        foreach ($id in $skuIDArray.skuID)
-        {
-            $test = $global:skuTracking | where {$_.skuID -eq $id}
-            out-logfile -string ("Count of objects that contain the skuID: "+$test.count.tostring())
-
-            $testDisabled = $global:skuTracking | where {(($_.skuID -eq $id) -and ($_.enabledNew -eq $FALSE))}
-
-            out-logfile -string ("Count ofo bjects that contain the skuID and are disabled: "+$testDisabled.count.tostring())
-
-            if ($test.count -eq $testDisabled.Count)
-            {
-                $skusToRemove+=$id
-            }
-        }
-
-        foreach ($id in $skusToRemove)
+        foreach ($id in $global:skuRootIDPresent)
         {
             out-logfile -string $id
         }
@@ -103,6 +88,8 @@ function ManageGroupLicense
     $Button1_Click = {
 
         $global:skuTracking = @()
+        $global:skuRootIDPresent = @()
+        $global:skuRootIDNotPresent = @()
 
         out-logfile -string "Search button selected..."
 
@@ -346,9 +333,11 @@ function ManageGroupLicense
                 {
                     out-logfile -string "A plan within the sku is enabled -> set the main sku to checked..."
                     $rootNode.checked=$true
+                    $global:skuRootIDPresent+=$sku.SkuID
                 }
                 else
                 {
+                    $global:skuRootIDNotPresent+=$sku.skuID
                     out-logfile -string "No plans within the sku are enabled -> set the main sku to unchecked."
                 }
 
