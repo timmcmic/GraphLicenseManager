@@ -55,11 +55,14 @@ function ManageGroupLicense
 
             $GroupMembersName.Show()
             $GroupMembersView.show()
+
             
-            foreach ($id in $groupMembers.Id)
+            
+            foreach ($id in $groupMembers.AdditionalProperties.displayName)
             {
                 [void]$groupMembersView.items.add($id)
             }
+        }
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
