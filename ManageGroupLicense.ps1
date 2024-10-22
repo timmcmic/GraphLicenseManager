@@ -1,7 +1,3 @@
-$LicenseList_AfterSelect = {
-}
-
-
 function ManageGroupLicense
 {
     $Button1_Click = {

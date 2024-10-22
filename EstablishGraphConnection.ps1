@@ -1,5 +1,10 @@
 function EstablishGraphConnection
 {
+
+    $form1.MaximizeBox = $False
+    $form1.MinimizeBox = $False
+    $form1.ControlBox = $False
+
     $RadioButton1_CheckedChanged = {
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
