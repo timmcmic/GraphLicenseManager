@@ -19,6 +19,8 @@ function ManageGroupLicense
 
     $Button1_Click = {
 
+        $skuTracking = @()
+
         out-logfile -string "Search button selected..."
 
         out-logfile -string "Clearing all form controls..."
@@ -195,11 +197,22 @@ function ManageGroupLicense
                             EnabledOnGroup = $false
                             EnabledNew = $false
                         }
+
+                        $skuTracking += $functionObject
                     }
                 }
+
+                foreach ($license in $graphGroupLicenses.AssignedLicenses)
+                {
+                    out-logfile -string $license.SkuId
+                }
+
+                exit
             }
 
-            exit
+            out-logfile -string "Update the object array with all plans that are enabled already on the group."
+
+
 
             out-logfile -string "Showing license display controls..."
 
