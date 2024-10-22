@@ -10,7 +10,6 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$Button1 = $null
 [System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
 [System.Windows.Forms.ToolStripStatusLabel]$ToolStripStatusLabel1 = $null
-
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -128,6 +127,7 @@ $ToolStripStatusLabel1.Size = (New-Object -TypeName System.Drawing.Size -Argumen
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]261))
+$Form1.ControlBox = $false
 $Form1.Controls.Add($StatusStrip1)
 $Form1.Controls.Add($Button1)
 $Form1.Controls.Add($RadioButton2)
@@ -138,6 +138,8 @@ $Form1.Controls.Add($TextBox2)
 $Form1.Controls.Add($RadioButton1)
 $Form1.Controls.Add($TextBox1)
 $Form1.Controls.Add($Label1)
+$Form1.MaximizeBox = $false
+$Form1.MinimizeBox = $false
 $Form1.Text = [System.String]'Connect Microsoft Graph'
 $StatusStrip1.ResumeLayout($false)
 $StatusStrip1.PerformLayout()
