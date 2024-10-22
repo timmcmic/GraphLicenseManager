@@ -3,7 +3,7 @@ $GroupMembersName_Click = {
 
 function ManageGroupLicense
 {
-    $licenseList.add_afterClick(
+    $licenseList.add_AfterCheck(
         {
             if ($node.parent -eq $NULL)
             {
@@ -16,7 +16,7 @@ function ManageGroupLicense
             }
         }
     )
-    
+
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
