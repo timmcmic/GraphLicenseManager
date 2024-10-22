@@ -57,6 +57,7 @@ function ManageGroupLicense
             $GroupMembersView.show()
 
             $groupMembersView.columnCount = 2
+            $groupMembersView.columnHeadersVisible = $TRUE
             $groupMembersView.columns[0].name = "ID"
             $groupMembersView.columns[0].name = "DisplayName"
         }
