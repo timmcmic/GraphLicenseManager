@@ -89,7 +89,7 @@ function ManageGroupLicense
                 write-host $sku.SkuPartNumber
                 $item = New-Object System.Windows.Forms.ListViewItem($sku.SkuPartNumber)
 
-                $listView.Items.Add($item)
+                $LicenseList.Items.Add($item)
             }
         }
     }
