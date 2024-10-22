@@ -68,6 +68,16 @@ function ManageGroupLicense
 
         out-logfile "Starting to determine what changes need to be processed."
 
+        $skuIDsToTest = @()
+        $skuIDToTest += $global:skuTracking | select-object skuID
+        $skuIDToTest = $skuIDToTest | select-object -unique
+
+        foreach ($skuid in $skuIDToTest)
+        {
+            out-logfile -string $skuid
+            start-sleep -s 5
+        }
+
         $skusToRemove = @()
 
         foreach ($sku in $global:skuTracking)
