@@ -168,10 +168,15 @@ $GroupMembersName.Visible = $false
 #
 #GroupMembersView
 #
+$GroupMembersView.AllowUserToAddRows = $false
+$GroupMembersView.AllowUserToDeleteRows = $false
 $GroupMembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
-$GroupMembersView.Enabled = $false
+$GroupMembersView.EditMode = [System.Windows.Forms.DataGridViewEditMode]::EditProgrammatically
 $GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
+$GroupMembersView.MultiSelect = $false
 $GroupMembersView.Name = [System.String]'GroupMembersView'
+$GroupMembersView.ReadOnly = $true
+$GroupMembersView.RowHeadersWidthSizeMode = [System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode]::AutoSizeToAllHeaders
 $GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]576))
 $GroupMembersView.TabIndex = [System.Int32]15
 $GroupMembersView.Visible = $false
