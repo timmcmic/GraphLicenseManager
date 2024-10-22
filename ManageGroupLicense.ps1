@@ -290,25 +290,28 @@ function ManageGroupLicense
 
                 foreach ($servicePlan in $sku.servicePlans)
                 {
-                    $subnode = New-Object System.Windows.Forms.TreeNode
-                    $subnode.text = $servicePlan.ServicePlanName
-
-                    out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
-
-                    $test = @()
-                    $test += $skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.SerivicePlanName -eq $servicePlan.ServicePlanName))}
-
-                    if ($test.count -gt 0)
+                    if ($servicePlan.appliesTo -ne "Company")
                     {
-                        out-logfile -string "The service plan on the sku is enabled on the group - setting the checkbox..."
-                        $subnode.checked = $true
-                    }
-                    else
-                    {
-                        out-logfile -string "The service plan on the sku is not enabled on the group - set to unchecked..."
-                    }
+                        $subnode = New-Object System.Windows.Forms.TreeNode
+                        $subnode.text = $servicePlan.ServicePlanName
 
-                    [void]$rootnode.Nodes.Add($subnode)
+                        out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
+
+                        $test = @()
+                        $test += $skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.SerivicePlanName -eq $servicePlan.ServicePlanName))}
+
+                        if ($test.count -gt 0)
+                        {
+                            out-logfile -string "The service plan on the sku is enabled on the group - setting the checkbox..."
+                            $subnode.checked = $true
+                        }
+                        else
+                        {
+                            out-logfile -string "The service plan on the sku is not enabled on the group - set to unchecked..."
+                        }
+
+                        [void]$rootnode.Nodes.Add($subnode)
+                    }
                 }
             }
 
