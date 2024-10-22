@@ -133,7 +133,18 @@ function ManageGroupLicense
                     {
                         $parent = $_.node.parent
 
-                        Write-Host $parent
+                        foreach ($n in $parent.nodes)
+                        {
+                            if ($n.checked)
+                            {
+                                $parent.Checked = $true
+                                break
+                            }
+                            else 
+                            {
+                                $parent.checked = $false
+                            }
+                        }
                     }
                 }
             }
