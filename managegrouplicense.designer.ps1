@@ -188,6 +188,7 @@ $GroupMembersView.Visible = $false
 #LicenseList
 #
 $LicenseList.CheckBoxes = $true
+$LicenseList.HeaderStyle = [System.Windows.Forms.ColumnHeaderStyle]::None
 $LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]202))
 $LicenseList.Name = [System.String]'LicenseList'
 $LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]585))

@@ -84,9 +84,6 @@ function ManageGroupLicense
             $licenseLabel.show()
             $LicenseList.show()
 
-            $licenseList.view = View.Details
-            $licenseList.scrollable = $true
-
             foreach ($sku in $skus)
             {
                 write-host $sku.SkuPartNumber
