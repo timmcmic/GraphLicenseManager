@@ -1,5 +1,3 @@
-$GroupMembersName_Click = {
-}
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
         $node.Checked = $nodeChecked
@@ -14,7 +12,15 @@ function ManageGroupLicense
     out-logfile -string "Entered manage group license..."
 
     $commit_Click = {
+        out-logfile -string "It is time to commit the changes that were made."
+
+        foreach ($treeNode in $licenseList.Nodes)
+        {
+            out-logfile -string $treeNode.name
+        }
     }
+
+
     $exit_Click = {
         $form2.close()
     }
