@@ -183,6 +183,7 @@ $GroupMembersView.RowHeadersVisible = $false
 $GroupMembersView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::CellSelect
 $GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]585))
 $GroupMembersView.TabIndex = [System.Int32]15
+$GroupMembersView.Visible = $false
 #
 #LicenseList
 #

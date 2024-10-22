@@ -83,6 +83,18 @@ function ManageGroupLicense
 
             $licenseLabel.show()
             $LicenseList.show()
+
+            foreach ($sku in $skus)
+            {
+                $item = New-Object System.Windows.Forms.ListViewItem($sku.SkuId)
+
+                foreach ($servicePlan in $sku.servicePlans)
+                {
+                    $item.Subitems.add($servicePlan)
+                }
+
+                $listView.Items.Add($item)
+            }
         }
     }
 
