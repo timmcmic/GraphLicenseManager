@@ -133,9 +133,8 @@ function ManageGroupLicense
             }
         
             $licenseList.add_BeforeExpand{
-                write-host "BeforeExpand"
                 #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
-                    if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
+                    if($_.Action -eq 'ByMouse'){write-host "ByMouse",$_.Cancel = $true}
             }
         }
     }
