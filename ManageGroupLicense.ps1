@@ -1,9 +1,9 @@
 
 function PrintTree($treeNode)
 {
-    foreach ($node in $treeNode)
+    foreach ($node in $rootNode)
     {
-        out-logfile -string $node.name
+        out-logfile -string $node.text
     }
 }
 function CheckAllChildNodes($treeNode, $nodeChecked){
@@ -22,10 +22,10 @@ function ManageGroupLicense
     $commit_Click = {
         out-logfile -string "It is time to commit the changes that were made."
 
-        foreach ($treeNode in $licenseList.Nodes)
+        foreach ($rootNode in $licenseList.Nodes)
         {
-            out-logfile -string $treeNode.name
-            PrintTree $treenNode.$subnode
+            out-logfile -string $rootNode.Text
+            PrintTree $rootNode.nodes
         }
     }
 
