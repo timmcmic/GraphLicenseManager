@@ -3,6 +3,20 @@ $GroupMembersName_Click = {
 
 function ManageGroupLicense
 {
+    $licenseList.add_afterClick(
+        {
+            if ($node.parent -eq $NULL)
+            {
+                $state = $node.checked
+                
+                foreach ($subNode in $node.nodes)
+                {
+                    $subnode.checked = $state
+                }
+            }
+        }
+    )
+    
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
@@ -97,7 +111,7 @@ function ManageGroupLicense
             #Create a custom powershell object that represents if an item is changed or removed.
             #==================================================================
 
-            
+
 
 
             $licenseLabel.show()
