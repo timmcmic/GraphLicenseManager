@@ -13,8 +13,6 @@ function ManageGroupLicense
 {
     out-logfile -string "Entered manage group license..."
 
-    $toolLabel.text = "Test"
-
     $commit_Click = {
     }
     $exit_Click = {
