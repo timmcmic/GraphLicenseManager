@@ -96,9 +96,6 @@ function ManageGroupLicense
             #Create a custom powershell object that represents if an item is changed or removed.
             #==================================================================
 
-
-
-
             $licenseLabel.show()
             $LicenseList.show()
 
@@ -117,31 +114,31 @@ function ManageGroupLicense
                     [void]$rootnode.Nodes.Add($subnode)
                 }
             }
-        }
 
-        $licenseList_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
-            write-host "Check box"
-        #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
-            if($_.Action -ne 'Unknown'){
-                if($_.Node.Nodes.Count -gt 0){
-                    CheckAllChildNodes $_.Node $_.Node.Checked
+            $licenseList_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
+                write-host "Check box"
+            #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
+                if($_.Action -ne 'Unknown'){
+                    if($_.Node.Nodes.Count -gt 0){
+                        CheckAllChildNodes $_.Node $_.Node.Checked
+                    }
                 }
             }
-        }
+            
+            function CheckAllChildNodes($treeNode, $nodeChecked){
+                foreach($node in $treeNode.Nodes){
+                    $node.Checked = $nodeChecked
+                    if($node.Nodes.Count -gt 0){
+                        CheckAllChildNodes $node $nodeChecked
+                    }
+                }
+            }
         
-        function CheckAllChildNodes($treeNode, $nodeChecked){
-            foreach($node in $treeNode.Nodes){
-                $node.Checked = $nodeChecked
-                if($node.Nodes.Count -gt 0){
-                    CheckAllChildNodes $node $nodeChecked
-                }
+            $licenseList_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
+                #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
+                    if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
             }
         }
-    
-        $licenseList_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
-            #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
-                if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
-            }
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
