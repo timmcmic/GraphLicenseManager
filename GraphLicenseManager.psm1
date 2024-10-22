@@ -15,8 +15,10 @@ function Start-GraphLicenseManager
     out-logfile -string "************************************************************************"
     out-logfile -string "Starting graph license manager."
     out-logfile -string "************************************************************************"
-    
+
+    out-logfile -string "Invoking establish graph connection..."
     establishGraphConnection
 
+    out-logfile -string "Invoking manage group license..."
     manageGroupLicense
 }
