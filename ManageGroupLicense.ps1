@@ -133,7 +133,7 @@ function ManageGroupLicense
                     {
                         write-host "This is a child node."
 
-                        $parent = $node.$parent
+                        $parent = $node.parent
                         write-host $parent
                     }
                 }
