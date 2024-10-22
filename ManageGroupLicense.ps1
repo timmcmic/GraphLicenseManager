@@ -84,6 +84,31 @@ function ManageGroupLicense
             $mailText.appendtext($graphGroup.mail)
             $membershipRuleText.appendtext($graphGroup.membershipRule)
             $groupTypeText.appendtext($graphGroup.GroupTypes)
+
+            if ($graphGroup.displayName.Length -gt 0)
+            {
+                out-logfile -string $graphGroup.displayName
+            }
+
+            if ($graphGroup.ExpirationDateTime.Length -gt 0)
+            {
+                out-logfile -string $graphGroup.ExpirationDateTime
+            }
+
+            if ($graphGroup.mail.Length -gt 0)
+            {
+                out-logfile -string $graphGroup.mail
+            }
+
+            if ($graphGroup.membershipRule.Length -gt 0)
+            {
+                out-logfile -string $graphGroup.membershipRule
+            }
+
+            if ($graphGroup.GroupTypes.Length -gt 0)
+            {
+                out-logfile -string $graphGroup.GroupTypes
+            }
         }
         else
         {
