@@ -48,9 +48,20 @@ function ManageGroupLicense
             $planArray +=PrintTree $rootNode.nodes $rootNode.text
         }
 
-        foreach ($plan in $planArray)
+        foreach ($sku in $skuArray)
         {
-            out-logfile -string $plan
+            out-logfile -string $sku.SkuPartNumber_ServicePlanName
+
+            if ($planArray.SkuPartNumber_ServicePlanName.contains($sku.SkuPartNumber_ServicePlanName))
+            {
+                $planUpdate = $planArray | where {$_.SkuPartNumber_ServicePlanName -eq $sku.SkuPartNumber_ServicePlanName}
+
+                out-logfile -string $planUpdate
+
+                $sku.enabledNew = $planUpdate.EnabledNew
+
+                out-logfile -string $sku
+            }
         }
     }
 
