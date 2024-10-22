@@ -1,7 +1,7 @@
 
-function PrintTree($treeNode)
+function PrintTree($printNode)
 {
-    foreach ($node in $rootNode)
+    foreach ($node in $printNode)
     {
         out-logfile -string $node.text
     }
