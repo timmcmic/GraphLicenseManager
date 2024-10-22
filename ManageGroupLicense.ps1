@@ -1,3 +1,11 @@
+
+function PrintTree($treeNode,)
+{
+    foreach ($node in $treeNode.Node)
+    {
+        out-logfile -string $treeNode.name
+    }
+}
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
         $node.Checked = $nodeChecked
@@ -17,6 +25,7 @@ function ManageGroupLicense
         foreach ($treeNode in $licenseList.Nodes)
         {
             out-logfile -string $treeNode.name
+            PrintTree $treenNode
         }
     }
 
