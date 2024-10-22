@@ -2,7 +2,7 @@
 
 function ManageGroupLicense
 {
-    $licenseList_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
+    _AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
     #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
         if($_.Action -ne 'Unknown'){
             if($_.Node.Nodes.Count -gt 0){
@@ -19,7 +19,12 @@ function ManageGroupLicense
             }
         }
     }
-        
+
+    $licenseList_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
+        #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
+            if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
+        }
+
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
