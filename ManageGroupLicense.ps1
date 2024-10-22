@@ -5,6 +5,11 @@ function PrintTree($printNode,$rootNodeName)
     {
         out-logfile -string $rootNodeName
         out-logfile -string $node.text
+
+        if ($node.checked)
+        {
+            out-logfile -string "IsChecked:TRUE"
+        }
     }
 }
 function CheckAllChildNodes($treeNode, $nodeChecked){
