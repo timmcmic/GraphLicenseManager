@@ -25,7 +25,7 @@ function ManageGroupLicense
         foreach ($treeNode in $licenseList.Nodes)
         {
             out-logfile -string $treeNode.name
-            PrintTree $treenNode.nodes
+            PrintTree $treenNode.$subnode
         }
     }
 
