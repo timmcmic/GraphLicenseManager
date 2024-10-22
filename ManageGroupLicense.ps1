@@ -117,14 +117,14 @@ function ManageGroupLicense
         $GroupMembersView.rows.clear()
         $licenseList.Nodes.Clear()
 
-        $groupID = $groupObjectIDText.Text
-        out-logfile -string $groupID
+        $global:groupID = $groupObjectIDText.Text
+        out-logfile -string $global:groupID
         $getGroupFailure = $FALSE
 
         try
         {
             out-logfile -string "Attempt to locate the group via groupID..."
-            $graphGroup = get-MGGroup -groupID $groupID -errorAction STOP
+            $graphGroup = get-MGGroup -groupID $global:groupID -errorAction STOP
             out-logfile -string "Group was successfully located..."
             out-logfile -string $graphGroup
             $getGroupFailure=$false
@@ -141,7 +141,7 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-            $graphGroupLicenses = get-MGGroup -groupID $groupID -property "AssignedLicenses" -errorAction STOP
+            $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
             out-logfile -string "Group and licenses were successfully located..."
         }
         catch
@@ -292,7 +292,7 @@ function ManageGroupLicense
             out-logfile -string "Previous operation was successful proceed with locating membership."
             try
             {
-                $groupMembers = get-mgGroupMember -groupID $groupID -errorAction STOP
+                $groupMembers = get-mgGroupMember -groupID $global:groupID -errorAction STOP
 
                 $getGroupFailure=$false
             }
