@@ -9,7 +9,7 @@ function ManageGroupLicense
         }
     }
     
-    $licenseList_AfterSelect=[System.Windows.Forms.TreeViewEventHandler]{
+    $licenseList_AfterCheck={
         write-host "Check box"
     #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
         if($_.Action -ne 'Unknown'){
@@ -19,7 +19,7 @@ function ManageGroupLicense
         }
     }
 
-    $licenseList_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
+    $licenseList_BeforeExpand={
         #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
             if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
     }
