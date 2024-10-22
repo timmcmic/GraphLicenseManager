@@ -73,6 +73,11 @@ function ManageGroupLicense
             out-logfile -string $id
         }
 
+        foreach ($skuID in $skuIDArray.skuID)
+        {
+            out-logfile -string $skuID
+        }
+
         exit
     }
 
