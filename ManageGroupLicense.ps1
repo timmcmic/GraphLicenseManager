@@ -86,11 +86,11 @@ function ManageGroupLicense
 
             foreach ($sku in $skus)
             {
-                $item = New-Object System.Windows.Forms.ListViewItem($sku.SkuId)
+                $item = New-Object System.Windows.Forms.ListViewItem($sku.SkuPartNumber)
 
                 foreach ($servicePlan in $sku.servicePlans)
                 {
-                    $item.Subitems.add($servicePlan)
+                    $item.Subitems.add($servicePlan.servicePlanName)
                 }
 
                 $listView.Items.Add($item)
