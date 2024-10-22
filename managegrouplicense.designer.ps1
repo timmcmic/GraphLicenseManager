@@ -216,6 +216,7 @@ $exit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.I
 $exit.TabIndex = [System.Int32]19
 $exit.Text = [System.String]'Exit Graph License Manager'
 $exit.UseVisualStyleBackColor = $true
+$exit.add_Click($exit_Click)
 #
 #commit
 #
@@ -225,6 +226,7 @@ $commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $commit.TabIndex = [System.Int32]20
 $commit.Text = [System.String]'Commit License Changes'
 $commit.UseVisualStyleBackColor = $true
+$commit.add_Click($commit_Click)
 #
 #Form2
 #

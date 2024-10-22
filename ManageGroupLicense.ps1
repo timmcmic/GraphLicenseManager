@@ -1,3 +1,4 @@
+
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
         $node.Checked = $nodeChecked
@@ -9,11 +10,11 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    
     $commit_Click = {
     }
-
     $exit_Click = {
-        exit
+        $form2.close()
     }
 
     $Button1_Click = {
