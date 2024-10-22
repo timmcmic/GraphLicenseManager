@@ -1,4 +1,13 @@
 
+function CheckAllChildNodes($treeNode, $nodeChecked){
+    foreach($node in $treeNode.Nodes){
+        $node.Checked = $nodeChecked
+        if($node.Nodes.Count -gt 0){
+            CheckAllChildNodes $node $nodeChecked
+        }
+    }
+}
+
 function ManageGroupLicense
 {
     $Button1_Click = {
@@ -111,15 +120,6 @@ function ManageGroupLicense
                     $subnode = New-Object System.Windows.Forms.TreeNode
                     $subnode.text = $servicePlan.ServicePlanName
                     [void]$rootnode.Nodes.Add($subnode)
-                }
-            }
-
-            function CheckAllChildNodes($treeNode, $nodeChecked){
-                foreach($node in $treeNode.Nodes){
-                    $node.Checked = $nodeChecked
-                    if($node.Nodes.Count -gt 0){
-                        CheckAllChildNodes $node $nodeChecked
-                    }
                 }
             }
             
