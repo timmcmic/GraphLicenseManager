@@ -2,20 +2,24 @@
 
 function ManageGroupLicense
 {
-    $licenseList.add_CheckedChanged(
-        {
-            $node = $_.node
-            if($node.parent -eq $null)
-            {
-                $state = $node.checked
-                foreach($subnode in $node.nodes)
-                {
-                    $subnode.checked = $state
-                }
+    $licenseList_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
+    #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
+        if($_.Action -ne 'Unknown'){
+            if($_.Node.Nodes.Count -gt 0){
+                CheckAllChildNodes $_.Node $_.Node.Checked
             }
         }
-    )
-
+    }
+    
+    function CheckAllChildNodes($treeNode, $nodeChecked){
+        foreach($node in $treeNode.Nodes){
+            $node.Checked = $nodeChecked
+            if($node.Nodes.Count -gt 0){
+                CheckAllChildNodes $node $nodeChecked
+            }
+        }
+    }
+        
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
