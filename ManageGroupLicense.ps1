@@ -129,6 +129,13 @@ function ManageGroupLicense
                     if($_.Node.Nodes.Count -gt 0){
                         CheckAllChildNodes $_.Node $_.Node.Checked
                     }
+                    else 
+                    {
+                        write-host "This is a child node."
+
+                        $parent = $node.$parent
+                        write-host $parent
+                    }
                 }
             }
         }
