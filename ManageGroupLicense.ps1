@@ -1,8 +1,9 @@
 
-function PrintTree($printNode)
+function PrintTree($printNode,$rootNodeName)
 {
     foreach ($node in $printNode)
     {
+        out-logfile -string $rootNodeName
         out-logfile -string $node.text
     }
 }
@@ -25,7 +26,7 @@ function ManageGroupLicense
         foreach ($rootNode in $licenseList.Nodes)
         {
             out-logfile -string $rootNode.Text
-            PrintTree $rootNode.nodes
+            PrintTree $rootNode.nodes $rootNode.text
         }
     }
 
