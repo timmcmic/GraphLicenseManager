@@ -132,10 +132,11 @@ function ManageGroupLicense
                 }
             }
         
-            $licenseList.add_BeforeExpand{
-                #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
-                    if($_.Action -eq 'ByMouse'){write-host "ByMouse",$_.Cancel = $true}
-            }
+            $licenseList.add_NodeMouseDoubleClick({
+                $eventArgs = $_
+                $eventArgs.Handled = $true
+                [System.Windows.Forms.MessageBox]::Show("Double-click event canceled.")
+            })
         }
     }
 
