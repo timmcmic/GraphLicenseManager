@@ -64,7 +64,7 @@ function ManageGroupLicense
         $groupTypeText.clear()
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
-        #$LicenseList.items.clear()
+        $licenseList.Nodes.Clear()
 
         if ($getGroupFailure -eq $false)
         {
@@ -183,15 +183,12 @@ function ManageGroupLicense
                 $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
-                out-logfile -string $rootNode.text
-
                 [void]$licenseList.nodes.add($rootNode)
 
                 foreach ($servicePlan in $skus.servicePlans)
                 {
                     $subnode = New-Object System.Windows.Forms.TreeNode
                     $subnode.text = $servicePlan.ServicePlanName
-                    out-logfile -string ("--"+$subnode.text)
                     [void]$rootnode.Nodes.Add($subnode)
                 }
             }
