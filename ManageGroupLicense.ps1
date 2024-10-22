@@ -3,7 +3,7 @@ function PrintTree($treeNode)
 {
     foreach ($node in $treeNode.Node)
     {
-        out-logfile -string $treeNode.name
+        out-logfile -string $node.name
     }
 }
 function CheckAllChildNodes($treeNode, $nodeChecked){
