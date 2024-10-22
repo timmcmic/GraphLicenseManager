@@ -86,10 +86,18 @@ function ManageGroupLicense
 
             foreach ($sku in $skus)
             {
-                write-host $sku.SkuPartNumber
-                $item = New-Object System.Windows.Forms.ListViewItem($sku.SkuPartNumber)
+                $rootNode = New-Object System.Windows.Forms.TreeNode
+                $rootNode.text = $sku.SkuPartNumber
+                $rootNode.name = $sku.SkuPartNumber
 
-                $LicenseList.Items.Add($item)
+                [void]$licenseList.nodes.add($rootNode)
+
+                foreach ($servicePlan in $skus.servicePlans)
+                {
+                    $subnode = New-Object System.Windows.Forms.TreeNode
+                    $subnode.text = $servicePlan.ServicePlanName
+                    [void]$rootnode.Nodes.Add($subnode)
+                }
             }
         }
     }
