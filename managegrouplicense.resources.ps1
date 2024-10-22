@@ -27,5 +27,7 @@
 'Label5.Name' = 'Label5'
 'GroupTypeText.Name' = 'GroupTypeText'
 'Label2.Name' = 'Label2'
+'LicenseList.Name' = 'LicenseList'
+'LicenseLabel.Name' = 'LicenseLabel'
 }
 }

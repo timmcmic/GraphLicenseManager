@@ -1,3 +1,5 @@
+$GroupMembersName_Click = {
+}
 
 function ManageGroupLicense
 {
@@ -65,6 +67,22 @@ function ManageGroupLicense
             {
                 $groupMembersView.rows.add($object.id,$object.AdditionalProperties.displayName)
             }
+        }
+
+        if ($getGroupFailure -eq $FALSE)
+        {
+            try {
+                $skus = Get-MgSubscribedSku -errorAction Stop
+                $getGroupFailure=$false
+            }
+            catch {
+                $getGroupFailure=$true
+                $errorText=$_
+                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+            }
+
+            $licenseLabel.show()
+            $LicenseList.show()
         }
     }
 

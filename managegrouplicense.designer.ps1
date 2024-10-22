@@ -14,6 +14,8 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.TextBox]$MembershipRuleText = $null
 [System.Windows.Forms.Label]$GroupMembersName = $null
 [System.Windows.Forms.DataGridView]$GroupMembersView = $null
+[System.Windows.Forms.ListView]$LicenseList = $null
+[System.Windows.Forms.Label]$LicenseLabel = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -31,6 +33,8 @@ $MembershipRule = (New-Object -TypeName System.Windows.Forms.Label)
 $MembershipRuleText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $GroupMembersName = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupMembersView = (New-Object -TypeName System.Windows.Forms.DataGridView)
+$LicenseList = (New-Object -TypeName System.Windows.Forms.ListView)
+$LicenseLabel = (New-Object -TypeName System.Windows.Forms.Label)
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
 $Form2.SuspendLayout()
 #
@@ -158,33 +162,53 @@ $MembershipRuleText.Visible = $false
 #
 #GroupMembersName
 #
-$GroupMembersName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]185))
+$GroupMembersName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]176))
 $GroupMembersName.Name = [System.String]'GroupMembersName'
 $GroupMembersName.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
 $GroupMembersName.TabIndex = [System.Int32]14
 $GroupMembersName.Text = [System.String]'Group Members'
 $GroupMembersName.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
 $GroupMembersName.Visible = $false
+$GroupMembersName.add_Click($GroupMembersName_Click)
 #
 #GroupMembersView
 #
-$GroupMembersView.AllowUserToAddRows = $false
-$GroupMembersView.AllowUserToDeleteRows = $false
-$GroupMembersView.AutoSizeColumnsMode = [System.Windows.Forms.DataGridViewAutoSizeColumnsMode]::ColumnHeader
+$GroupMembersView.AutoSizeColumnsMode = [System.Windows.Forms.DataGridViewAutoSizeColumnsMode]::AllCells
 $GroupMembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
-$GroupMembersView.EditMode = [System.Windows.Forms.DataGridViewEditMode]::EditProgrammatically
-$GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
+$GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]202))
 $GroupMembersView.MultiSelect = $false
 $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.ReadOnly = $true
-$GroupMembersView.RowHeadersWidthSizeMode = [System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode]::AutoSizeToAllHeaders
-$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]576))
+$GroupMembersView.RowHeadersVisible = $false
+$GroupMembersView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::CellSelect
+$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]585))
 $GroupMembersView.TabIndex = [System.Int32]15
-$GroupMembersView.Visible = $false
+#
+#LicenseList
+#
+$LicenseList.CheckBoxes = $true
+$LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]202))
+$LicenseList.Name = [System.String]'LicenseList'
+$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]585))
+$LicenseList.TabIndex = [System.Int32]16
+$LicenseList.UseCompatibleStateImageBehavior = $false
+$LicenseList.Visible = $false
+#
+#LicenseLabel
+#
+$LicenseLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]176))
+$LicenseLabel.Name = [System.String]'LicenseLabel'
+$LicenseLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]23))
+$LicenseLabel.TabIndex = [System.Int32]17
+$LicenseLabel.Text = [System.String]'Licenses'
+$LicenseLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
+$LicenseLabel.Visible = $false
 #
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]799))
+$Form2.Controls.Add($LicenseLabel)
+$Form2.Controls.Add($LicenseList)
 $Form2.Controls.Add($GroupMembersView)
 $Form2.Controls.Add($GroupMembersName)
 $Form2.Controls.Add($MembershipRuleText)
@@ -218,5 +242,7 @@ Add-Member -InputObject $Form2 -Name MembershipRule -Value $MembershipRule -Memb
 Add-Member -InputObject $Form2 -Name MembershipRuleText -Value $MembershipRuleText -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name GroupMembersName -Value $GroupMembersName -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name GroupMembersView -Value $GroupMembersView -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name LicenseList -Value $LicenseList -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name LicenseLabel -Value $LicenseLabel -MemberType NoteProperty
 }
 . InitializeComponent
