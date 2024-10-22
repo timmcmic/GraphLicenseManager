@@ -255,7 +255,8 @@ function ManageGroupLicense
                 $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
-                $test = $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
+                $test = @()
+                $test += $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
 
                 if ($test.count -gt 0)
                 {
@@ -268,6 +269,15 @@ function ManageGroupLicense
                 {
                     $subnode = New-Object System.Windows.Forms.TreeNode
                     $subnode.text = $servicePlan.ServicePlanName
+
+                    $test = @()
+                    $test = $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.servicePlanName -eq $servicePlan.ServicePlanName)}
+
+                    if ($test.count -gt 0)
+                    {
+                        $subnode.checked = $true
+                    }
+
                     [void]$rootnode.Nodes.Add($subnode)
                 }
             }
