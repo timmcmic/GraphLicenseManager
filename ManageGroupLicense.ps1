@@ -221,12 +221,13 @@ function ManageGroupLicense
 
                         out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
 
-                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanName))
+                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
                         {
                             out-logfile -string "The plan is disabled - no work."
                         }
                         else
                         {
+                            out-logfile -string "The sku is not disabled - set the SKU to enabled."
                             $skuObject.EnabledOnGroup = $TRUE
                         }
                     }
