@@ -48,7 +48,7 @@ function ManageGroupLicense
             $planArray +=PrintTree $rootNode.nodes $rootNode.text
         }
 
-        foreach ($sku in $skuArray)
+        foreach ($sku in $global:skuTracking)
         {
             out-logfile -string $sku.SkuPartNumber_ServicePlanName
 
@@ -71,7 +71,7 @@ function ManageGroupLicense
 
     $Button1_Click = {
 
-        $skuTracking = @()
+        $global:skuTracking = @()
 
         out-logfile -string "Search button selected..."
 
@@ -162,7 +162,7 @@ function ManageGroupLicense
                             EnabledNew = $false
                         }
 
-                        $skuTracking += $functionObject
+                        $global:skuTracking += $functionObject
                     }
                 }
             }
@@ -173,7 +173,7 @@ function ManageGroupLicense
             {
                 out-logfile -string "The group specified has licenses - being the evaluation."
 
-                foreach ($skuObject in $skuTracking)
+                foreach ($skuObject in $global:skuTracking)
                 {
                     out-logfile -string "Checking to see if the group has the SKU id..."
 
@@ -198,7 +198,7 @@ function ManageGroupLicense
                 }
             }
 
-            foreach ($entry in $skuTracking)
+            foreach ($entry in $global:skuTracking)
             {
                 out-logfile -string $entry
             }
@@ -309,7 +309,7 @@ function ManageGroupLicense
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
 
                 $test = @()
-                $test += $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
+                $test += $global:skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
 
                 if ($test.count -gt 0)
                 {
@@ -333,7 +333,7 @@ function ManageGroupLicense
                         out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
 
                         $test = @()
-                        $test += $skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.SerivicePlanName -eq $servicePlan.ServicePlanName))}
+                        $test += $global:skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.SerivicePlanName -eq $servicePlan.ServicePlanName))}
 
                         if ($test.count -gt 0)
                         {
