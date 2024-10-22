@@ -69,6 +69,88 @@ function ManageGroupLicense
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
 
+        if ($getGroupFailure -eq $FALSE)
+        {
+            out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
+
+            try {
+                $skus = Get-MgSubscribedSku -errorAction Stop
+                out-logfile -string "SKUs successfully obtained..."
+                $getGroupFailure=$false
+            }
+            catch {
+                $getGroupFailure=$true
+                $errorText=$_
+                out-logfile -string "Unable to obtain the skus within the tenant.."
+                out-logfile -string $errorText
+                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+            }
+
+            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
+
+            foreach ($sku in $skus)
+            {
+                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+                foreach ($servicePlan in $sku.ServicePlans)
+                {
+                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+                    if ($servicePlan.AppliesTo -eq "User")
+                    {
+                        out-logfile -string "Service plan is per user - creating object."
+
+                        $functionObject = New-Object PSObject -Property @{
+                            SkuID = $sku.SkuId
+                            SkuPartNumber = $sku.SkuPartNumber
+                            ServicePlanID = $servicePlan.ServicePlanId
+                            SerivicePlanName = $servicePlan.ServicePlanName
+                            EnabledOnGroup = $false
+                            EnabledNew = $false
+                        }
+
+                        $skuTracking += $functionObject
+                    }
+                }
+            }
+
+            out-logfile -string "Evaluating the skus in the tenant against the group provided."
+
+            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
+            {
+                out-logfile -string "The group specified has licenses - being the evaluation."
+
+                foreach ($skuObject in $skuTracking)
+                {
+                    out-logfile -string "Checking to see if the group has the SKU id..."
+
+                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+                    {
+                        out-logfile -string "The group licenses the sku id - check disabled plans..."
+
+                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
+
+                        out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
+
+                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
+                        {
+                            out-logfile -string "The plan is disabled - no work."
+                        }
+                        else
+                        {
+                            out-logfile -string "The sku is not disabled - set the SKU to enabled."
+                            $skuObject.EnabledOnGroup = $TRUE
+                        }
+                    }
+                }
+            }
+
+            foreach ($entry in $skuTracking)
+            {
+                out-logfile -string $entry
+            }
+        }
+
         if ($getGroupFailure -eq $false)
         {
             out-logfile -string "Displaying all relevant form controls..."
@@ -160,85 +242,6 @@ function ManageGroupLicense
 
         if ($getGroupFailure -eq $FALSE)
         {
-            out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
-
-            try {
-                $skus = Get-MgSubscribedSku -errorAction Stop
-                out-logfile -string "SKUs successfully obtained..."
-                $getGroupFailure=$false
-            }
-            catch {
-                $getGroupFailure=$true
-                $errorText=$_
-                out-logfile -string "Unable to obtain the skus within the tenant.."
-                out-logfile -string $errorText
-                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
-            }
-
-            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
-
-            foreach ($sku in $skus)
-            {
-                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
-
-                foreach ($servicePlan in $sku.ServicePlans)
-                {
-                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-
-                    if ($servicePlan.AppliesTo -eq "User")
-                    {
-                        out-logfile -string "Service plan is per user - creating object."
-
-                        $functionObject = New-Object PSObject -Property @{
-                            SkuID = $sku.SkuId
-                            SkuPartNumber = $sku.SkuPartNumber
-                            ServicePlanID = $servicePlan.ServicePlanId
-                            SerivicePlanName = $servicePlan.ServicePlanName
-                            EnabledOnGroup = $false
-                            EnabledNew = $false
-                        }
-
-                        $skuTracking += $functionObject
-                    }
-                }
-            }
-
-            out-logfile -string "Evaluating the skus in the tenant against the group provided."
-
-            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
-            {
-                out-logfile -string "The group specified has licenses - being the evaluation."
-
-                foreach ($skuObject in $skuTracking)
-                {
-                    out-logfile -string "Checking to see if the group has the SKU id..."
-
-                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
-                    {
-                        out-logfile -string "The group licenses the sku id - check disabled plans..."
-
-                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
-
-                        out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
-
-                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
-                        {
-                            out-logfile -string "The plan is disabled - no work."
-                        }
-                        else
-                        {
-                            out-logfile -string "The sku is not disabled - set the SKU to enabled."
-                            $skuObject.EnabledOnGroup = $TRUE
-                        }
-                    }
-                }
-            }
-
-            foreach ($entry in $skuTracking)
-            {
-                out-logfile -string $entry
-            }
-
             out-logfile -string "Showing license display controls..."
 
             $licenseLabel.show()
