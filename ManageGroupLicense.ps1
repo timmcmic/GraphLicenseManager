@@ -131,10 +131,9 @@ function ManageGroupLicense
                     }
                     else 
                     {
-                        write-host "This is a child node."
+                        $parent = $_.node.parent
 
-                        $parent = $node.parent
-                        write-host $parent
+                        Write-Host $parent
                     }
                 }
             }
