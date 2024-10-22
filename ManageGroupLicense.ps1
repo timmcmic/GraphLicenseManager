@@ -1,5 +1,5 @@
 
-function PrintTree($treeNode,)
+function PrintTree($treeNode)
 {
     foreach ($node in $treeNode.Node)
     {
