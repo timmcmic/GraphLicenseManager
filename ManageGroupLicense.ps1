@@ -132,10 +132,12 @@ function ManageGroupLicense
                 }
             }
         
-            $licenseList.add_NodeMouseDoubleClick({
+            $licenseList.add_BeforeExpand({
                 $eventArgs = $_
-                $eventArgs.Handled = $true
-                [System.Windows.Forms.MessageBox]::Show("Double-click event canceled.")
+                if ($eventArgs.Action -eq [System.Windows.Forms.TreeViewAction]::Expand) {
+                    $eventArgs.Cancel = $true
+                    [System.Windows.Forms.MessageBox]::Show("Expand action canceled.")
+                }
             })
         }
     }
