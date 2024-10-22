@@ -16,7 +16,7 @@ function PrintTree($printNode,$rootNodeName)
         $functionObject = New-Object PSObject -Property @{
             SkuPartNumber = $rootNodeName
             SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.text)
-            SerivicePlanName = $node.text
+            ServicePlanName = $node.text
             EnabledNew = $node.checked
         }
 
@@ -50,10 +50,12 @@ function ManageGroupLicense
 
         foreach ($sku in $global:skuTracking)
         {
-            out-logfile -string $sku.SkuPartNumber_ServicePlanName
+            out-logfile -string ("Evaluting Sku: "+$sku.SkuPartNumber_ServicePlanName)
 
             if ($planArray.SkuPartNumber_ServicePlanName.contains($sku.SkuPartNumber_ServicePlanName))
             {
+                out-logfile -string "SKU located within the plan tree - this was expected."
+
                 $planUpdate = $planArray | where {$_.SkuPartNumber_ServicePlanName -eq $sku.SkuPartNumber_ServicePlanName}
 
                 out-logfile -string $planUpdate
@@ -62,6 +64,33 @@ function ManageGroupLicense
 
                 out-logfile -string $sku
             }
+        }
+
+        out-logfile "Starting to determine what changes need to be processed."
+
+        $skusToRemove = @()
+
+        foreach ($sku in $global:skuTracking)
+        {
+            out-logfile -string "Start testing for skus that have been completely removed..." 
+
+            $skuRemoveTest = $global:skuTracking | where {$_.skuID -eq $sku.skuID}
+            out-logfile -string ("The number of entries for this sku: "+$skuRemoveTest.Count.toString())
+
+            $skuRemoveTestNew = $global:SkuStracking | where {($_.skuID -eq $sku.skuID) -and ($enabledNew -eq $FALSE) }
+            out-logfile -string ("The number of entries for tihs sku where all options are enabled new: "+$skuRemoveTestNew.count.tostring())
+
+            if ($skuRemoveTest.count -eq $skuRemoveTestNew.count)
+            {
+                out-logfile -string "The entire sku has been removed as no options are enabled."
+                $skusToRemove += $sku.skuID
+            }
+
+        }
+
+        foreach ($member in $skusToRemove)
+        {
+            out-logfile -string $member
         }
     }
 
@@ -157,7 +186,7 @@ function ManageGroupLicense
                             SkuPartNumber = $sku.SkuPartNumber
                             SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
                             ServicePlanID = $servicePlan.ServicePlanId
-                            SerivicePlanName = $servicePlan.ServicePlanName
+                            ServicePlanName = $servicePlan.ServicePlanName
                             EnabledOnGroup = $false
                             EnabledNew = $false
                         }
@@ -333,7 +362,7 @@ function ManageGroupLicense
                         out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
 
                         $test = @()
-                        $test += $global:skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.SerivicePlanName -eq $servicePlan.ServicePlanName))}
+                        $test += $global:skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.ServicePlanName -eq $servicePlan.ServicePlanName))}
 
                         if ($test.count -gt 0)
                         {
