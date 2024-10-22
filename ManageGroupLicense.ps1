@@ -1,3 +1,5 @@
+$GroupMembersName_Click = {
+}
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
         $node.Checked = $nodeChecked
@@ -16,6 +18,8 @@ function ManageGroupLicense
     $exit_Click = {
         $form2.close()
     }
+
+    $statusLabel.text = "Pending group input..."
 
     $Button1_Click = {
 
