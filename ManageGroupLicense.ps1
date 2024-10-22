@@ -57,7 +57,7 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-            $graphGroupLicenses = get-MGGroup -groupID $groupID -property "AssignedLicense" -errorAction STOP
+            $graphGroupLicenses = get-MGGroup -groupID $groupID -property "AssignedLicenses" -errorAction STOP
             out-logfile -string "Group and licenses were successfully located..."
         }
         catch
@@ -207,8 +207,6 @@ function ManageGroupLicense
                     write-host "here"
                     out-logfile -string $license.SkuId
                 }
-
-                exit
             }
 
             out-logfile -string "Update the object array with all plans that are enabled already on the group."
