@@ -80,13 +80,10 @@ function ManageGroupLicense
             $membershipRuleText.show()
 
             $displayNameText.appendtext($graphGroup.displayName)
-            out-logfile -string $graphGroup.displayName
+            $expirationDateTimeText.appendTExt($graphGroup.ExpirationDateTime)
             $mailText.appendtext($graphGroup.mail)
-            out-logfile -string $graphGroup.mail
             $membershipRuleText.appendtext($graphGroup.membershipRule)
-            out-logfile -string $graphGroup.membershipRule
             $groupTypeText.appendtext($graphGroup.GroupTypes)
-            out-logfile -string $graphGroup.GroupTypes
         }
         else
         {
