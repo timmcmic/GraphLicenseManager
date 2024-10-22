@@ -271,7 +271,7 @@ function ManageGroupLicense
                     $subnode.text = $servicePlan.ServicePlanName
 
                     $test = @()
-                    $test = $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.servicePlanName -eq $servicePlan.ServicePlanName)}
+                    $test += $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.servicePlanName -eq $servicePlan.ServicePlanName)}
 
                     if ($test.count -gt 0)
                     {
