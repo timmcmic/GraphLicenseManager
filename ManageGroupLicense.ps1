@@ -55,23 +55,11 @@ function ManageGroupLicense
 
             $GroupMembersName.Show()
             $GroupMembersView.show()
-
-            $groupMembersView.GridLines = $true
-
-            $groupMembersID = $groupMembers | select-object Id
-
-            $groupMembersView.GridLines = $true
-            $groupMembersView.columns.add("ID")
-            $groupMembersView.columns[0].width = -2
-
-            $groupMembersView.columns.add("DisplayName")
-            $groupMembersView.columns[0].width = -2
-
-            foreach ($id in $groupMembersID)
+            
+            foreach ($id in $groupMembers.Id)
             {
-                [void]$GroupMembersView.Items.Add($id)
+                [void]$groupMembersView.items.add($id)
             }
-        }
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')

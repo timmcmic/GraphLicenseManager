@@ -13,7 +13,7 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$MembershipRule = $null
 [System.Windows.Forms.TextBox]$MembershipRuleText = $null
 [System.Windows.Forms.Label]$GroupMembersName = $null
-[System.Windows.Forms.ListView]$GroupMembersView = $null
+[System.Windows.Forms.ListBox]$GroupMembersView = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -30,7 +30,7 @@ $GroupTypeText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $MembershipRule = (New-Object -TypeName System.Windows.Forms.Label)
 $MembershipRuleText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $GroupMembersName = (New-Object -TypeName System.Windows.Forms.Label)
-$GroupMembersView = (New-Object -TypeName System.Windows.Forms.ListView)
+$GroupMembersView = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Form2.SuspendLayout()
 #
 #Label1
@@ -167,11 +167,12 @@ $GroupMembersName.Visible = $false
 #
 #GroupMembersView
 #
+$GroupMembersView.FormattingEnabled = $true
+$GroupMembersView.HorizontalScrollbar = $true
 $GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
 $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]576))
 $GroupMembersView.TabIndex = [System.Int32]15
-$GroupMembersView.UseCompatibleStateImageBehavior = $false
 $GroupMembersView.Visible = $false
 #
 #Form2
