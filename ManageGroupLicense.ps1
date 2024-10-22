@@ -173,6 +173,34 @@ function ManageGroupLicense
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
             }
 
+            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
+
+            foreach ($sku in $skus)
+            {
+                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+                foreach ($servicePlan in $sku.ServicePlans)
+                {
+                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+                    if ($servicePlan.AppliesTo -eq "User")
+                    {
+                        out-logfile -string "Service plan is per user - creating object."
+
+                        $functionObject = New-Object PSObject -Property @{
+                            SkuID = $sku.SkuId
+                            SkuPartNumber = $sku.SkuPartNumber
+                            ServicePlanID = $servicePlan.ServicePlanId
+                            SerivicePlanName = $servicePlan.ServicePlanName
+                            EnabledOnGroup = $false
+                            EnabledNew = $false
+                        }
+                    }
+                }
+            }
+
+            exit
+
             out-logfile -string "Showing license display controls..."
 
             $licenseLabel.show()
