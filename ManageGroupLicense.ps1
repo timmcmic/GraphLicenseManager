@@ -76,7 +76,7 @@ function ManageGroupLicense
         foreach ($id in $global:skuRootIDPresent)
         {
             $removeTest = $global:skuTracking | where {$_.skuID -eq $id}
-            $removeTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($enabledNew -eq $false)}
+            $removeTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
             out-logfile -string ("The number of skus to test for removal: "+$removeTest.count.tostring())
             out-logfile -string ("The number of skus to test with plans removed: "+$removeTestDisabled.count.toString())
