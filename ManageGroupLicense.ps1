@@ -10,7 +10,7 @@ function ManageGroupLicense
         }
     }
     
-    $licenseList.add_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
+    $licenseList.add_AfterSelect=[System.Windows.Forms.TreeViewEventHandler]{
         write-host "Check box"
     #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
         if($_.Action -ne 'Unknown'){
