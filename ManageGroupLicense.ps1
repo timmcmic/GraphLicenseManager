@@ -253,6 +253,13 @@ function ManageGroupLicense
                 $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
+                $test = $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
+
+                if ($test.count -gt 0)
+                {
+                    $rootNode.checked=$true
+                }
+
                 [void]$licenseList.nodes.add($rootNode)
 
                 foreach ($servicePlan in $skus.servicePlans)
