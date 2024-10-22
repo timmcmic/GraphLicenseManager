@@ -207,6 +207,7 @@ $LicenseList.Visible = $false
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]799))
+$Form2.ControlBox = $false
 $Form2.Controls.Add($LicenseList)
 $Form2.Controls.Add($LicenseLabel)
 $Form2.Controls.Add($GroupMembersView)
@@ -224,6 +225,10 @@ $Form2.Controls.Add($DisplayName)
 $Form2.Controls.Add($Button1)
 $Form2.Controls.Add($GroupObjectIDText)
 $Form2.Controls.Add($Label1)
+$Form2.MaximizeBox = $false
+$Form2.MinimizeBox = $false
+$Form2.ShowIcon = $false
+$Form2.Text = [System.String]'Graph License Manager'
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).EndInit()
 $Form2.ResumeLayout($false)
 $Form2.PerformLayout()

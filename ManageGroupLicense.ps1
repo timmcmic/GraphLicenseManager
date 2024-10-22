@@ -1,3 +1,5 @@
+$GroupMembersName_Click = {
+}
 function ManageGroupLicense
 {
     $Button1_Click = {
