@@ -68,6 +68,7 @@ function EstablishGraphConnection
     }
 
     out-logfile -string "Showing the authentication form to begin user interation..."
+    out-logfile -string "Exiting establish graph connection..."
 
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'establishgraphconnection.designer.ps1')
