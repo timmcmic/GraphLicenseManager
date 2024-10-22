@@ -170,6 +170,7 @@ $GroupMembersName.Visible = $false
 #
 $GroupMembersView.AllowUserToAddRows = $false
 $GroupMembersView.AllowUserToDeleteRows = $false
+$GroupMembersView.AutoSizeColumnsMode = [System.Windows.Forms.DataGridViewAutoSizeColumnsMode]::ColumnHeader
 $GroupMembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $GroupMembersView.EditMode = [System.Windows.Forms.DataGridViewEditMode]::EditProgrammatically
 $GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
