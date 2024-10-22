@@ -20,6 +20,17 @@ function ManageGroupLicense
     $Button1_Click = {
 
         out-logfile -string "Search button selected..."
+
+        out-logfile -string "Clearing all form controls..."
+
+        $displayNameText.clear()
+        $expirationDateTimeText.clear()
+        $mailText.clear()
+        $groupTypeText.clear()
+        $membershipRuleText.clear()
+        $GroupMembersView.rows.clear()
+        $licenseList.Nodes.Clear()
+
         $groupID = $groupObjectIDText.Text
         out-logfile -string $groupID
         $getGroupFailure = $FALSE
@@ -55,16 +66,6 @@ function ManageGroupLicense
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
-
-        out-logfile -string "Clearing all form controls..."
-
-        $displayNameText.clear()
-        $expirationDateTimeText.clear()
-        $mailText.clear()
-        $groupTypeText.clear()
-        $membershipRuleText.clear()
-        $GroupMembersView.rows.clear()
-        $licenseList.Nodes.Clear()
 
         if ($getGroupFailure -eq $false)
         {
