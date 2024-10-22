@@ -11,6 +11,18 @@ function ManageGroupLicense
         try
         {
             $graphGroup = get-MGGroup -groupID $groupID -errorAction STOP
+            $getGroupFailure=$false
+        }
+        catch
+        {
+            $getGroupFailure=$true
+            $errorText=$_
+            [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
+        }
+
+        try
+        {
+            $graphGroupLicenses = get-MGGroup -groupID $groupID -property "AssignedLicense" -errorAction STOP
         }
         catch
         {
@@ -80,6 +92,13 @@ function ManageGroupLicense
                 $errorText=$_
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
             }
+
+            #==================================================================
+            #Create a custom powershell object that represents if an item is changed or removed.
+            #==================================================================
+
+            
+
 
             $licenseLabel.show()
             $LicenseList.show()
