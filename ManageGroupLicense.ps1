@@ -66,42 +66,14 @@ function ManageGroupLicense
             }
         }
 
-        out-logfile "Starting to determine what changes need to be processed."
+        $skuIDArray = $global:skuTracking | select-object skuID -Unique
 
-        $skuIDsToTest = @()
-        $skuIDToTest += $global:skuTracking | select-object skuID
-        $skuIDToTest = $skuIDToTest | select-object -unique
-
-        foreach ($skuid in $skuIDToTest)
+        foreach ($id in $skuIDArray)
         {
-            out-logfile -string $skuid
-            start-sleep -s 5
+            out-logfile -string $id
         }
 
-        $skusToRemove = @()
-
-        foreach ($sku in $global:skuTracking)
-        {
-            out-logfile -string "Start testing for skus that have been completely removed..." 
-
-            $skuRemoveTest = $global:skuTracking | where {$_.skuID -eq $sku.skuID}
-            out-logfile -string ("The number of entries for this sku: "+$skuRemoveTest.Count.toString())
-
-            $skuRemoveTestNew = $global:SkuStracking | where {($_.skuID -eq $sku.skuID) -and ($enabledNew -eq $FALSE) }
-            out-logfile -string ("The number of entries for tihs sku where all options are enabled new: "+$skuRemoveTestNew.count.tostring())
-
-            if ($skuRemoveTest.count -eq $skuRemoveTestNew.count)
-            {
-                out-logfile -string "The entire sku has been removed as no options are enabled."
-                $skusToRemove += $sku.skuID
-            }
-
-        }
-
-        foreach ($member in $skusToRemove)
-        {
-            out-logfile -string $member
-        }
+        exit
     }
 
     $exit_Click = {
