@@ -59,7 +59,12 @@ function ManageGroupLicense
             $groupMembersView.columnCount = 2
             $groupMembersView.columnHeadersVisible = $TRUE
             $groupMembersView.columns[0].name = "ID"
-            $groupMembersView.columns[0].name = "DisplayName"
+            $groupMembersView.columns[1].name = "DisplayName"
+
+            foreach ($object in $groupMembers)
+            {
+                $groupMembersView.rows.add($object.id,$object.AdditionalProperties.displayName)
+            }
         }
     }
 
