@@ -1,3 +1,4 @@
+
 function ManageGroupLicense
 {
     function CheckAllChildNodes($treeNode, $nodeChecked){
@@ -9,7 +10,7 @@ function ManageGroupLicense
         }
     }
     
-    $licenseList_AfterCheck={
+    $licenseList.add_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
         write-host "Check box"
     #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
         if($_.Action -ne 'Unknown'){
@@ -19,7 +20,7 @@ function ManageGroupLicense
         }
     }
 
-    $licenseList_BeforeExpand={
+    $licenseList.add_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
         #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
             if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
     }
