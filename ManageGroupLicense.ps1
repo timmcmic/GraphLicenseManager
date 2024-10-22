@@ -1,3 +1,5 @@
+$GroupMembersName_Click = {
+}
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
         $node.Checked = $nodeChecked

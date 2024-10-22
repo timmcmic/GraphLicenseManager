@@ -16,6 +16,8 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.DataGridView]$GroupMembersView = $null
 [System.Windows.Forms.Label]$LicenseLabel = $null
 [System.Windows.Forms.TreeView]$LicenseList = $null
+[System.Windows.Forms.Button]$exit = $null
+[System.Windows.Forms.Button]$commit = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -35,6 +37,8 @@ $GroupMembersName = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupMembersView = (New-Object -TypeName System.Windows.Forms.DataGridView)
 $LicenseLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $LicenseList = (New-Object -TypeName System.Windows.Forms.TreeView)
+$exit = (New-Object -TypeName System.Windows.Forms.Button)
+$commit = (New-Object -TypeName System.Windows.Forms.Button)
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
 $Form2.SuspendLayout()
 #
@@ -181,7 +185,7 @@ $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.ReadOnly = $true
 $GroupMembersView.RowHeadersVisible = $false
 $GroupMembersView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::CellSelect
-$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]585))
+$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]565))
 $GroupMembersView.TabIndex = [System.Int32]15
 $GroupMembersView.Visible = $false
 #
@@ -200,14 +204,34 @@ $LicenseLabel.Visible = $false
 $LicenseList.CheckBoxes = $true
 $LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]202))
 $LicenseList.Name = [System.String]'LicenseList'
-$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]585))
+$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]565))
 $LicenseList.TabIndex = [System.Int32]18
 $LicenseList.Visible = $false
+#
+#exit
+#
+$exit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]773))
+$exit.Name = [System.String]'exit'
+$exit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
+$exit.TabIndex = [System.Int32]19
+$exit.Text = [System.String]'Exit Graph License Manager'
+$exit.UseVisualStyleBackColor = $true
+#
+#commit
+#
+$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]773))
+$commit.Name = [System.String]'commit'
+$commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]23))
+$commit.TabIndex = [System.Int32]20
+$commit.Text = [System.String]'Commit License Changes'
+$commit.UseVisualStyleBackColor = $true
 #
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]799))
 $Form2.ControlBox = $false
+$Form2.Controls.Add($commit)
+$Form2.Controls.Add($exit)
 $Form2.Controls.Add($LicenseList)
 $Form2.Controls.Add($LicenseLabel)
 $Form2.Controls.Add($GroupMembersView)
@@ -249,5 +273,7 @@ Add-Member -InputObject $Form2 -Name GroupMembersName -Value $GroupMembersName -
 Add-Member -InputObject $Form2 -Name GroupMembersView -Value $GroupMembersView -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name LicenseLabel -Value $LicenseLabel -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name LicenseList -Value $LicenseList -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name exit -Value $exit -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name commit -Value $commit -MemberType NoteProperty
 }
 . InitializeComponent
