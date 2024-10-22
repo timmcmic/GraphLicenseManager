@@ -132,18 +132,28 @@ function ManageGroupLicense
                     else 
                     {
                         $parent = $_.node.parent
+                        $needsChecked = $FALSE
 
                         foreach ($n in $parent.nodes)
                         {
                             if ($n.checked)
                             {
-                                $parent.Checked = $true
+                                $needsChecked = $true
                                 break
                             }
                             else 
                             {
-                                $parent.checked = $false
+                                $needsChecked=$false
                             }
+                        }
+
+                        if ($needsChecked -eq $TRUE)
+                        {
+                            $parent.checked = $TRUE
+                        }
+                        else 
+                        {
+                            $parent.Checked = $false
                         }
                     }
                 }
