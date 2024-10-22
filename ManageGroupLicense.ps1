@@ -13,7 +13,7 @@ function ManageGroupLicense
 {
     out-logfile -string "Entered manage group license..."
 
-    $statusStrip1.text = "Pending input and group search information..."
+    $toolLabel.text = "Test"
 
     $commit_Click = {
     }

@@ -2,7 +2,7 @@
  @{ 
 'TextBox2.Name' = 'TextBox2'
 'Label5.Name' = 'Label5'
-'GroupTypes.Name' = 'GroupTypes'
+'TextBox4.Name' = 'TextBox4'
 'Button1.Name' = 'Button1'
 'GroupObjectIDText.Name' = 'GroupObjectIDText'
 'Mail.Name' = 'Mail'
@@ -14,10 +14,11 @@
 'commit.Name' = 'commit'
 'Label2.Name' = 'Label2'
 'exit.Name' = 'exit'
+'Label1.Name' = 'Label1'
+'GroupTypes.Name' = 'GroupTypes'
+'TextBox5.Name' = 'TextBox5'
 'GroupMembersName.Name' = 'GroupMembersName'
 'TextBox3.Name' = 'TextBox3'
-'Label1.Name' = 'Label1'
-'TextBox5.Name' = 'TextBox5'
 '$this.Name' = 'Form2'
 'DisplayNameText.Name' = 'DisplayNameText'
 'GroupMembers.Name' = 'GroupMembers'
@@ -25,7 +26,6 @@
 'GroupMemberView.Name' = 'GroupMemberView'
 'StatusLabel.Name' = 'StatusLabel'
 'DisplayName.Name' = 'DisplayName'
-'TextBox4.Name' = 'TextBox4'
 'LicenseList.Name' = 'LicenseList'
 'StatusStrip1.TrayLocation' = New-Object -TypeName System.Drawing.Point -ArgumentList @(17, 17)
 'Label3.Name' = 'Label3'
@@ -34,5 +34,6 @@
 'Label4.Name' = 'Label4'
 'ExpirationDateTime.Name' = 'ExpirationDateTime'
 'GroupMembersView.Name' = 'GroupMembersView'
+'ToolLabel.Name' = 'ToolLabel'
 }
 }
