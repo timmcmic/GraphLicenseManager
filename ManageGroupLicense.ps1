@@ -1,4 +1,3 @@
-
 function CheckAllChildNodes($treeNode, $nodeChecked){
     foreach($node in $treeNode.Nodes){
         $node.Checked = $nodeChecked
@@ -10,6 +9,13 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    $commit_Click = {
+    }
+    
+    $exit_Click = {
+        exit
+    }
+
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
@@ -104,6 +110,9 @@ function ManageGroupLicense
             #Create a custom powershell object that represents if an item is changed or removed.
             #==================================================================
 
+            
+
+
             $licenseLabel.show()
             $LicenseList.show()
 
@@ -122,6 +131,8 @@ function ManageGroupLicense
                     [void]$rootnode.Nodes.Add($subnode)
                 }
             }
+
+
             
             $licenseList.add_AfterCheck{
             #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
