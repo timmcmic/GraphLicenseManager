@@ -13,7 +13,7 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$MembershipRule = $null
 [System.Windows.Forms.TextBox]$MembershipRuleText = $null
 [System.Windows.Forms.Label]$GroupMembersName = $null
-[System.Windows.Forms.ListBox]$GroupMembersView = $null
+[System.Windows.Forms.DataGridView]$GroupMembersView = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -30,7 +30,8 @@ $GroupTypeText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $MembershipRule = (New-Object -TypeName System.Windows.Forms.Label)
 $MembershipRuleText = (New-Object -TypeName System.Windows.Forms.TextBox)
 $GroupMembersName = (New-Object -TypeName System.Windows.Forms.Label)
-$GroupMembersView = (New-Object -TypeName System.Windows.Forms.ListBox)
+$GroupMembersView = (New-Object -TypeName System.Windows.Forms.DataGridView)
+([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
 $Form2.SuspendLayout()
 #
 #Label1
@@ -167,8 +168,7 @@ $GroupMembersName.Visible = $false
 #
 #GroupMembersView
 #
-$GroupMembersView.FormattingEnabled = $true
-$GroupMembersView.HorizontalScrollbar = $true
+$GroupMembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
 $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]576))
@@ -193,6 +193,7 @@ $Form2.Controls.Add($DisplayName)
 $Form2.Controls.Add($Button1)
 $Form2.Controls.Add($GroupObjectIDText)
 $Form2.Controls.Add($Label1)
+([System.ComponentModel.ISupportInitialize]$GroupMembersView).EndInit()
 $Form2.ResumeLayout($false)
 $Form2.PerformLayout()
 Add-Member -InputObject $Form2 -Name Label1 -Value $Label1 -MemberType NoteProperty

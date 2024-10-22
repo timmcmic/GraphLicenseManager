@@ -56,12 +56,9 @@ function ManageGroupLicense
             $GroupMembersName.Show()
             $GroupMembersView.show()
 
-            
-            
-            foreach ($id in $groupMembers.AdditionalProperties.displayName)
-            {
-                [void]$groupMembersView.items.add($id)
-            }
+            $groupMembersView.columnCount = 2
+            $groupMembersView.columns[0].name = "ID"
+            $groupMembersView.columns[0].name = "DisplayName"
         }
     }
 
