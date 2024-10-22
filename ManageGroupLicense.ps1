@@ -1,15 +1,14 @@
-$GroupMembersName_Click = {
-}
+
 
 function ManageGroupLicense
 {
-    $licenseList.add_AfterCheck(
+    $licenseList.add_CheckedChanged(
         {
-            if ($node.parent -eq $NULL)
+            $node = $_.node
+            if($node.parent -eq $null)
             {
                 $state = $node.checked
-                
-                foreach ($subNode in $node.nodes)
+                foreach($subnode in $node.nodes)
                 {
                     $subnode.checked = $state
                 }
