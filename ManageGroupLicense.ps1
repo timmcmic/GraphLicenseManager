@@ -1,31 +1,9 @@
+$LicenseList_AfterSelect = {
+}
 
 
 function ManageGroupLicense
 {
-    $licenseList_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
-        write-host "Check box"
-    #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
-        if($_.Action -ne 'Unknown'){
-            if($_.Node.Nodes.Count -gt 0){
-                CheckAllChildNodes $_.Node $_.Node.Checked
-            }
-        }
-    }
-    
-    function CheckAllChildNodes($treeNode, $nodeChecked){
-        foreach($node in $treeNode.Nodes){
-            $node.Checked = $nodeChecked
-            if($node.Nodes.Count -gt 0){
-                CheckAllChildNodes $node $nodeChecked
-            }
-        }
-    }
-
-    $licenseList_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
-        #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
-            if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
-        }
-
     $Button1_Click = {
 
         $groupID = $groupObjectIDText.Text
@@ -142,6 +120,30 @@ function ManageGroupLicense
                 }
             }
         }
+
+        $licenseList_AfterCheck=[System.Windows.Forms.TreeViewEventHandler]{
+            write-host "Check box"
+        #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
+            if($_.Action -ne 'Unknown'){
+                if($_.Node.Nodes.Count -gt 0){
+                    CheckAllChildNodes $_.Node $_.Node.Checked
+                }
+            }
+        }
+        
+        function CheckAllChildNodes($treeNode, $nodeChecked){
+            foreach($node in $treeNode.Nodes){
+                $node.Checked = $nodeChecked
+                if($node.Nodes.Count -gt 0){
+                    CheckAllChildNodes $node $nodeChecked
+                }
+            }
+        }
+    
+        $licenseList_BeforeExpand=[System.Windows.Forms.TreeViewCancelEventHandler]{
+            #Event Argument: $_ = [System.Windows.Forms.TreeViewCancelEventArgs]
+                if($_.Action -eq 'ByMouse'){$_.Cancel = $true}
+            }
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
