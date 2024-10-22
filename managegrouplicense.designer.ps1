@@ -185,7 +185,7 @@ $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.ReadOnly = $true
 $GroupMembersView.RowHeadersVisible = $false
 $GroupMembersView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::CellSelect
-$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]565))
+$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]381))
 $GroupMembersView.TabIndex = [System.Int32]15
 $GroupMembersView.Visible = $false
 #
@@ -204,13 +204,13 @@ $LicenseLabel.Visible = $false
 $LicenseList.CheckBoxes = $true
 $LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]202))
 $LicenseList.Name = [System.String]'LicenseList'
-$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]565))
+$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]381))
 $LicenseList.TabIndex = [System.Int32]18
 $LicenseList.Visible = $false
 #
 #exit
 #
-$exit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]773))
+$exit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]589))
 $exit.Name = [System.String]'exit'
 $exit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
 $exit.TabIndex = [System.Int32]19
@@ -220,7 +220,7 @@ $exit.add_Click($exit_Click)
 #
 #commit
 #
-$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]773))
+$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]589))
 $commit.Name = [System.String]'commit'
 $commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]23))
 $commit.TabIndex = [System.Int32]20
@@ -230,7 +230,7 @@ $commit.add_Click($commit_Click)
 #
 #Form2
 #
-$Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]799))
+$Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]619))
 $Form2.ControlBox = $false
 $Form2.Controls.Add($commit)
 $Form2.Controls.Add($exit)
