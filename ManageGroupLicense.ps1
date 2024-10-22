@@ -64,7 +64,7 @@ function ManageGroupLicense
         $groupTypeText.clear()
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
-        $LicenseList.clear()
+        $LicenseList.items.clear()
 
         if ($getGroupFailure -eq $false)
         {
