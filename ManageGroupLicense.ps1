@@ -88,6 +88,10 @@ function ManageGroupLicense
             $groupTypeText.appendtext($graphGroup.GroupTypes)
             out-logfile -string $graphGroup.GroupTypes
         }
+        else
+        {
+            out-logfile -string "Relevant form controls not displayed due to previous failure."
+        }
 
         if ($getGroupFailure -eq $false)
         {
@@ -95,47 +99,57 @@ function ManageGroupLicense
             try
             {
                 $groupMembers = get-mgGroupMember -groupID $groupID -errorAction STOP
+
                 $getGroupFailure=$false
             }
             catch
             {
                 $getGroupFailure=$true
                 $errorText=$_
+                out-logfile -string "The group was not located by group object id.."
+                out-logfile -string $errorText
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
             }
 
+            out-logfile -string "Showing relelvant group member controls..."
+
             $GroupMembersName.Show()
             $GroupMembersView.show()
+
+            out-logfile -string "Showing relevant group member information..."
 
             $groupMembersView.columnCount = 2
             $groupMembersView.columnHeadersVisible = $TRUE
             $groupMembersView.columns[0].name = "ID"
             $groupMembersView.columns[1].name = "DisplayName"
 
+            out-logfile -string "Generate the membership view and log membership for preservation..."
+
             foreach ($object in $groupMembers)
             {
                 $groupMembersView.rows.add($object.id,$object.AdditionalProperties.displayName)
+                out-logfile -string ("Group Member ID: "+$object.id+" Group Member DisplayName: "+$object.AdditionalProperties.displayNam)
             }
         }
 
         if ($getGroupFailure -eq $FALSE)
         {
+            out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
+
             try {
                 $skus = Get-MgSubscribedSku -errorAction Stop
+                out-logfile -string "SKUs successfully obtained..."
                 $getGroupFailure=$false
             }
             catch {
                 $getGroupFailure=$true
                 $errorText=$_
+                out-logfile -string "Unable to obtain the skus within the tenant.."
+                out-logfile -string $errorText
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
             }
 
-            #==================================================================
-            #Create a custom powershell object that represents if an item is changed or removed.
-            #==================================================================
-
-            
-
+            out-logfile -string "Showing license display controls..."
 
             $licenseLabel.show()
             $LicenseList.show()
@@ -156,8 +170,6 @@ function ManageGroupLicense
                 }
             }
 
-
-            
             $licenseList.add_AfterCheck{
             #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
                 if($_.Action -ne 'Unknown'){
