@@ -63,6 +63,8 @@ function ManageGroupLicense
         $mailText.clear()
         $groupTypeText.clear()
         $membershipRuleText.clear()
+        $GroupMembersView.clear()
+        $LicenseList.clear()
 
         if ($getGroupFailure -eq $false)
         {
@@ -150,7 +152,6 @@ function ManageGroupLicense
             foreach ($object in $groupMembers)
             {
                 $groupMembersView.rows.add($object.id,$object.AdditionalProperties.displayName)
-                out-logfile -string ("Group Member ID: "+$object.id+" Group Member DisplayName: "+$object.AdditionalProperties.displayNam)
             }
         }
 
