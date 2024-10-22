@@ -255,12 +255,19 @@ function ManageGroupLicense
                 $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
+                out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
+
                 $test = @()
                 $test += $skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
 
                 if ($test.count -gt 0)
                 {
+                    out-logfile -string "A plan within the sku is enabled -> set the main sku to checked..."
                     $rootNode.checked=$true
+                }
+                else
+                {
+                    out-logfile -string "No plans within the sku are enabled -> set the main sku to unchecked."
                 }
 
                 [void]$licenseList.nodes.add($rootNode)
@@ -270,12 +277,19 @@ function ManageGroupLicense
                     $subnode = New-Object System.Windows.Forms.TreeNode
                     $subnode.text = $servicePlan.ServicePlanName
 
+                    out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
+
                     $test = @()
                     $test += $skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.SerivicePlanName -eq $servicePlan.ServicePlanName))}
 
                     if ($test.count -gt 0)
                     {
+                        out-logfile -string "The service plan on the sku is enabled on the group - setting the checkbox..."
                         $subnode.checked = $true
+                    }
+                    else
+                    {
+                        out-logfile -string "The service plan on the sku is not enabled on the group - set to unchecked..."
                     }
 
                     [void]$rootnode.Nodes.Add($subnode)
