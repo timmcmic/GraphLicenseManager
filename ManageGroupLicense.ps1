@@ -204,6 +204,7 @@ function ManageGroupLicense
 
                 foreach ($license in $graphGroupLicenses.AssignedLicenses)
                 {
+                    write-host "here"
                     out-logfile -string $license.SkuId
                 }
 
