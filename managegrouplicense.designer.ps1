@@ -169,6 +169,7 @@ $GroupMembersName.Visible = $false
 #GroupMembersView
 #
 $GroupMembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
+$GroupMembersView.Enabled = $false
 $GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]211))
 $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]576))
