@@ -201,22 +201,42 @@ function ManageGroupLicense
                         $skuTracking += $functionObject
                     }
                 }
+            }
 
-                foreach ($license in $graphGroupLicenses.AssignedLicenses)
+            out-logfile -string "Evaluating the skus in the tenant against the group provided."
+
+            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
+            {
+                out-logfile -string "The group specified has licenses - being the evaluation."
+
+                foreach ($skuObject in $skuTracking)
                 {
-                    out-logfile -string ("Evaluating SKU ID: "+$license.SkuId)
+                    out-logfile -string "Checking to see if the group has the SKU id..."
 
-                    $workingSet = $skuTracking | where {$_.skuID -eq $license.SkuId}
+                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+                    {
+                        out-logfile -string "The group licenses the sku id - check disabled plans..."
 
-                    out-logfile -string $workingSet.count.toString()
+                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
 
-                    exit
+                        out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
+
+                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanName))
+                        {
+                            out-logfile -string "The plan is disabled - no work."
+                        }
+                        else
+                        {
+                            $skuObject.EnabledOnGroup = $TRUE
+                        }
+                    }
                 }
             }
 
-            out-logfile -string "Update the object array with all plans that are enabled already on the group."
-
-
+            foreach ($entry in $skuTracking)
+            {
+                out-logfile -string $entry
+            }
 
             out-logfile -string "Showing license display controls..."
 
