@@ -204,8 +204,13 @@ function ManageGroupLicense
 
                 foreach ($license in $graphGroupLicenses.AssignedLicenses)
                 {
-                    write-host "here"
-                    out-logfile -string $license.SkuId
+                    out-logfile -string ("Evaluating SKU ID: "+$license.SkuId)
+
+                    $workingSet = $skuTracking | where {$_.skuID -eq $license.SkuId}
+
+                    out-logfile -string $workingSet.count.toString()
+
+                    exit
                 }
             }
 
