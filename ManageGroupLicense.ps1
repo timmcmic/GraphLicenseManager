@@ -170,12 +170,12 @@ function ManageGroupLicense
 
             if ($addTestEnabled.count -gt 0)
             {
-                out-logfile -string "The sku was added but only partially added."
+                out-logfile -string "The sku is present - updating disalbed plans."
 
                 foreach ($sku in $addTestDisabled)
                 {
                     out-logfile -string "Building disabled IDs"
-                    out-logfile -string $sku.id
+                    out-logfile -string $sku.skuID
                     $disabledPlans+=$sku.skuID
                 }
 
