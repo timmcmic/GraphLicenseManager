@@ -209,7 +209,7 @@ function ManageGroupLicense
                 {
                     out-logfile -string "Building disabled IDS"
                     out-logfile -string $sku.ServicePlanID
-                    $disalbedPlans+=$sku.ServicePlanID
+                    $disabledPlans+=$sku.ServicePlanID
                 }
 
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
