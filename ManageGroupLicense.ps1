@@ -1,8 +1,3 @@
-function getGroupLicenses
-{
-    $global:groupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses"
-}
-
 
 function PrintTree($printNode,$rootNodeName)
 {
@@ -208,7 +203,7 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
-            Invoke-Command -ScriptBlock $Button1_Click
+            Invoke-Command -ScriptBlock $button1_click
         }
     }
 
@@ -225,7 +220,6 @@ function ManageGroupLicense
         $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
-        $global:GroupID = ""
 
         out-logfile -string "Search button selected..."
 
@@ -238,8 +232,6 @@ function ManageGroupLicense
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
         $licenseList.Nodes.Clear()
-
-        $statusStrip1.panels[0].text = "Test"
 
         $global:groupID = $groupObjectIDText.Text
         Out-logfile -string "Group ID to Search:"
@@ -268,7 +260,7 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-            getGroupLicenses -errorAction STOP
+            $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
             out-logfile -string "Group and licenses were successfully located..."
         }
         catch
@@ -280,7 +272,7 @@ function ManageGroupLicense
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
 
-        out-xmlFile -itemToExport $global:groupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
+        out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
 
         if ($getGroupFailure -eq $FALSE)
         {
@@ -334,7 +326,7 @@ function ManageGroupLicense
 
             out-logfile -string "Evaluating the skus in the tenant against the group provided."
 
-            if ($global:groupLicenses.assignedLicenses.count -gt 0)
+            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
             {
                 out-logfile -string "The group specified has licenses - being the evaluation."
 
@@ -342,11 +334,11 @@ function ManageGroupLicense
                 {
                     out-logfile -string "Checking to see if the group has the SKU id..."
 
-                    if ($global:groupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
                     {
                         out-logfile -string "The group licenses the sku id - check disabled plans..."
 
-                        $workingLicense = $global:groupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
+                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
 
                         out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
 
