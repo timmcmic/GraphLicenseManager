@@ -75,8 +75,7 @@ Function EstablishGraphConnection
 
     out-logfile -string "Add items ot the combo box."
 
-    $items = @("Global","USGov")
-    $environmentbox.items.addrange($items)
+
 
 
     Add-Type -AssemblyName System.Windows.Forms

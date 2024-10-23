@@ -128,6 +128,8 @@ $EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentL
 $EnvironmentBox.Name = [System.String]'EnvironmentBox'
 $EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]121,[System.Int32]21))
 $EnvironmentBox.TabIndex = [System.Int32]10
+$items = @("Global","USGov")
+$environmentbox.items.addrange($items)
 $EnvironmentBox.add_SelectedIndexChanged($EnvironmentBox_SelectedIndexChanged)
 #
 #Label4
