@@ -68,8 +68,7 @@ function ManageGroupLicense
             }
         }
 
-        out-logfile -string "Generate the list of unique sku ids..."
-        $skuIDArray = $global:skuTracking | select-object skuID -Unique
+        out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("GlobalSKUTrackingPostUpdate-"+(Get-Date -Format FileDateTime))
 
         $skusToRemove=@()
         $licenseParams = @{}
@@ -190,6 +189,8 @@ function ManageGroupLicense
         $licenseParams.add("AddLicenses",$skusToAdd)
         $licenseParams.add("RemoveLicenses",$skusToRemove)
 
+        out-xmlFile -itemToExport $licenseParams -itemNameToExport ("LicenseParams-"+(Get-Date -Format FileDateTime))
+
         try {
             Set-MgGroupLicense -GroupId $global:groupID -BodyParameter $licenseParams -errorAction Stop
         }
@@ -266,6 +267,8 @@ function ManageGroupLicense
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
 
+        out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
+
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
@@ -282,6 +285,8 @@ function ManageGroupLicense
                 out-logfile -string $errorText
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
             }
+
+            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
 
             out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
@@ -311,6 +316,8 @@ function ManageGroupLicense
                     }
                 }
             }
+
+            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
 
             out-logfile -string "Evaluating the skus in the tenant against the group provided."
 
@@ -343,10 +350,7 @@ function ManageGroupLicense
                 }
             }
 
-            foreach ($entry in $global:skuTracking)
-            {
-                out-logfile -string $entry
-            }
+            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
         }
 
         if ($getGroupFailure -eq $false)
@@ -405,7 +409,7 @@ function ManageGroupLicense
             out-logfile -string "Previous operation was successful proceed with locating membership."
             try
             {
-                $groupMembers = get-mgGroupMember -groupID $global:groupID -errorAction STOP
+                $groupMembers = get-mgGroupMember -groupID $global:groupID -all -errorAction STOP
 
                 $getGroupFailure=$false
             }
@@ -417,6 +421,8 @@ function ManageGroupLicense
                 out-logfile -string $errorText
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
             }
+
+            out-xmlFile -itemToExport $groupMembers -itemNameToExport ("GroupMembers-"+(Get-Date -Format FileDateTime))
 
             out-logfile -string "Showing relelvant group member controls..."
 
