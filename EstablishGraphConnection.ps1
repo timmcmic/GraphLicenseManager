@@ -1,14 +1,3 @@
-$GroupBox1_Enter = {
-}
-$TextBox3_TextChanged = {
-}
-$Label2_Click = {
-}
-$TextBox2_TextChanged = {
-}
-$Label1_Click = {
-}
-
 function EstablishGraphConnection
 {
     $ExitButton_Click = {
