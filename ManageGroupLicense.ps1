@@ -72,7 +72,7 @@ function ManageGroupLicense
         $skusToRemove=@()
         $licenseParams = @{}
         $skusToAdd=@()
-
+        
         out-logfile -string "Begin to look for skus that have been removed..."
 
         foreach ($id in $global:skuRootIDPresent)
@@ -90,26 +90,81 @@ function ManageGroupLicense
             }
         }
 
-        
-        
         out-logfile -string "Determine if any entire skus were added to the new license template by reviewing skus that were not already there."
 
         foreach ($id in $global:skuRootIDNotPresent)
         {
+            $skusToAddHash=@{}
+            $disabledPlans=@()
+
             $addTest = $global:skuTracking | where {$_.skuID -eq $id}
             $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
 
             if ($addTest.count -eq $addTestEnabled.count)
             {
                 out-logfile -string "The number of sku references and plan references are equal -> the entire sku was added"
-                $skusToAdd += $id
+                $skusToAddHash.add("DisabledPlans",$disabledPlans)
+                $skusToAddHash.add("SkuID",$id)
+                $skusToAdd+=$skusToAddHash
             }
         }
 
-        foreach ($sku in $skusToAdd)
+        out-logfile -string "Searching for new skus that were partially added."
+
+        foreach ($id in $global:skuRootIDNotPresent)
         {
-            out-logfile -string $sku
+            $skusToAddHash=@{}
+            $disabledPlans=@()
+
+            $addTest = $global:skuTracking | where {$_.skuID -eq $id}
+            $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            $addTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
+
+            if ($addTest.count -ne $addTestEnabled.count)
+            {
+                out-logfile -string "The sku was added but only partially added."
+
+                foreach ($sku in $addTestDisabled)
+                {
+                    $disalbedPlans+=$sku.skuID
+                }
+
+                $skusToAddHash.add("DisabledPlans",$disabledPlans)
+                $skusToAddHash.add("SkuID",$id)
+                $skusToAdd+=$skusToAddHash
+            }
         }
+
+        out-logfile -string "Searching for changes to existing skus."
+        
+        foreach ($id in $global:skuRootIDPresent)
+        {
+            $skusToAddHash=@{}
+            $disabledPlans=@()
+
+            $addTest = $global:skuTracking | where {$_.skuID -eq $id}
+            $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            $addTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
+
+            if ($addTest.count -ne $addTestEnabled.count)
+            {
+                out-logfile -string "The sku was added but only partially added."
+
+                foreach ($sku in $addTestDisabled)
+                {
+                    $disalbedPlans+=$sku.skuID
+                }
+
+                $skusToAddHash.add("DisabledPlans",$disabledPlans)
+                $skusToAddHash.add("SkuID",$id)
+                $skusToAdd+=$skusToAddHash
+            }
+        }
+
+        $licenseParams.add("AddLicenses",$skusToAdd)
+        $licenseParams.add("RemoveLicenses",$skusToRemove)
+
+        out-logfile -string $licenseParams
 
         exit
     }
