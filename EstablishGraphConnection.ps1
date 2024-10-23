@@ -1,11 +1,7 @@
 
 Function EstablishGraphConnection
 {
-    <#
-    $items = "Global", "USGov", "USGovDOD" , "China"
-    $EnvironmentBox.Items.AddRange($items)
-    $EnvironmentBox.selectedIndex=0
-    #>
+    $global:GraphEnvironment = "Global"
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
