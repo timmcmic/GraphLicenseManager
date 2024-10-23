@@ -87,6 +87,7 @@ function ManageGroupLicense
             if ($removeTest.count -eq $removeTestDisabled.count)
             {
                 out-logfile -string "The number of sku references equals number of plans disalbed -> remove sku."
+                out-logfile -string $id
                 $skusToRemove += $id
                 out-logfile -string "Remove the entry from the active array - it's no longer active."
                 $global:skuRootIDPresent = $global:skuRootIDPresent | where {$_ -ne $id}
@@ -107,6 +108,7 @@ function ManageGroupLicense
             if ($addTest.count -eq $addTestEnabled.count)
             {
                 out-logfile -string "The number of sku references and plan references are equal -> the entire sku was added"
+                out-logfile -string $id
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
                 $skusToAddHash.add("SkuID",$id)
                 $skusToAdd+=$skusToAddHash
@@ -127,12 +129,14 @@ function ManageGroupLicense
             $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
             $addTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
-            if ($addTest.count -ne $addTestEnabled.count)
+            if ($addTestEnabled -gt 0)
             {
                 out-logfile -string "The sku was added but only partially added."
 
                 foreach ($sku in $addTestDisabled)
                 {
+                    out-logfile -string "Building disabled IDS"
+                    out-logfile -string $sku.skuID
                     $disalbedPlans+=$sku.skuID
                 }
 
@@ -160,6 +164,8 @@ function ManageGroupLicense
 
                 foreach ($sku in $addTestDisabled)
                 {
+                    out-logfile -string "Building disabled IDs"
+                    out-logfile -string $sku.id
                     $disabledPlans+=$sku.skuID
                 }
 
