@@ -1,5 +1,15 @@
+
 Function EstablishGraphConnection
 {
+    <#
+    $items = "Global", "USGov", "USGovDOD" , "China"
+    $EnvironmentBox.Items.AddRange($items)
+    $EnvironmentBox.selectedIndex=0
+    #>
+    
+    $EnvironmentBox_SelectedIndexChanged = {
+    }
+
     $ExitButton_Click = {
         [void]$Form1.close()
     }
