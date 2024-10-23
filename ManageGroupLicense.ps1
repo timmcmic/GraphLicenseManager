@@ -12,6 +12,10 @@ function PrintTree($printNode,$rootNodeName)
         {
             out-logfile -string "IsChecked:TRUE"
         }
+        else
+        {
+            out-logfile -string "IsChecked:FALSE"
+        }
 
         $functionObject = New-Object PSObject -Property @{
             SkuPartNumber = $rootNodeName
