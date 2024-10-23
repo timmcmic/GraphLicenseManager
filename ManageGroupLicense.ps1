@@ -87,6 +87,8 @@ function ManageGroupLicense
             {
                 out-logfile -string "The number of sku references equals number of plans disalbed -> remove sku."
                 $skusToRemove += $id
+                out-logfile -string "Remove the entry from the active array - it's no longer active."
+                $global:skuRootIDPresent = $global:skuRootIDPresent | where {$_ -ne $id}
             }
         }
 
@@ -106,6 +108,8 @@ function ManageGroupLicense
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
                 $skusToAddHash.add("SkuID",$id)
                 $skusToAdd+=$skusToAddHash
+                out-logfile -string "Remove from the IDs not present - it is now present."
+                $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
             }
         }
 
@@ -172,7 +176,6 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
-
         }
     }
 
