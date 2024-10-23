@@ -54,8 +54,6 @@ function ManageGroupLicense
             $planArray +=PrintTree $rootNode.nodes $rootNode.text
         }
 
-        $planArray = $planArray | select-object -Unique
-
         foreach ($sku in $global:skuTracking)
         {
             out-logfile -string ("Evaluting Sku: "+$sku.SkuPartNumber_ServicePlanName)
@@ -101,6 +99,10 @@ function ManageGroupLicense
                 out-logfile -string "Remove the entry from the active array - it's no longer active."
                 $global:skuRootIDPresent = $global:skuRootIDPresent | where {$_ -ne $id}
             }
+            else
+            {
+                out-llogfile -string "The SKU is not a SKU that was entirely removed."
+            }
         }
 
         out-logfile -string "Determine if any entire skus were added to the new license template by reviewing skus that were not already there."
@@ -115,6 +117,8 @@ function ManageGroupLicense
 
             $addTest += $global:skuTracking | where {$_.skuID -eq $id}
             $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            out-logfile -string ("Count of all found skus: "+$addTest.count.tostring())
+            out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
 
             if ($addTest.count -eq $addTestEnabled.count)
             {
@@ -125,6 +129,10 @@ function ManageGroupLicense
                 $skusToAdd+=$skusToAddHash
                 out-logfile -string "Remove from the IDs not present - it is now present."
                 $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
+            }
+            else
+            {
+                out-logfile -string "The SKU was not a SKU that was entirely added."
             }
         }
 
@@ -143,6 +151,10 @@ function ManageGroupLicense
             $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
             $addTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
+            out-logfile -string ("Count of all found skus: "+$addTest.count.tostring())
+            out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
+            out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
+
             if ($addTestEnabled.count -gt 0)
             {
                 out-logfile -string "The sku was added but only partially added."
@@ -157,6 +169,10 @@ function ManageGroupLicense
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
                 $skusToAddHash.add("SkuID",$id)
                 $skusToAdd+=$skusToAddHash
+            }
+            else
+            {
+                out-logfile -string "The sku was not added even partially."
             }
         }
 
@@ -175,6 +191,11 @@ function ManageGroupLicense
             $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
             $addTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
+            
+            out-logfile -string ("Count of all found skus: "+$addTest.count.tostring())
+            out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
+            out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
+
             if ($addTestEnabled.count -gt 0)
             {
                 out-logfile -string "The sku is present - updating disalbed plans."
@@ -189,6 +210,10 @@ function ManageGroupLicense
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
                 $skusToAddHash.add("SkuID",$id)
                 $skusToAdd+=$skusToAddHash
+            }
+            else
+            {
+                out-logfile -string "The sku was not modified partially."
             }
         }
 
