@@ -234,7 +234,7 @@ function ManageGroupLicense
         $GroupMembersView.rows.clear()
         $licenseList.Nodes.Clear()
 
-        $statusStrip1.ToolLabel.text = "Test"
+        $statusStrip1.panels[0].text = "Test"
 
         $global:groupID = $groupObjectIDText.Text
         Out-logfile -string "Group ID to Search:"
