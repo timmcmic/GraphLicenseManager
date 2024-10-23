@@ -283,6 +283,7 @@ function ManageGroupLicense
             out-logfile -string "Group was successfully located..."
             out-logfile -string $graphGroup
             $getGroupFailure=$false
+            out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime)
         }
         catch
         {
@@ -293,13 +294,13 @@ function ManageGroupLicense
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
 
-        out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime))
 
         try
         {
             out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
             $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
             out-logfile -string "Group and licenses were successfully located..."
+            out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
         }
         catch
         {
@@ -309,8 +310,6 @@ function ManageGroupLicense
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
-
-        out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
 
         if ($getGroupFailure -eq $FALSE)
         {
@@ -320,6 +319,7 @@ function ManageGroupLicense
                 $skus = Get-MgSubscribedSku -errorAction Stop
                 out-logfile -string "SKUs successfully obtained..."
                 $getGroupFailure=$false
+                out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
             }
             catch {
                 $getGroupFailure=$true
@@ -328,8 +328,6 @@ function ManageGroupLicense
                 out-logfile -string $errorText
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
             }
-
-            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
 
             out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
