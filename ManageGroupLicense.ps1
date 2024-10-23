@@ -1,4 +1,182 @@
+function drawLicenseView
+{
+    out-logfile -string "Showing license display controls..."
 
+    $licenseLabel.show()
+    $LicenseList.show()
+
+    foreach ($sku in $skus)
+    {
+        $rootNode = New-Object System.Windows.Forms.TreeNode
+        $rootNode.text = $sku.SkuPartNumber
+        $rootNode.name = $sku.SkuPartNumber
+
+        out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
+
+        $test = @()
+        $test += $global:skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
+
+        if ($test.count -gt 0)
+        {
+            out-logfile -string "A plan within the sku is enabled -> set the main sku to checked..."
+            $rootNode.checked=$true
+            $global:skuRootIDPresent+=$sku.SkuID
+        }
+        else
+        {
+            $global:skuRootIDNotPresent+=$sku.skuID
+            out-logfile -string "No plans within the sku are enabled -> set the main sku to unchecked."
+        }
+
+        [void]$licenseList.nodes.add($rootNode)
+
+        foreach ($servicePlan in $sku.servicePlans)
+        {
+            if ($servicePlan.appliesTo -ne "Company")
+            {
+                $subnode = New-Object System.Windows.Forms.TreeNode
+                $subnode.text = $servicePlan.ServicePlanName
+
+                out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
+
+                $test = @()
+                $test += $global:skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.ServicePlanName -eq $servicePlan.ServicePlanName))}
+
+                if ($test.count -gt 0)
+                {
+                    out-logfile -string "The service plan on the sku is enabled on the group - setting the checkbox..."
+                    $subnode.checked = $true
+                }
+                else
+                {
+                    out-logfile -string "The service plan on the sku is not enabled on the group - set to unchecked..."
+                }
+
+                [void]$rootnode.Nodes.Add($subnode)
+            }
+        }
+    }
+
+    $licenseList.add_AfterCheck{
+    #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
+        if($_.Action -ne 'Unknown'){
+            if($_.Node.Nodes.Count -gt 0){
+                CheckAllChildNodes $_.Node $_.Node.Checked
+            }
+            else 
+            {
+                $parent = $_.node.parent
+                $needsChecked = $FALSE
+
+                foreach ($n in $parent.nodes)
+                {
+                    if ($n.checked)
+                    {
+                        $needsChecked = $true
+                        break
+                    }
+                    else 
+                    {
+                        $needsChecked=$false
+                    }
+                }
+
+                if ($needsChecked -eq $TRUE)
+                {
+                    $parent.checked = $TRUE
+                }
+                else 
+                {
+                    $parent.Checked = $false
+                }
+            }
+        }
+    }
+}
+
+function getGraphSKU
+{
+    out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
+
+            try {
+                $skus = Get-MgSubscribedSku -errorAction Stop
+                out-logfile -string "SKUs successfully obtained..."
+                $getGroupFailure=$false
+            }
+            catch {
+                $getGroupFailure=$true
+                $errorText=$_
+                out-logfile -string "Unable to obtain the skus within the tenant.."
+                out-logfile -string $errorText
+                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+            }
+
+            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
+
+            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
+
+            foreach ($sku in $skus)
+            {
+                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+                foreach ($servicePlan in $sku.ServicePlans)
+                {
+                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+                    if ($servicePlan.AppliesTo -eq "User")
+                    {
+                        out-logfile -string "Service plan is per user - creating object."
+
+                        $functionObject = New-Object PSObject -Property @{
+                            SkuID = $sku.SkuId
+                            SkuPartNumber = $sku.SkuPartNumber
+                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
+                            ServicePlanID = $servicePlan.ServicePlanId
+                            ServicePlanName = $servicePlan.ServicePlanName
+                            EnabledOnGroup = $false
+                            EnabledNew = $false
+                        }
+
+                        $global:skuTracking += $functionObject
+                    }
+                }
+            }
+
+            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+
+            out-logfile -string "Evaluating the skus in the tenant against the group provided."
+
+            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
+            {
+                out-logfile -string "The group specified has licenses - being the evaluation."
+
+                foreach ($skuObject in $global:skuTracking)
+                {
+                    out-logfile -string "Checking to see if the group has the SKU id..."
+
+                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+                    {
+                        out-logfile -string "The group licenses the sku id - check disabled plans..."
+
+                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
+
+                        out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
+
+                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
+                        {
+                            out-logfile -string "The plan is disabled - no work."
+                        }
+                        else
+                        {
+                            out-logfile -string "The sku is not disabled - set the SKU to enabled."
+                            $skuObject.EnabledOnGroup = $TRUE
+                        }
+                    }
+                }
+            }
+
+            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
+}
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
@@ -203,7 +381,8 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
-            Invoke-Command -ScriptBlock $Button1_Click
+            getGraphSKU
+            drawLicenseView
         }
     }
 
@@ -276,86 +455,7 @@ function ManageGroupLicense
 
         if ($getGroupFailure -eq $FALSE)
         {
-            out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
-
-            try {
-                $skus = Get-MgSubscribedSku -errorAction Stop
-                out-logfile -string "SKUs successfully obtained..."
-                $getGroupFailure=$false
-            }
-            catch {
-                $getGroupFailure=$true
-                $errorText=$_
-                out-logfile -string "Unable to obtain the skus within the tenant.."
-                out-logfile -string $errorText
-                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
-            }
-
-            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
-
-            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
-
-            foreach ($sku in $skus)
-            {
-                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
-
-                foreach ($servicePlan in $sku.ServicePlans)
-                {
-                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-
-                    if ($servicePlan.AppliesTo -eq "User")
-                    {
-                        out-logfile -string "Service plan is per user - creating object."
-
-                        $functionObject = New-Object PSObject -Property @{
-                            SkuID = $sku.SkuId
-                            SkuPartNumber = $sku.SkuPartNumber
-                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
-                            ServicePlanID = $servicePlan.ServicePlanId
-                            ServicePlanName = $servicePlan.ServicePlanName
-                            EnabledOnGroup = $false
-                            EnabledNew = $false
-                        }
-
-                        $global:skuTracking += $functionObject
-                    }
-                }
-            }
-
-            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
-
-            out-logfile -string "Evaluating the skus in the tenant against the group provided."
-
-            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
-            {
-                out-logfile -string "The group specified has licenses - being the evaluation."
-
-                foreach ($skuObject in $global:skuTracking)
-                {
-                    out-logfile -string "Checking to see if the group has the SKU id..."
-
-                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
-                    {
-                        out-logfile -string "The group licenses the sku id - check disabled plans..."
-
-                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
-
-                        out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
-
-                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
-                        {
-                            out-logfile -string "The plan is disabled - no work."
-                        }
-                        else
-                        {
-                            out-logfile -string "The sku is not disabled - set the SKU to enabled."
-                            $skuObject.EnabledOnGroup = $TRUE
-                        }
-                    }
-                }
-            }
-
-            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
+            getGraphSKU
         }
 
         if ($getGroupFailure -eq $false)
@@ -451,98 +551,7 @@ function ManageGroupLicense
 
         if ($getGroupFailure -eq $FALSE)
         {
-            out-logfile -string "Showing license display controls..."
-
-            $licenseLabel.show()
-            $LicenseList.show()
-
-            foreach ($sku in $skus)
-            {
-                $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNode.text = $sku.SkuPartNumber
-                $rootNode.name = $sku.SkuPartNumber
-
-                out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
-
-                $test = @()
-                $test += $global:skuTracking | where {($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE)}
-
-                if ($test.count -gt 0)
-                {
-                    out-logfile -string "A plan within the sku is enabled -> set the main sku to checked..."
-                    $rootNode.checked=$true
-                    $global:skuRootIDPresent+=$sku.SkuID
-                }
-                else
-                {
-                    $global:skuRootIDNotPresent+=$sku.skuID
-                    out-logfile -string "No plans within the sku are enabled -> set the main sku to unchecked."
-                }
-
-                [void]$licenseList.nodes.add($rootNode)
-
-                foreach ($servicePlan in $sku.servicePlans)
-                {
-                    if ($servicePlan.appliesTo -ne "Company")
-                    {
-                        $subnode = New-Object System.Windows.Forms.TreeNode
-                        $subnode.text = $servicePlan.ServicePlanName
-
-                        out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
-
-                        $test = @()
-                        $test += $global:skuTracking | where {(($_.skuPartNumber -eq $sku.skuPartNumber) -and ($_.EnabledOnGroup -eq $TRUE) -and ($_.ServicePlanName -eq $servicePlan.ServicePlanName))}
-
-                        if ($test.count -gt 0)
-                        {
-                            out-logfile -string "The service plan on the sku is enabled on the group - setting the checkbox..."
-                            $subnode.checked = $true
-                        }
-                        else
-                        {
-                            out-logfile -string "The service plan on the sku is not enabled on the group - set to unchecked..."
-                        }
-
-                        [void]$rootnode.Nodes.Add($subnode)
-                    }
-                }
-            }
-
-            $licenseList.add_AfterCheck{
-            #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
-                if($_.Action -ne 'Unknown'){
-                    if($_.Node.Nodes.Count -gt 0){
-                        CheckAllChildNodes $_.Node $_.Node.Checked
-                    }
-                    else 
-                    {
-                        $parent = $_.node.parent
-                        $needsChecked = $FALSE
-
-                        foreach ($n in $parent.nodes)
-                        {
-                            if ($n.checked)
-                            {
-                                $needsChecked = $true
-                                break
-                            }
-                            else 
-                            {
-                                $needsChecked=$false
-                            }
-                        }
-
-                        if ($needsChecked -eq $TRUE)
-                        {
-                            $parent.checked = $TRUE
-                        }
-                        else 
-                        {
-                            $parent.Checked = $false
-                        }
-                    }
-                }
-            }
+            drawLicenseView
         }
     }
 
