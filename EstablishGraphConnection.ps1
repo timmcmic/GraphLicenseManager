@@ -19,7 +19,6 @@ function EstablishGraphConnection
         out-logfile -string "China graph environment selected."
     }
 
-
     $ExitButton_Click = {
         [void]$Form1.close()
     }
@@ -40,6 +39,27 @@ function EstablishGraphConnection
 
     $Button1_Click = {
         out-logfile -string "Establish graph button clicked..."
+
+        if ($GlobalButton.checked -eq $True)
+        {
+            out-logfile -string "Global graph envirnoment in use."
+            $graphEnvironment = "Global"
+        }
+        elseif ($USGovButton.checked -eq $TRUE)
+        {
+            out-logfile -string "USGov graph environment in use."
+            $graphEnvironment = "USGov"
+        }
+        elseif ($USDoDButton.checked -eq $TRUE)
+        {
+            out-logfile -string "USGovDOD graph environment in use."
+            $graphEnvironment = "USGovDOD"
+        }
+        elseif ($ChinaButton.checked -eq $TRUE)
+        {
+            out-logfile -string "China graph environment in use."
+            $graphEnvironment = "China"
+        }
 
         if ($textBox1.text -eq "")
         {
@@ -80,7 +100,7 @@ function EstablishGraphConnection
             out-logfile -string "Interactive authentication radio box selected..."
 
             try {
-                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $graphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
                 [void]$Form1.close()
             }
