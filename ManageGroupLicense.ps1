@@ -1,5 +1,10 @@
+function getGroupLicenses
+{
+    $global:groupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses"
+}
 
-function PrintTree($printNode,$rootNodeName)
+
+unction PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
 
@@ -263,7 +268,7 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-            $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
+            getGroupLicenses -errorAction STOP
             out-logfile -string "Group and licenses were successfully located..."
         }
         catch
@@ -275,7 +280,7 @@ function ManageGroupLicense
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
 
-        out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
+        out-xmlFile -itemToExport $global:groupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
 
         if ($getGroupFailure -eq $FALSE)
         {
@@ -329,7 +334,7 @@ function ManageGroupLicense
 
             out-logfile -string "Evaluating the skus in the tenant against the group provided."
 
-            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
+            if ($global:groupLicenses.assignedLicenses.count -gt 0)
             {
                 out-logfile -string "The group specified has licenses - being the evaluation."
 
@@ -337,11 +342,11 @@ function ManageGroupLicense
                 {
                     out-logfile -string "Checking to see if the group has the SKU id..."
 
-                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+                    if ($global:groupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
                     {
                         out-logfile -string "The group licenses the sku id - check disabled plans..."
 
-                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
+                        $workingLicense = $global:groupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
 
                         out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
 
