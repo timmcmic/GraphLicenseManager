@@ -164,9 +164,16 @@ function ManageGroupLicense
         $licenseParams.add("AddLicenses",$skusToAdd)
         $licenseParams.add("RemoveLicenses",$skusToRemove)
 
-        out-logfile -string $licenseParams
+        try {
+            Set-MgGroupLicense -GroupId $global:groupID -BodyParameter $licenseParams -errorAction Stop
+        }
+        catch {
+            out-logfile -string "Error adjusting licenses on group."
+            $errorText = $_
+            out-logfile -string $errorText
+            [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
 
-        exit
+        }
     }
 
     $exit_Click = {
