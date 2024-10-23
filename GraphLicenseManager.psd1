@@ -30,7 +30,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) timmcmic. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'This powershell module will assist customers in managing and setting group based licensing.'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''
