@@ -39,6 +39,8 @@ function ManageGroupLicense
     $planArray = @()
     out-logfile -string "Entered manage group license..."
 
+#****************************************************************************************************************************
+
     $commit_Click = {
         out-logfile -string "It is time to commit the changes that were made."
 
@@ -199,9 +201,13 @@ function ManageGroupLicense
         }
     }
 
+#****************************************************************************************************************************
+
     $exit_Click = {
         $form2.close()
     }
+
+#****************************************************************************************************************************
 
     $Button1_Click = {
 
@@ -222,6 +228,7 @@ function ManageGroupLicense
         $licenseList.Nodes.Clear()
 
         $global:groupID = $groupObjectIDText.Text
+        Out-logfile -string "Group ID to Search:"
         out-logfile -string $global:groupID
         $getGroupFailure = $FALSE
 
@@ -241,6 +248,8 @@ function ManageGroupLicense
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
         }
+
+        out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime))
 
         try
         {

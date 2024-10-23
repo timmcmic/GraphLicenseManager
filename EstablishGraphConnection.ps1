@@ -3,11 +3,13 @@ function EstablishGraphConnection
     out-logfile -string "Entered establish graph connection..."
 
     $RadioButton1_CheckedChanged = {
+        out-logfile -string "Certifcate radio button selected..."
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
     }
     
     $RadioButton2_CheckedChanged = {
+        out-logfile -string "Interactive credentials radio button selected..."
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
     }
@@ -67,8 +69,10 @@ function EstablishGraphConnection
         }
     }
 
-    out-logfile -string "Showing the authentication form to begin user interation..."
+    
     out-logfile -string "Exiting establish graph connection..."
+
+    out-logfile -string "Showing the authentication form to begin user interation..."
 
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'establishgraphconnection.designer.ps1')
