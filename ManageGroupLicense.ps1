@@ -76,7 +76,7 @@ function ManageGroupLicense
 
         out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("GlobalSKUTrackingPostUpdate-"+(Get-Date -Format FileDateTime))
 
-        out-logflie -string "This is really cheap - adding a fake ID to each array to ensure the count never reaches zero."
+        out-logfile -string "This is really cheap - adding a fake ID to each array to ensure the count never reaches zero."
 
         $global:skuRootIDNotPresent += "00000000-0000-0000-0000-000000000000"
         $global:skuRootIDPresent += "00000000-0000-0000-0000-000000000000"
