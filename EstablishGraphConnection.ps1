@@ -2,13 +2,13 @@ Function EstablishGraphConnection
 {
     out-logfile -string "Add the graph environments."
 
-    [void]$EnvironmentBox.Items.Add("Global")
-    [void]$EnvironmentBox.Items.Add("USGov")
-    [void]$EnvironmentBox.Items.Add("USGovDOD")
-    [void]$EnvironmentBox.Items.Add("China")
+    $EnvironmentBox.Items.Add("Global")
+    $EnvironmentBox.Items.Add("USGov")
+    $EnvironmentBox.Items.Add("USGovDOD")
+    $EnvironmentBox.Items.Add("China")
 
     $EnvironmentBox_SelectedIndexChanged = {
-
+        $graphEnvironment = $environmentBox.selectedindex
     }
 
     $ExitButton_Click = {
