@@ -1,9 +1,5 @@
 Function EstablishGraphConnection
 {
-    $EnvironmentBox_SelectedIndexChanged = {
-        $graphEnvironment = $environmentBox.selectedindex
-    }
-
     $ExitButton_Click = {
         [void]$Form1.close()
     }
