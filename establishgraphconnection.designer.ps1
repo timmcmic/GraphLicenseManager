@@ -27,10 +27,10 @@ $RadioButton2 = (New-Object -TypeName System.Windows.Forms.RadioButton)
 $Button1 = (New-Object -TypeName System.Windows.Forms.Button)
 $ExitButton = (New-Object -TypeName System.Windows.Forms.Button)
 $GroupBox1 = (New-Object -TypeName System.Windows.Forms.GroupBox)
-$GlobalButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
-$usgovbutton = (New-Object -TypeName System.Windows.Forms.RadioButton)
-$USDoDButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
 $ChinaButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
+$USDoDButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
+$usgovbutton = (New-Object -TypeName System.Windows.Forms.RadioButton)
+$GlobalButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
 $GroupBox1.SuspendLayout()
 $Form1.SuspendLayout()
 #
@@ -100,7 +100,7 @@ $Label3.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #RadioButton2
 #
-$RadioButton2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]174))
+$RadioButton2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]186))
 $RadioButton2.Name = [System.String]'RadioButton2'
 $RadioButton2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]152,[System.Int32]24))
 $RadioButton2.TabIndex = [System.Int32]7
@@ -134,33 +134,23 @@ $GroupBox1.Controls.Add($ChinaButton)
 $GroupBox1.Controls.Add($USDoDButton)
 $GroupBox1.Controls.Add($usgovbutton)
 $GroupBox1.Controls.Add($GlobalButton)
-$GroupBox1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]198))
+$GroupBox1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]177,[System.Int32]174))
 $GroupBox1.Name = [System.String]'GroupBox1'
-$GroupBox1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]795,[System.Int32]42))
+$GroupBox1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]557,[System.Int32]42))
 $GroupBox1.TabIndex = [System.Int32]10
 $GroupBox1.TabStop = $false
-$GroupBox1.Text = [System.String]'GroupBox1'
+$GroupBox1.Text = [System.String]'Graph Environment Selection'
 $GroupBox1.add_Enter($GroupBox1_Enter)
 #
-#GlobalButton
+#ChinaButton
 #
-$GlobalButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]7,[System.Int32]12))
-$GlobalButton.Name = [System.String]'GlobalButton'
-$GlobalButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$GlobalButton.TabIndex = [System.Int32]0
-$GlobalButton.TabStop = $true
-$GlobalButton.Text = [System.String]'Global'
-$GlobalButton.UseVisualStyleBackColor = $true
-#
-#usgovbutton
-#
-$usgovbutton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]144,[System.Int32]12))
-$usgovbutton.Name = [System.String]'usgovbutton'
-$usgovbutton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$usgovbutton.TabIndex = [System.Int32]11
-$usgovbutton.TabStop = $true
-$usgovbutton.Text = [System.String]'UsGOV'
-$usgovbutton.UseVisualStyleBackColor = $true
+$ChinaButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]418,[System.Int32]12))
+$ChinaButton.Name = [System.String]'ChinaButton'
+$ChinaButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
+$ChinaButton.TabIndex = [System.Int32]11
+$ChinaButton.TabStop = $true
+$ChinaButton.Text = [System.String]'China'
+$ChinaButton.UseVisualStyleBackColor = $true
 #
 #USDoDButton
 #
@@ -172,15 +162,25 @@ $USDoDButton.TabStop = $true
 $USDoDButton.Text = [System.String]'UsDOD'
 $USDoDButton.UseVisualStyleBackColor = $true
 #
-#ChinaButton
+#usgovbutton
 #
-$ChinaButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]418,[System.Int32]12))
-$ChinaButton.Name = [System.String]'ChinaButton'
-$ChinaButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$ChinaButton.TabIndex = [System.Int32]11
-$ChinaButton.TabStop = $true
-$ChinaButton.Text = [System.String]'China'
-$ChinaButton.UseVisualStyleBackColor = $true
+$usgovbutton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]144,[System.Int32]12))
+$usgovbutton.Name = [System.String]'usgovbutton'
+$usgovbutton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
+$usgovbutton.TabIndex = [System.Int32]11
+$usgovbutton.TabStop = $true
+$usgovbutton.Text = [System.String]'UsGOV'
+$usgovbutton.UseVisualStyleBackColor = $true
+#
+#GlobalButton
+#
+$GlobalButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]7,[System.Int32]12))
+$GlobalButton.Name = [System.String]'GlobalButton'
+$GlobalButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
+$GlobalButton.TabIndex = [System.Int32]0
+$GlobalButton.TabStop = $true
+$GlobalButton.Text = [System.String]'Global'
+$GlobalButton.UseVisualStyleBackColor = $true
 #
 #Form1
 #

@@ -1,5 +1,25 @@
+
 function EstablishGraphConnection
 {
+    $globalButton.checked=$TRUE
+
+    $GlobalButton_CheckedChanged = {
+        out-logfile -string "Global graph environment selected."
+    }
+
+    $USGovButton_CheckedChanged = {
+        out-logfile -string "USGov graph environment selected."
+    }
+
+    $USDODButton_CheckedChanged = {
+        out-logfile -string "USDoD graph environment selected."
+    }
+
+    $ChinaButton_CheckedChanged = {
+        out-logfile -string "China graph environment selected."
+    }
+
+
     $ExitButton_Click = {
         [void]$Form1.close()
     }
