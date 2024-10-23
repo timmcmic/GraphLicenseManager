@@ -103,6 +103,11 @@ Function EstablishGraphConnection
     
     out-logfile -string "Exiting establish graph connection..."
 
+    $EnvironmentBox.Items.Add("Global")
+    $EnvironmentBox.Items.Add("USGov")
+    $EnvironmentBox.Items.Add("USGovDOD")
+    $EnvironmentBox.Items.Add("China")
+
     out-logfile -string "Showing the authentication form to begin user interation..."
 
     Add-Type -AssemblyName System.Windows.Forms
@@ -110,9 +115,4 @@ Function EstablishGraphConnection
     [void]$Form1.ShowDialog()
 
     out-logfile -string "Add the graph environments."
-
-    $EnvironmentBox.Items.Add("Global")
-    $EnvironmentBox.Items.Add("USGov")
-    $EnvironmentBox.Items.Add("USGovDOD")
-    $EnvironmentBox.Items.Add("China")
 }
