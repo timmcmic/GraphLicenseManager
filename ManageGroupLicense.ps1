@@ -77,6 +77,7 @@ function ManageGroupLicense
 
         foreach ($id in $global:skuRootIDPresent)
         {
+            out-logfile -string ('Evaluating ID: '+$id)
             $removeTest = $global:skuTracking | where {$_.skuID -eq $id}
             $removeTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
@@ -96,6 +97,7 @@ function ManageGroupLicense
 
         foreach ($id in $global:skuRootIDNotPresent)
         {
+            out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
             $disabledPlans=@()
 
@@ -117,6 +119,7 @@ function ManageGroupLicense
 
         foreach ($id in $global:skuRootIDNotPresent)
         {
+            out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
             $disabledPlans=@()
 
@@ -143,6 +146,7 @@ function ManageGroupLicense
         
         foreach ($id in $global:skuRootIDPresent)
         {
+            out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
             $disabledPlans=@()
 
