@@ -220,6 +220,7 @@ function ManageGroupLicense
         $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
+        $global:GroupID = ""
 
         out-logfile -string "Search button selected..."
 
@@ -232,6 +233,8 @@ function ManageGroupLicense
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
         $licenseList.Nodes.Clear()
+
+        $statusStrip1.ToolLabel.text = "Test"
 
         $global:groupID = $groupObjectIDText.Text
         Out-logfile -string "Group ID to Search:"
