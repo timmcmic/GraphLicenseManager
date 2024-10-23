@@ -143,8 +143,8 @@ function ManageGroupLicense
                 foreach ($sku in $addTestDisabled)
                 {
                     out-logfile -string "Building disabled IDS"
-                    out-logfile -string $sku.skuID
-                    $disalbedPlans+=$sku.skuID
+                    out-logfile -string $sku.ServicePlanID
+                    $disalbedPlans+=$sku.ServicePlanID
                 }
 
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
@@ -175,8 +175,8 @@ function ManageGroupLicense
                 foreach ($sku in $addTestDisabled)
                 {
                     out-logfile -string "Building disabled IDs"
-                    out-logfile -string $sku.skuID
-                    $disabledPlans+=$sku.skuID
+                    out-logfile -string $sku.ServicePlanID
+                    $disabledPlans+=$sku.ServicePlanID
                 }
 
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
