@@ -68,7 +68,7 @@ Function EstablishGraphConnection
                 out-logfile -string $msGraphCertificateThumbPrint
                 out-logfile -string $msGraphApplicationID
                 out-logfile -string "We are ready to establish the certificate authentication graph request."
-                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
             }
         }
         elseif ($radioButton2.checked)
