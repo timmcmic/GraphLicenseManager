@@ -1,3 +1,8 @@
+function clearLicenseView
+{
+    $licenseList.Nodes.Clear()
+}
+
 function drawLicenseView ($skus)
 {
     out-logfile -string "Showing license display controls..."
@@ -383,6 +388,7 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
+            clearLicenseView
             $skus = getGraphSKU
             drawLicenseView $skus
         }
@@ -412,7 +418,8 @@ function ManageGroupLicense
         $groupTypeText.clear()
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
-        $licenseList.Nodes.Clear()
+        
+        clearLicenseView
 
         $global:groupID = $groupObjectIDText.Text
         Out-logfile -string "Group ID to Search:"
