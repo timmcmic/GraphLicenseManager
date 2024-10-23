@@ -187,7 +187,7 @@ function ManageGroupLicense
 
         out-logfile -string "Searching for changes to existing skus."
         
-        foreach ($id in $global:skuRootIDPresent)
+        foreach ($id in $originalSkuRootIDPresent)
         {
             out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
