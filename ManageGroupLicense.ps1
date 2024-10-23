@@ -43,6 +43,7 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 function ManageGroupLicense
 {
     $planArray = @()
+    $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
     out-logfile -string "Entered manage group license..."
 
 #****************************************************************************************************************************
@@ -76,11 +77,6 @@ function ManageGroupLicense
 
         out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("GlobalSKUTrackingPostUpdate-"+(Get-Date -Format FileDateTime))
 
-        out-logfile -string "This is really cheap - adding a fake ID to each array to ensure the count never reaches zero."
-
-        $global:skuRootIDNotPresent += "00000000-0000-0000-0000-000000000000"
-        $global:skuRootIDPresent += "00000000-0000-0000-0000-000000000000"
-
         $skusToRemove=@()
         $licenseParams = @{}
         $skusToAdd=@()
@@ -105,7 +101,7 @@ function ManageGroupLicense
             out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
             out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
 
-            if ($addTestEnabled.count -gt 0)
+            if (($addTestEnabled.count -gt 0) -and ($id -ne $global:fakePlanID))
             {
                 out-logfile -string "The sku is present - updating disalbed plans."
 
@@ -139,7 +135,7 @@ function ManageGroupLicense
             out-logfile -string ("The number of skus to test for removal: "+$removeTest.count.tostring())
             out-logfile -string ("The number of skus to test with plans removed: "+$removeTestDisabled.count.toString())
 
-            if ($removeTest.count -eq $removeTestDisabled.count)
+            if (($removeTest.count -eq $removeTestDisabled.count) -and ($id -ne $global:fakePlanID))
             {
                 out-logfile -string "The number of sku references equals number of plans disalbed -> remove sku."
                 out-logfile -string $id
@@ -169,7 +165,7 @@ function ManageGroupLicense
             out-logfile -string ("Count of all found skus: "+$addTest.count.tostring())
             out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
 
-            if ($addTest.count -eq $addTestEnabled.count)
+            if (($addTest.count -eq $addTestEnabled.count) -and ($id -ne $global:fakePlanID))
             {
                 out-logfile -string "The number of sku references and plan references are equal -> the entire sku was added"
                 out-logfile -string $id
@@ -205,7 +201,7 @@ function ManageGroupLicense
             out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
             out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
 
-            if (($addTestEnabled.count -gt 0) -and ($addTestDisabled.count -gt 0))
+            if (($addTestEnabled.count -gt 0) -and ($addTestDisabled.count -gt 0) -and ($id -ne $global:fakePlanID))
             {
                 out-logfile -string "The sku was added but only partially added."
 
@@ -556,6 +552,9 @@ function ManageGroupLicense
             }
 
             $licenseList.endUpdate()
+
+            $global:skuRootIDPresent+=$global:fakePlanID
+            $global:skuRootIDNotPresent+=$global:fakePlanID
 
             $licenseList.add_AfterCheck{
                 $commit.show()
