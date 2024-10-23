@@ -24,7 +24,7 @@ GUID = 'bdc7ed32-de5b-4bde-a76c-52761dcd0a3b'
 Author = 'timmcmic'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+CompanyName = 'Microsoft CSS'
 
 # Copyright statement for this module
 Copyright = '(c) timmcmic. All rights reserved.'
