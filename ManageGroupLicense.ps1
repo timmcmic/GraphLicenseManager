@@ -79,9 +79,7 @@ function ManageGroupLicense
         $skusToRemove=@()
         $licenseParams = @{}
         $skusToAdd=@()
-        $originalSkuRootIDPresent = $global:skuRootIDPresent
-        $originalSkuRootIDNotPresent = $global:skuRootIDNotPresent
-
+             
         out-logfile -string "Searching for changes to existing skus."
         
         foreach ($id in $global:skuRootIDPresent)
