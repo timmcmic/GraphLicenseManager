@@ -231,6 +231,8 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $commit_Click = {
+        $planArray = @()
+        
         out-logfile -string "It is time to commit the changes that were made."
 
         foreach ($rootNode in $licenseList.Nodes)
