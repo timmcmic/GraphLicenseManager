@@ -2,7 +2,10 @@ Function EstablishGraphConnection
 {
     out-logfile -string "Add the graph environments."
 
-    @("Global","USGov","USGovDOD","China") | ForEach-Object {[void]$EnvironmentBox.items.add($_)}
+    $EnvironmentBox.Items.Add("Global")
+    $EnvironmentBox.Items.Add("USGov")
+    $EnvironmentBox.Items.Add("USGovDOD")
+    $EnvironmentBox.Items.Add("China")
 
     $EnvironmentBox_SelectedIndexChanged = {
         $graphEnvironment = $environmentBox.selectedindex
