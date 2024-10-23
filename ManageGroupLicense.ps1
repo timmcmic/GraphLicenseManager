@@ -555,6 +555,8 @@ function ManageGroupLicense
 
             $global:skuRootIDPresent+=$global:fakePlanID
             $global:skuRootIDNotPresent+=$global:fakePlanID
+            $global:skuRootIDPresent+=$global:fakePlanID
+            $global:skuRootIDNotPresent+=$global:fakePlanID
 
             $licenseList.add_AfterCheck{
                 $commit.show()
