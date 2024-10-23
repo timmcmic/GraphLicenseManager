@@ -50,7 +50,7 @@
 
         #Update the log folder path to include the static folder.
 
-        $logFolderPath = $logFolderPath+$global:staticFolderName
+        $logFolderPath = $logFolderPath
         
         # Get our log file path and combine it with the filename
 
