@@ -54,6 +54,8 @@ function ManageGroupLicense
             $planArray +=PrintTree $rootNode.nodes $rootNode.text
         }
 
+        $planArray = $planArray | select-object -Unique
+
         foreach ($sku in $global:skuTracking)
         {
             out-logfile -string ("Evaluting Sku: "+$sku.SkuPartNumber_ServicePlanName)
