@@ -235,8 +235,6 @@ function ManageGroupLicense
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
             out-logfile -string "Resetting arrays for re-validation if license application is checked..."
-            $global:skuRootIDPresent = $originalSkuRootIDPresent
-            $global:skuRootIDNotPresent = $originalSkuRootIDNotPresent
         }
     }
 
