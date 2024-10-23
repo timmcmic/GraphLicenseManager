@@ -77,9 +77,11 @@ function ManageGroupLicense
 
         foreach ($id in $global:skuRootIDPresent)
         {
+            $removeTest=@()
+            $removeTestDisabled=@()
             out-logfile -string ('Evaluating ID: '+$id)
-            $removeTest = $global:skuTracking | where {$_.skuID -eq $id}
-            $removeTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
+            $removeTest += $global:skuTracking | where {$_.skuID -eq $id}
+            $removeTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
             out-logfile -string ("The number of skus to test for removal: "+$removeTest.count.tostring())
             out-logfile -string ("The number of skus to test with plans removed: "+$removeTestDisabled.count.toString())
@@ -101,9 +103,11 @@ function ManageGroupLicense
             out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
             $disabledPlans=@()
+            $addTest=@()
+            $addTestEnabled=@()
 
-            $addTest = $global:skuTracking | where {$_.skuID -eq $id}
-            $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            $addTest += $global:skuTracking | where {$_.skuID -eq $id}
+            $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
 
             if ($addTest.count -eq $addTestEnabled.count)
             {
@@ -124,10 +128,13 @@ function ManageGroupLicense
             out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
             $disabledPlans=@()
+            $addTest=@()
+            $addTestEnabled=@()
+            $addTestDisabled=@()
 
-            $addTest = $global:skuTracking | where {$_.skuID -eq $id}
-            $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
-            $addTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
+            $addTest += $global:skuTracking | where {$_.skuID -eq $id}
+            $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            $addTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
             if ($addTestEnabled.count -gt 0)
             {
@@ -153,10 +160,13 @@ function ManageGroupLicense
             out-logfile -string ('Evaluating ID: '+$id)
             $skusToAddHash=@{}
             $disabledPlans=@()
+            $addTest=@()
+            $addTestEnabled=@()
+            $addTestDisabled=@()
 
-            $addTest = $global:skuTracking | where {$_.skuID -eq $id}
-            $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
-            $addTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
+            $addTest += $global:skuTracking | where {$_.skuID -eq $id}
+            $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            $addTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
             if ($addTestEnabled.count -gt 0)
             {
