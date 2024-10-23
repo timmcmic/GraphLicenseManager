@@ -1,3 +1,5 @@
+$GroupMembersName_Click = {
+}
 
 function PrintTree($printNode,$rootNodeName)
 {
@@ -546,6 +548,7 @@ function ManageGroupLicense
             $licenseList.endUpdate()
 
             $licenseList.add_AfterCheck{
+                $commit.show()
             #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
                 if($_.Action -ne 'Unknown'){
                     if($_.Node.Nodes.Count -gt 0){

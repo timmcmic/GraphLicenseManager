@@ -231,6 +231,7 @@ $commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $commit.TabIndex = [System.Int32]20
 $commit.Text = [System.String]'Commit License Changes'
 $commit.UseVisualStyleBackColor = $true
+$commit.Visible = $false
 $commit.add_Click($commit_Click)
 #
 #StatusStrip1
