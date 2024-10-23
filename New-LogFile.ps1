@@ -43,6 +43,8 @@
     # Get our log file path
 
     $logFolderPath = $logFolderPath+"\"+$logFileName+"\"
+
+    $global:xmlPath = $logFolderPath
     
     #Since $logFile is defined in the calling function - this sets the log file name for the entire script
     

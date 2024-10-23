@@ -47,14 +47,10 @@
         #Declare function variables.
 
         $fileName = $itemNameToExport+".xml"
-
-        #Update the log folder path to include the static folder.
-
-        $logFolderPath = $logFolderPath
         
         # Get our log file path and combine it with the filename
 
-        $LogFile = Join-path $logFolderPath $fileName
+        $LogFile = Join-path $global:xmlPath $fileName
 
         #Write our variables to the log.
 
