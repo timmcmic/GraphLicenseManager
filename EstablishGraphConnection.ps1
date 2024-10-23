@@ -4,18 +4,22 @@ Function EstablishGraphConnection
 
     $GlobalButton_CheckedChanged = {
         out-logfile -string "Global graph environment selected."
+        $graphEnvironment = "Global"
     }
 
     $USGovButton_CheckedChanged = {
         out-logfile -string "USGov graph environment selected."
+        $graphEnvironment = "USGov"
     }
 
     $USDODButton_CheckedChanged = {
         out-logfile -string "USDoD graph environment selected."
+        $graphEnvironment = "USGovDOD"
     }
 
     $ChinaButton_CheckedChanged = {
         out-logfile -string "China graph environment selected."
+        $graphEnvironment = "China"
     }
 
     $ExitButton_Click = {
@@ -37,6 +41,7 @@ Function EstablishGraphConnection
     }
 
     $Button1_Click = {
+        <#
         out-logfile -string "Establish graph button clicked..."
 
         if ($GlobalButton.checked -eq $True)
@@ -59,6 +64,7 @@ Function EstablishGraphConnection
             out-logfile -string "China graph environment in use."
             $graphEnvironment = "China"
         }
+        #>
 
         if ($textBox1.text -eq "")
         {
