@@ -283,7 +283,7 @@ function ManageGroupLicense
             out-logfile -string "Group was successfully located..."
             out-logfile -string $graphGroup
             $getGroupFailure=$false
-            out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime)
+            out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime))
         }
         catch
         {
