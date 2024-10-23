@@ -174,7 +174,7 @@ function ManageGroupLicense
                 $skusToAdd+=$skusToAddHash
                 out-logfile -string "Remove from the IDs not present - it is now present."
                 $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
-                $global:skuIDPresent += $id
+                $global:skuRootIDPresent += $id
             }
             else
             {
@@ -217,7 +217,7 @@ function ManageGroupLicense
                 $skusToAdd+=$skusToAddHash
 
                 $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
-                $global:skuIDPresent += $id
+                $global:skuRootIDPresent += $id
             }
             else
             {
