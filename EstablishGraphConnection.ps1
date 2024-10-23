@@ -1,6 +1,6 @@
 Function EstablishGraphConnection
 {
-    $globalButton.checked=$TRUE
+    $globalButton.Checked = $TRUE
 
     $GlobalButton_CheckedChanged = {
         out-logfile -string "Global graph environment selected."
