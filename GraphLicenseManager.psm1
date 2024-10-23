@@ -8,9 +8,9 @@ function Start-GraphLicenseManager
 
     $ErrorActionPreference = 'Stop'
     $global:logFile=$NULL
-    $logFileName = "LicenseChangeOperation_"+(Get-Date -Format FileDateTime)
+    $global:logFileName = "LicenseChangeOperation_"+(Get-Date -Format FileDateTime)
 
-    new-logfile -logFileName $logFileName -logFolderPath $logFolderPath
+    new-logfile -logFileName $logFileName -logFolderPath $global:logFileName
 
     out-logfile -string "************************************************************************"
     out-logfile -string "Starting graph license manager."
