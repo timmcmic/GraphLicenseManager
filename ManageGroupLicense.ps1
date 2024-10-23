@@ -329,6 +329,12 @@ function ManageGroupLicense
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
             }
 
+            out-logfile -string "Removing all non-user SKUs"
+
+            $skus = $skus | where {$_.appliesTo -eq "User"}
+
+            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUSUserOnly-"+(Get-Date -Format FileDateTime))
+
             out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
         
