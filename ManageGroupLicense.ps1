@@ -112,6 +112,8 @@ function ManageGroupLicense
         {
             out-logfile -string $sku
         }
+
+        exit
     }
 
     $exit_Click = {
