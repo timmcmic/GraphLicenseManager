@@ -156,7 +156,7 @@ function ManageGroupLicense
 
                 foreach ($sku in $addTestDisabled)
                 {
-                    $disalbedPlans+=$sku.skuID
+                    $disabledPlans+=$sku.skuID
                 }
 
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
