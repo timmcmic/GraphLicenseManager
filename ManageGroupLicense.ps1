@@ -81,6 +81,47 @@ function ManageGroupLicense
         $skusToAdd=@()
         $originalSkuRootIDPresent = $global:skuRootIDPresent
         $originalSkuRootIDNotPresent = $global:skuRootIDNotPresent
+
+        out-logfile -string "Searching for changes to existing skus."
+        
+        foreach ($id in $global:skuRootIDPresent)
+        {
+            out-logfile -string ('Evaluating ID: '+$id)
+            $skusToAddHash=@{}
+            $disabledPlans=@()
+            $addTest=@()
+            $addTestEnabled=@()
+            $addTestDisabled=@()
+
+            $addTest += $global:skuTracking | where {$_.skuID -eq $id}
+            $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
+            $addTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
+
+            
+            out-logfile -string ("Count of all found skus: "+$addTest.count.tostring())
+            out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
+            out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
+
+            if ($addTestEnabled.count -gt 0)
+            {
+                out-logfile -string "The sku is present - updating disalbed plans."
+
+                foreach ($sku in $addTestDisabled)
+                {
+                    out-logfile -string "Building disabled IDs"
+                    out-logfile -string $sku.ServicePlanID
+                    $disabledPlans+=$sku.ServicePlanID
+                }
+
+                $skusToAddHash.add("DisabledPlans",$disabledPlans)
+                $skusToAddHash.add("SkuID",$id)
+                $skusToAdd+=$skusToAddHash
+            }
+            else
+            {
+                out-logfile -string "The sku was not modified partially."
+            }
+        }
         
         out-logfile -string "Begin to look for skus that have been removed..."
 
@@ -161,7 +202,7 @@ function ManageGroupLicense
             out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
             out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
 
-            if (($addTestEnabled.count -gt 0) -and ($addTestDisabled -gt 0))
+            if (($addTestEnabled.count -gt 0) -and ($addTestDisabled.count -gt 0))
             {
                 out-logfile -string "The sku was added but only partially added."
 
@@ -182,47 +223,6 @@ function ManageGroupLicense
             else
             {
                 out-logfile -string "The sku was not added even partially."
-            }
-        }
-
-        out-logfile -string "Searching for changes to existing skus."
-        
-        foreach ($id in $originalSkuRootIDPresent)
-        {
-            out-logfile -string ('Evaluating ID: '+$id)
-            $skusToAddHash=@{}
-            $disabledPlans=@()
-            $addTest=@()
-            $addTestEnabled=@()
-            $addTestDisabled=@()
-
-            $addTest += $global:skuTracking | where {$_.skuID -eq $id}
-            $addTestEnabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
-            $addTestDisabled += $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
-
-            
-            out-logfile -string ("Count of all found skus: "+$addTest.count.tostring())
-            out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
-            out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
-
-            if ($addTestEnabled.count -gt 0)
-            {
-                out-logfile -string "The sku is present - updating disalbed plans."
-
-                foreach ($sku in $addTestDisabled)
-                {
-                    out-logfile -string "Building disabled IDs"
-                    out-logfile -string $sku.ServicePlanID
-                    $disabledPlans+=$sku.ServicePlanID
-                }
-
-                $skusToAddHash.add("DisabledPlans",$disabledPlans)
-                $skusToAddHash.add("SkuID",$id)
-                $skusToAdd+=$skusToAddHash
-            }
-            else
-            {
-                out-logfile -string "The sku was not modified partially."
             }
         }
 
