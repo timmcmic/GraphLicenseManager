@@ -19,31 +19,6 @@ Function EstablishGraphConnection
     }
 
     $Button1_Click = {
-        <#
-        out-logfile -string "Establish graph button clicked..."
-
-        if ($GlobalButton.checked -eq $True)
-        {
-            out-logfile -string "Global graph envirnoment in use."
-            $graphEnvironment = "Global"
-        }
-        elseif ($USGovButton.checked -eq $TRUE)
-        {
-            out-logfile -string "USGov graph environment in use."
-            $graphEnvironment = "USGov"
-        }
-        elseif ($USDoDButton.checked -eq $TRUE)
-        {
-            out-logfile -string "USGovDOD graph environment in use."
-            $graphEnvironment = "USGovDOD"
-        }
-        elseif ($ChinaButton.checked -eq $TRUE)
-        {
-            out-logfile -string "China graph environment in use."
-            $graphEnvironment = "China"
-        }
-        #>
-
         if ($textBox1.text -eq "")
         {
             [System.Windows.Forms.MessageBox]::Show("TenantID is required to connnect to Microsoft Graph...", 'Warning')
@@ -95,14 +70,6 @@ Function EstablishGraphConnection
             }
         }
     }
-
-    
-    out-logfile -string "Exiting establish graph connection..."
-
-    $EnvironmentBox.Items.Add("Global")
-    $EnvironmentBox.Items.Add("USGov")
-    $EnvironmentBox.Items.Add("USGovDOD")
-    $EnvironmentBox.Items.Add("China")
 
     out-logfile -string "Showing the authentication form to begin user interation..."
 
