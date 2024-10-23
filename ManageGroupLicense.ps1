@@ -102,6 +102,7 @@ function ManageGroupLicense
                 $skusToRemove += $id
                 out-logfile -string "Remove the entry from the active array - it's no longer active."
                 $global:skuRootIDPresent = $global:skuRootIDPresent | where {$_ -ne $id}
+                $global:skuRootIDNotPresent += $id
             }
             else
             {
@@ -133,6 +134,7 @@ function ManageGroupLicense
                 $skusToAdd+=$skusToAddHash
                 out-logfile -string "Remove from the IDs not present - it is now present."
                 $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
+                $global:skuRootIDPresent += $id
             }
             else
             {
