@@ -158,7 +158,7 @@ function ManageGroupLicense
             $addTestEnabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $true)}
             $addTestDisabled = $global:skuTracking | where {($_.skuID -eq $id) -and ($_.enabledNew -eq $false)}
 
-            if ($addTest.count -ne $addTestEnabled.count)
+            if ($addTestEnabled -gt 0)
             {
                 out-logfile -string "The sku was added but only partially added."
 
