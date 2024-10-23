@@ -77,6 +77,8 @@ function ManageGroupLicense
         $skusToRemove=@()
         $licenseParams = @{}
         $skusToAdd=@()
+        $originalSkuRootIDPresent = $global:skuRootIDPresent
+        $originalSkuRootIDNotPresent = $global:skuRootIDNotPresent
         
         out-logfile -string "Begin to look for skus that have been removed..."
 
@@ -230,6 +232,9 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
+            out-logfile -string "Resetting arrays for re-validation if license application is checked..."
+            $global:skuRootIDPresent = $originalSkuRootIDPresent
+            $global:skuRootIDNotPresent = $originalSkuRootIDNotPresent
         }
     }
 
