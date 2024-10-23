@@ -1,7 +1,7 @@
 function EstablishGraphConnection
 {
     $ExitButton_Click = {
-        [void]$form1.close
+        [void]$Form1.close()
     }
     
     out-logfile -string "Entered establish graph connection..."
