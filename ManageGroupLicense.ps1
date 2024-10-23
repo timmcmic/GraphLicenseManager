@@ -70,7 +70,8 @@ function ManageGroupLicense
         $skuIDArray = $global:skuTracking | select-object skuID -Unique
 
         $skusToRemove=@()
-        $skusToAdd = @{}
+        $licenseParams = @{}
+        $skusToAdd=@()
 
         out-logfile -string "Begin to look for skus that have been removed..."
 
@@ -89,10 +90,7 @@ function ManageGroupLicense
             }
         }
 
-        foreach ($sku in $skusToRemove)
-        {
-            out-logfile -string $sku
-        }
+        
         
         out-logfile -string "Determine if any entire skus were added to the new license template by reviewing skus that were not already there."
 
