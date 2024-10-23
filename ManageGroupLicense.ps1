@@ -383,8 +383,8 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
-            getGraphSKU
-            drawLicenseView
+            $skus = getGraphSKU
+            drawLicenseView $skus
         }
     }
 
