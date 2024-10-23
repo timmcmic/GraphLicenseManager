@@ -230,7 +230,10 @@ function ManageGroupLicense
         $groupTypeText.clear()
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
+
+        $licenseList.beginUpdate()
         $licenseList.Nodes.Clear()
+        $licenseList.endUpdate()
 
         $global:groupID = $groupObjectIDText.Text
         Out-logfile -string "Group ID to Search:"
@@ -452,6 +455,7 @@ function ManageGroupLicense
         {
             out-logfile -string "Showing license display controls..."
 
+            $licenseList.beginUpdate()
             $licenseLabel.show()
             $LicenseList.show()
 
@@ -506,6 +510,8 @@ function ManageGroupLicense
                     }
                 }
             }
+
+            $licenseList.endUpdate()
 
             $licenseList.add_AfterCheck{
             #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
