@@ -8,7 +8,10 @@ Function EstablishGraphConnection
     #>
     
     $EnvironmentBox_SelectedIndexChanged = {
+        out-logfile -string $environmentBox.selectedItem
+        $graphEnvironment = $environmentBox.selectedItem
     }
+
 
     $ExitButton_Click = {
         [void]$Form1.close()
