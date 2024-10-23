@@ -4,7 +4,7 @@ function getGroupLicenses
 }
 
 
-unction PrintTree($printNode,$rootNodeName)
+function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
 
