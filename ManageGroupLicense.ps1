@@ -1,4 +1,4 @@
-function drawLicenseView
+function drawLicenseView ($skus)
 {
     out-logfile -string "Showing license display controls..."
 
@@ -98,84 +98,86 @@ function getGraphSKU
 {
     out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
 
-            try {
-                $skus = Get-MgSubscribedSku -errorAction Stop
-                out-logfile -string "SKUs successfully obtained..."
-                $getGroupFailure=$false
-            }
-            catch {
-                $getGroupFailure=$true
-                $errorText=$_
-                out-logfile -string "Unable to obtain the skus within the tenant.."
-                out-logfile -string $errorText
-                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
-            }
+    try {
+        $skus = Get-MgSubscribedSku -errorAction Stop
+        out-logfile -string "SKUs successfully obtained..."
+        $getGroupFailure=$false
+    }
+    catch {
+        $getGroupFailure=$true
+        $errorText=$_
+        out-logfile -string "Unable to obtain the skus within the tenant.."
+        out-logfile -string $errorText
+        [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+    }
 
-            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
+    out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
 
-            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
+    out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
-            foreach ($sku in $skus)
+    foreach ($sku in $skus)
+    {
+        out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+        foreach ($servicePlan in $sku.ServicePlans)
+        {
+            out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+            if ($servicePlan.AppliesTo -eq "User")
             {
-                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+                out-logfile -string "Service plan is per user - creating object."
 
-                foreach ($servicePlan in $sku.ServicePlans)
+                $functionObject = New-Object PSObject -Property @{
+                    SkuID = $sku.SkuId
+                    SkuPartNumber = $sku.SkuPartNumber
+                    SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
+                    ServicePlanID = $servicePlan.ServicePlanId
+                    ServicePlanName = $servicePlan.ServicePlanName
+                    EnabledOnGroup = $false
+                    EnabledNew = $false
+                }
+
+                $global:skuTracking += $functionObject
+            }
+        }
+    }
+
+    out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+
+    out-logfile -string "Evaluating the skus in the tenant against the group provided."
+
+    if ($graphGroupLicenses.assignedLicenses.count -gt 0)
+    {
+        out-logfile -string "The group specified has licenses - being the evaluation."
+
+        foreach ($skuObject in $global:skuTracking)
+        {
+            out-logfile -string "Checking to see if the group has the SKU id..."
+
+            if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+            {
+                out-logfile -string "The group licenses the sku id - check disabled plans..."
+
+                $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
+
+                out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
+
+                if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
                 {
-                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-
-                    if ($servicePlan.AppliesTo -eq "User")
-                    {
-                        out-logfile -string "Service plan is per user - creating object."
-
-                        $functionObject = New-Object PSObject -Property @{
-                            SkuID = $sku.SkuId
-                            SkuPartNumber = $sku.SkuPartNumber
-                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
-                            ServicePlanID = $servicePlan.ServicePlanId
-                            ServicePlanName = $servicePlan.ServicePlanName
-                            EnabledOnGroup = $false
-                            EnabledNew = $false
-                        }
-
-                        $global:skuTracking += $functionObject
-                    }
+                    out-logfile -string "The plan is disabled - no work."
+                }
+                else
+                {
+                    out-logfile -string "The sku is not disabled - set the SKU to enabled."
+                    $skuObject.EnabledOnGroup = $TRUE
                 }
             }
+        }
+    }
 
-            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+    out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
 
-            out-logfile -string "Evaluating the skus in the tenant against the group provided."
-
-            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
-            {
-                out-logfile -string "The group specified has licenses - being the evaluation."
-
-                foreach ($skuObject in $global:skuTracking)
-                {
-                    out-logfile -string "Checking to see if the group has the SKU id..."
-
-                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
-                    {
-                        out-logfile -string "The group licenses the sku id - check disabled plans..."
-
-                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
-
-                        out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
-
-                        if ($workingLicense.disabledPlans.contains($skuObject.ServicePlanID))
-                        {
-                            out-logfile -string "The plan is disabled - no work."
-                        }
-                        else
-                        {
-                            out-logfile -string "The sku is not disabled - set the SKU to enabled."
-                            $skuObject.EnabledOnGroup = $TRUE
-                        }
-                    }
-                }
-            }
-
-            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
+    return $skus
 }
 function PrintTree($printNode,$rootNodeName)
 {
@@ -455,7 +457,7 @@ function ManageGroupLicense
 
         if ($getGroupFailure -eq $FALSE)
         {
-            getGraphSKU
+            $skus = getGraphSKU
         }
 
         if ($getGroupFailure -eq $false)
@@ -551,7 +553,7 @@ function ManageGroupLicense
 
         if ($getGroupFailure -eq $FALSE)
         {
-            drawLicenseView
+            drawLicenseView $skus
         }
     }
 
