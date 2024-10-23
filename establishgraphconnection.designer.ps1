@@ -9,11 +9,8 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.RadioButton]$RadioButton2 = $null
 [System.Windows.Forms.Button]$Button1 = $null
 [System.Windows.Forms.Button]$ExitButton = $null
-[System.Windows.Forms.GroupBox]$GroupBox1 = $null
-[System.Windows.Forms.RadioButton]$ChinaButton = $null
-[System.Windows.Forms.RadioButton]$USDoDButton = $null
-[System.Windows.Forms.RadioButton]$usgovbutton = $null
-[System.Windows.Forms.RadioButton]$GlobalButton = $null
+[System.Windows.Forms.ComboBox]$EnvironmentBox = $null
+[System.Windows.Forms.Label]$Label4 = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -26,12 +23,8 @@ $Label3 = (New-Object -TypeName System.Windows.Forms.Label)
 $RadioButton2 = (New-Object -TypeName System.Windows.Forms.RadioButton)
 $Button1 = (New-Object -TypeName System.Windows.Forms.Button)
 $ExitButton = (New-Object -TypeName System.Windows.Forms.Button)
-$GroupBox1 = (New-Object -TypeName System.Windows.Forms.GroupBox)
-$ChinaButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
-$USDoDButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
-$usgovbutton = (New-Object -TypeName System.Windows.Forms.RadioButton)
-$GlobalButton = (New-Object -TypeName System.Windows.Forms.RadioButton)
-$GroupBox1.SuspendLayout()
+$EnvironmentBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
+$Label4 = (New-Object -TypeName System.Windows.Forms.Label)
 $Form1.SuspendLayout()
 #
 #Label1
@@ -128,66 +121,30 @@ $ExitButton.Text = [System.String]'Quit'
 $ExitButton.UseVisualStyleBackColor = $true
 $ExitButton.add_Click($ExitButton_Click)
 #
-#GroupBox1
+#EnvironmentBox
 #
-$GroupBox1.Controls.Add($ChinaButton)
-$GroupBox1.Controls.Add($USDoDButton)
-$GroupBox1.Controls.Add($usgovbutton)
-$GroupBox1.Controls.Add($GlobalButton)
-$GroupBox1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]177,[System.Int32]174))
-$GroupBox1.Name = [System.String]'GroupBox1'
-$GroupBox1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]557,[System.Int32]42))
-$GroupBox1.TabIndex = [System.Int32]10
-$GroupBox1.TabStop = $false
-$GroupBox1.Text = [System.String]'Graph Environment Selection'
-$GroupBox1.add_Enter($GroupBox1_Enter)
+$EnvironmentBox.FormattingEnabled = $true
+$EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]683,[System.Int32]189))
+$EnvironmentBox.Name = [System.String]'EnvironmentBox'
+$EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]121,[System.Int32]21))
+$EnvironmentBox.TabIndex = [System.Int32]10
+$EnvironmentBox.add_SelectedIndexChanged($EnvironmentBox_SelectedIndexChanged)
 #
-#ChinaButton
+#Label4
 #
-$ChinaButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]418,[System.Int32]12))
-$ChinaButton.Name = [System.String]'ChinaButton'
-$ChinaButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$ChinaButton.TabIndex = [System.Int32]11
-$ChinaButton.TabStop = $true
-$ChinaButton.Text = [System.String]'China'
-$ChinaButton.UseVisualStyleBackColor = $true
-#
-#USDoDButton
-#
-$USDoDButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]281,[System.Int32]12))
-$USDoDButton.Name = [System.String]'USDoDButton'
-$USDoDButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$USDoDButton.TabIndex = [System.Int32]11
-$USDoDButton.TabStop = $true
-$USDoDButton.Text = [System.String]'UsDOD'
-$USDoDButton.UseVisualStyleBackColor = $true
-#
-#usgovbutton
-#
-$usgovbutton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]144,[System.Int32]12))
-$usgovbutton.Name = [System.String]'usgovbutton'
-$usgovbutton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$usgovbutton.TabIndex = [System.Int32]11
-$usgovbutton.TabStop = $true
-$usgovbutton.Text = [System.String]'UsGOV'
-$usgovbutton.UseVisualStyleBackColor = $true
-#
-#GlobalButton
-#
-$GlobalButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]7,[System.Int32]12))
-$GlobalButton.Name = [System.String]'GlobalButton'
-$GlobalButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]131,[System.Int32]24))
-$GlobalButton.TabIndex = [System.Int32]0
-$GlobalButton.TabStop = $true
-$GlobalButton.Text = [System.String]'Global'
-$GlobalButton.UseVisualStyleBackColor = $true
-$GlobalButton.add_CheckedChanged($GlobalButton_CheckedChanged)
+$Label4.ImageAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$Label4.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]519,[System.Int32]192))
+$Label4.Name = [System.String]'Label4'
+$Label4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
+$Label4.TabIndex = [System.Int32]11
+$Label4.Text = [System.String]'Graph Environment Selection'
 #
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]281))
 $Form1.ControlBox = $false
-$Form1.Controls.Add($GroupBox1)
+$Form1.Controls.Add($Label4)
+$Form1.Controls.Add($EnvironmentBox)
 $Form1.Controls.Add($ExitButton)
 $Form1.Controls.Add($Button1)
 $Form1.Controls.Add($RadioButton2)
@@ -201,7 +158,6 @@ $Form1.Controls.Add($Label1)
 $Form1.MaximizeBox = $false
 $Form1.MinimizeBox = $false
 $Form1.Text = [System.String]'Connect Microsoft Graph'
-$GroupBox1.ResumeLayout($false)
 $Form1.ResumeLayout($false)
 $Form1.PerformLayout()
 Add-Member -InputObject $Form1 -Name Label1 -Value $Label1 -MemberType NoteProperty
@@ -214,10 +170,7 @@ Add-Member -InputObject $Form1 -Name Label3 -Value $Label3 -MemberType NotePrope
 Add-Member -InputObject $Form1 -Name RadioButton2 -Value $RadioButton2 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name Button1 -Value $Button1 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name ExitButton -Value $ExitButton -MemberType NoteProperty
-Add-Member -InputObject $Form1 -Name GroupBox1 -Value $GroupBox1 -MemberType NoteProperty
-Add-Member -InputObject $Form1 -Name ChinaButton -Value $ChinaButton -MemberType NoteProperty
-Add-Member -InputObject $Form1 -Name USDoDButton -Value $USDoDButton -MemberType NoteProperty
-Add-Member -InputObject $Form1 -Name usgovbutton -Value $usgovbutton -MemberType NoteProperty
-Add-Member -InputObject $Form1 -Name GlobalButton -Value $GlobalButton -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name EnvironmentBox -Value $EnvironmentBox -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name Label4 -Value $Label4 -MemberType NoteProperty
 }
 . InitializeComponent

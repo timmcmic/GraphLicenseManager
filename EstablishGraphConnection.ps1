@@ -1,23 +1,14 @@
 Function EstablishGraphConnection
 {
-    $GlobalButton_CheckedChanged = {
-        out-logfile -string "Global graph environment selected."
-        $graphEnvironment = "Global"
-    }
+    out-logfile -string "Add the graph environments."
 
-    $USGovButton_CheckedChanged = {
-        out-logfile -string "USGov graph environment selected."
-        $graphEnvironment = "USGov"
-    }
+    [void] $EnvironmentBox.Items.Add("Global")
+    [void] $EnvironmentBox.Items.Add("USGov")
+    [void] $EnvironmentBox.Items.Add("USGovDOD")
+    [void] $EnvironmentBox.Items.Add("China")
 
-    $USDODButton_CheckedChanged = {
-        out-logfile -string "USDoD graph environment selected."
-        $graphEnvironment = "USGovDOD"
-    }
-
-    $ChinaButton_CheckedChanged = {
-        out-logfile -string "China graph environment selected."
-        $graphEnvironment = "China"
+    $EnvironmentBox_SelectedIndexChanged = {
+        
     }
 
     $ExitButton_Click = {
