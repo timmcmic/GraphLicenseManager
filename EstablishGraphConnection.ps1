@@ -10,6 +10,7 @@ Function EstablishGraphConnection
 
 
     $ExitButton_Click = {
+        $global:exitSelected = $true
         [void]$Form1.close()
     }
     
@@ -69,6 +70,7 @@ Function EstablishGraphConnection
                 out-logfile -string $msGraphApplicationID
                 out-logfile -string "We are ready to establish the certificate authentication graph request."
                 Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
+                [void]$Form1.close()
             }
         }
         elseif ($radioButton2.checked)
