@@ -60,12 +60,12 @@ $Label1.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 $GroupObjectIDText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]22))
 $GroupObjectIDText.Name = [System.String]'GroupObjectIDText'
-$GroupObjectIDText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]749,[System.Int32]21))
+$GroupObjectIDText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
 $GroupObjectIDText.TabIndex = [System.Int32]1
 #
 #Button1
 #
-$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]966,[System.Int32]22))
+$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]753,[System.Int32]22))
 $Button1.Name = [System.String]'Button1'
 $Button1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]75,[System.Int32]23))
 $Button1.TabIndex = [System.Int32]2
@@ -88,7 +88,7 @@ $DisplayName.Visible = $false
 $DisplayNameText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]49))
 $DisplayNameText.Name = [System.String]'DisplayNameText'
 $DisplayNameText.ReadOnly = $true
-$DisplayNameText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]749,[System.Int32]21))
+$DisplayNameText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
 $DisplayNameText.TabIndex = [System.Int32]4
 $DisplayNameText.Visible = $false
 #
@@ -107,7 +107,7 @@ $ExpirationDateTime.Visible = $false
 $ExpirationDateTimeText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]75))
 $ExpirationDateTimeText.Name = [System.String]'ExpirationDateTimeText'
 $ExpirationDateTimeText.ReadOnly = $true
-$ExpirationDateTimeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]749,[System.Int32]21))
+$ExpirationDateTimeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
 $ExpirationDateTimeText.TabIndex = [System.Int32]6
 $ExpirationDateTimeText.Visible = $false
 #
@@ -126,7 +126,7 @@ $Mail.Visible = $false
 $MailText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]102))
 $MailText.Name = [System.String]'MailText'
 $MailText.ReadOnly = $true
-$MailText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]749,[System.Int32]21))
+$MailText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
 $MailText.TabIndex = [System.Int32]8
 $MailText.Visible = $false
 #
@@ -145,7 +145,7 @@ $GroupTypes.Visible = $false
 $GroupTypeText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]125))
 $GroupTypeText.Name = [System.String]'GroupTypeText'
 $GroupTypeText.ReadOnly = $true
-$GroupTypeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]749,[System.Int32]21))
+$GroupTypeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
 $GroupTypeText.TabIndex = [System.Int32]10
 $GroupTypeText.Visible = $false
 #
@@ -165,15 +165,15 @@ $MembershipRuleText.Location = (New-Object -TypeName System.Drawing.Point -Argum
 $MembershipRuleText.Name = [System.String]'MembershipRuleText'
 $MembershipRuleText.ReadOnly = $true
 $MembershipRuleText.ScrollBars = [System.Windows.Forms.ScrollBars]::Both
-$MembershipRuleText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]749,[System.Int32]21))
+$MembershipRuleText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
 $MembershipRuleText.TabIndex = [System.Int32]12
 $MembershipRuleText.Visible = $false
 #
 #GroupMembersName
 #
-$GroupMembersName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]176))
+$GroupMembersName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]530))
 $GroupMembersName.Name = [System.String]'GroupMembersName'
-$GroupMembersName.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
+$GroupMembersName.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]10,[System.Int32]23))
 $GroupMembersName.TabIndex = [System.Int32]14
 $GroupMembersName.Text = [System.String]'Group Members'
 $GroupMembersName.TextAlign = [System.Drawing.ContentAlignment]::TopCenter
@@ -184,21 +184,21 @@ $GroupMembersName.add_Click($GroupMembersName_Click)
 #
 $GroupMembersView.AutoSizeColumnsMode = [System.Windows.Forms.DataGridViewAutoSizeColumnsMode]::AllCells
 $GroupMembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
-$GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]202))
+$GroupMembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]556))
 $GroupMembersView.MultiSelect = $false
 $GroupMembersView.Name = [System.String]'GroupMembersView'
 $GroupMembersView.ReadOnly = $true
 $GroupMembersView.RowHeadersVisible = $false
 $GroupMembersView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::CellSelect
-$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]364))
+$GroupMembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]10,[System.Int32]10))
 $GroupMembersView.TabIndex = [System.Int32]15
 $GroupMembersView.Visible = $false
 #
 #LicenseLabel
 #
-$LicenseLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]176))
+$LicenseLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]175))
 $LicenseLabel.Name = [System.String]'LicenseLabel'
-$LicenseLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]23))
+$LicenseLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]816,[System.Int32]23))
 $LicenseLabel.TabIndex = [System.Int32]17
 $LicenseLabel.Text = [System.String]'Licenses'
 $LicenseLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
@@ -207,17 +207,17 @@ $LicenseLabel.Visible = $false
 #LicenseList
 #
 $LicenseList.CheckBoxes = $true
-$LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]202))
+$LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]201))
 $LicenseList.Name = [System.String]'LicenseList'
-$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]364))
+$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]816,[System.Int32]364))
 $LicenseList.TabIndex = [System.Int32]18
 $LicenseList.Visible = $false
 #
 #exit
 #
-$exit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]571))
+$exit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]572))
 $exit.Name = [System.String]'exit'
-$exit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]475,[System.Int32]23))
+$exit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]256,[System.Int32]23))
 $exit.TabIndex = [System.Int32]19
 $exit.Text = [System.String]'Exit Graph License Manager'
 $exit.UseVisualStyleBackColor = $true
@@ -225,9 +225,9 @@ $exit.add_Click($exit_Click)
 #
 #commit
 #
-$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]572))
+$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]568,[System.Int32]571))
 $commit.Name = [System.String]'commit'
-$commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]522,[System.Int32]23))
+$commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]260,[System.Int32]23))
 $commit.TabIndex = [System.Int32]20
 $commit.Text = [System.String]'Commit License Changes'
 $commit.UseVisualStyleBackColor = $true
@@ -239,7 +239,7 @@ $commit.add_Click($commit_Click)
 $StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($ToolLabel))
 $StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]597))
 $StatusStrip1.Name = [System.String]'StatusStrip1'
-$StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]22))
+$StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]834,[System.Int32]22))
 $StatusStrip1.TabIndex = [System.Int32]21
 $StatusStrip1.Text = [System.String]'StatusStrip1'
 #
@@ -251,7 +251,7 @@ $ToolLabel.Text = [System.String]'ToolStripStatusLabel1'
 #
 #Form2
 #
-$Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1074,[System.Int32]619))
+$Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]834,[System.Int32]619))
 $Form2.ControlBox = $false
 $Form2.Controls.Add($StatusStrip1)
 $Form2.Controls.Add($commit)

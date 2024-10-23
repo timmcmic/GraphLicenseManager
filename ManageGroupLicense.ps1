@@ -453,6 +453,8 @@ function ManageGroupLicense
             out-logfile -string "Relevant form controls not displayed due to previous failure."
         }
 
+        <#
+
         if ($getGroupFailure -eq $false)
         {
             out-logfile -string "Previous operation was successful proceed with locating membership."
@@ -492,6 +494,8 @@ function ManageGroupLicense
                 $groupMembersView.rows.add($object.id,$object.AdditionalProperties.displayName)
             }
         }
+
+        #>
 
         if ($getGroupFailure -eq $FALSE)
         {
