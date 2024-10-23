@@ -113,6 +113,4 @@ Function EstablishGraphConnection
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'establishgraphconnection.designer.ps1')
     [void]$Form1.ShowDialog()
-
-    out-logfile -string "Add the graph environments."
 }
