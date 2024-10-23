@@ -102,6 +102,7 @@ function ManageGroupLicense
                 $skusToRemove += $id
                 out-logfile -string "Remove the entry from the active array - it's no longer active."
                 $global:skuRootIDPresent = $global:skuRootIDPresent | where {$_ -ne $id}
+                $global:skuRootIDNotPresent += $id
             }
             else
             {
@@ -133,6 +134,7 @@ function ManageGroupLicense
                 $skusToAdd+=$skusToAddHash
                 out-logfile -string "Remove from the IDs not present - it is now present."
                 $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
+                $global:skuIDPresent += $id
             }
             else
             {
@@ -159,7 +161,7 @@ function ManageGroupLicense
             out-logfile -string ("Count of all found skus enabled: "+$addTestEnabled.count.tostring())
             out-logfile -string ("Count of all found skus disabled: "+$addTestDisabled.count.tostring())
 
-            if ($addTestEnabled.count -gt 0)
+            if (($addTestEnabled.count -gt 0) -and ($addTestDisabled -gt 0))
             {
                 out-logfile -string "The sku was added but only partially added."
 
@@ -173,6 +175,9 @@ function ManageGroupLicense
                 $skusToAddHash.add("DisabledPlans",$disabledPlans)
                 $skusToAddHash.add("SkuID",$id)
                 $skusToAdd+=$skusToAddHash
+
+                $global:skuRootIDNotPresent = $global:skuRootIDNotPresent | where {$_ -ne $id}
+                $global:skuIDPresent += $id
             }
             else
             {
