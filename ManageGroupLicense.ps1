@@ -331,40 +331,32 @@ function ManageGroupLicense
 
             out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
-            if ($global:skuTracking.count -eq 0)
+            foreach ($sku in $skus)
             {
-                foreach ($sku in $skus)
+                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+                foreach ($servicePlan in $sku.ServicePlans)
                 {
-                    out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
-    
-                    foreach ($servicePlan in $sku.ServicePlans)
+                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+                    if ($servicePlan.AppliesTo -eq "User")
                     {
-                        out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-    
-                        if ($servicePlan.AppliesTo -eq "User")
-                        {
-                            out-logfile -string "Service plan is per user - creating object."
-    
-                            $functionObject = New-Object PSObject -Property @{
-                                SkuID = $sku.SkuId
-                                SkuPartNumber = $sku.SkuPartNumber
-                                SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
-                                ServicePlanID = $servicePlan.ServicePlanId
-                                ServicePlanName = $servicePlan.ServicePlanName
-                                EnabledOnGroup = $false
-                                EnabledNew = $false
-                            }
-    
-                            $global:skuTracking += $functionObject
+                        out-logfile -string "Service plan is per user - creating object."
+
+                        $functionObject = New-Object PSObject -Property @{
+                            SkuID = $sku.SkuId
+                            SkuPartNumber = $sku.SkuPartNumber
+                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
+                            ServicePlanID = $servicePlan.ServicePlanId
+                            ServicePlanName = $servicePlan.ServicePlanName
+                            EnabledOnGroup = $false
+                            EnabledNew = $false
                         }
+
+                        $global:skuTracking += $functionObject
                     }
                 }
-            }
-            else
-            {
-                out-logfile -string "The global sku table has already been built -> no need to rebuild."
-            }
-            
+            }           
 
             out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
 
