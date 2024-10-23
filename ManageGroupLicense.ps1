@@ -46,7 +46,6 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $commit_Click = {
-        $planArray = @()
         out-logfile -string "It is time to commit the changes that were made."
 
         foreach ($rootNode in $licenseList.Nodes)
@@ -204,7 +203,6 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
-            Invoke-Command -ScriptBlock $button1_click
         }
     }
 
