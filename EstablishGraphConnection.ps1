@@ -9,7 +9,7 @@ Function EstablishGraphConnection
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
-        $graphEnvironment = $environmentBox.selectedItem
+        $global:GraphEnvironment = $environmentBox.selectedItem
     }
 
 
@@ -71,7 +71,7 @@ Function EstablishGraphConnection
             out-logfile -string "Interactive authentication radio box selected..."
 
             try {
-                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $graphEnvironment -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
                 [void]$Form1.close()
             }
