@@ -73,6 +73,12 @@ Function EstablishGraphConnection
 
     out-logfile -string "Showing the authentication form to begin user interation..."
 
+    out-logfile -string "Add items ot the combo box."
+
+    $items = @("Global","USGov")
+    $environmentbox.items.addrange($items)
+
+
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'establishgraphconnection.designer.ps1')
     [void]$Form1.ShowDialog()
