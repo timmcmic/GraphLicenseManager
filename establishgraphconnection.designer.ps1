@@ -181,6 +181,7 @@ $GlobalButton.TabIndex = [System.Int32]0
 $GlobalButton.TabStop = $true
 $GlobalButton.Text = [System.String]'Global'
 $GlobalButton.UseVisualStyleBackColor = $true
+$GlobalButton.add_CheckedChanged($GlobalButton_CheckedChanged)
 #
 #Form1
 #

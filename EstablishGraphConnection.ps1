@@ -1,5 +1,4 @@
-
-function EstablishGraphConnection
+Function EstablishGraphConnection
 {
     $globalButton.checked=$TRUE
 
