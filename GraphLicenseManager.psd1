@@ -72,7 +72,7 @@ RequiredModules = @(
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('EstablishGraphConnection.ps1','ManageGroupLicense.ps1','new-logfile.ps1','Out-LogFile.ps1')
+NestedModules = @('EstablishGraphConnection.ps1','ManageGroupLicense.ps1','new-logfile.ps1','Out-LogFile.ps1','Out-XMLFile.ps1')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('start-GraphLicenseManager')
