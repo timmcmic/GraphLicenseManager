@@ -171,7 +171,7 @@ function ManageGroupLicense
             out-logfile -string "Error adjusting licenses on group."
             $errorText = $_
             out-logfile -string $errorText
-            [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
+            [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
 
         }
     }
