@@ -103,7 +103,7 @@ function ManageGroupLicense
             }
             else
             {
-                out-llogfile -string "The SKU is not a SKU that was entirely removed."
+                out-logfile -string "The SKU is not a SKU that was entirely removed."
             }
         }
 
