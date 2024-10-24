@@ -27,6 +27,12 @@ function Start-GraphLicenseManager
     $telemetryMSGraphGroups = $NULL
     $telemetryOSVersion = (Get-CimInstance Win32_OperatingSystem).version
     $telemetryStartTime = get-universalDateTime
+    $telemetryAuthenticationStartTime = $null
+    $telemetryAuthenticationEndTime = $NULL
+    [double]$telemetryAuthentictionTime = 0
+    $telemetryLicenseManagementStartTime = $NULL
+    $telemetryLicenseManagementEndTime = $NULL
+    [double]$telemetryLicenseManagementTime = 0
     $telemetryEndTime = $NULL
     [double]$telemetryElapsedSeconds = 0
     $telemetryEventName = "Start-DistributionListMigration"
@@ -61,7 +67,11 @@ function Start-GraphLicenseManager
     out-logfile -string "************************************************************************"
 
     out-logfile -string "Invoking establish graph connection..."
+
+    $telemetryAuthenticationStartTime = get-universalDateTime
     establishGraphConnection
+    $telemetryAuthenticationEndTime = get-universalDateTime
+    $telemetryAuthentictionTime= get-elapsedTime -startTime $telemetryAuthenticationStartTime -endTime $telemetryAuthenticationEndTime
 
     if ($global:exitSelected -eq $TRUE)
     {
@@ -74,5 +84,11 @@ function Start-GraphLicenseManager
     }
 
     out-logfile -string "Invoking manage group license..."
+    $telemetryLicenseManagementStartTime = get-universalDateTime
     manageGroupLicense
+    $telemetryLicenseManagementEndTime = get-universalDateTime
+    $telemetryLicenseManagementTime = get-elapsedTime -startTime $telemetryLicenseManagementStartTime -endTime $telemetryLicenseManagementEndTime
+
+    $telemetryEndTime = get-universalDateTIme
+    $telemetryElapsedSeconds = get-elapsedTime -startTime $telemetryStartTime -endTime $telemetryEndTime
 }
