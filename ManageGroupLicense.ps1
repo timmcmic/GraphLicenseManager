@@ -49,6 +49,8 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $commit_Click = {
+        $global:telemetryCommits=0
+        
         out-logfile -string "It is time to commit the changes that were made."
 
         foreach ($rootNode in $licenseList.Nodes)
@@ -252,6 +254,8 @@ function ManageGroupLicense
 
     $Button1_Click = {
 
+        $global:telemetrySearches++
+        
         $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()

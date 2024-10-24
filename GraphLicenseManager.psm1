@@ -36,8 +36,8 @@ function Start-GraphLicenseManager
     $telemetryEndTime = $NULL
     [double]$telemetryElapsedSeconds = 0
     $telemetryEventName = "Start-DistributionListMigration"
-    [double]$telemetrySearches=0
-    [double]$telemetryCommits=0
+    [double]$global:telemetrySearches=0
+    [double]$global:telemetryCommits=0
 
     $ErrorActionPreference = 'Stop'
     $global:logFile=$NULL
