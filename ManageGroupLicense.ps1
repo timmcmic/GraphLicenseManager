@@ -449,10 +449,9 @@ function ManageGroupLicense
             out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
         }
 
-        $ToolLabel.Text = "Updating form controls with group and license information..."
-
         if ($getGroupFailure -eq $false)
         {
+            $ToolLabel.Text = "Updating form controls with group and license information..."
             out-logfile -string "Displaying all relevant form controls..."
 
             $displayName.show() 
