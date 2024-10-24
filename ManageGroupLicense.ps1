@@ -298,25 +298,29 @@ function ManageGroupLicense
             $global:telemetrySearcheErrors++
         }
 
-
-        try
+        if ($getGroupFailure -eq $FALSE)
         {
-            out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-            $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
-            out-logfile -string "Group and licenses were successfully located..."
-            out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
-        }
-        catch
-        {
-            $getGroupFailure=$true
-            $errorText=$_
-            out-logfile -string "The group was not located by group object id.."
-            out-logfile -string $errorText
-            $errorText = ($errorText -split 'Status: 400')[0]
-            [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
-            $global:telemetrySearcheErrors++
+            try
+            {
+                out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
+                $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
+                out-logfile -string "Group and licenses were successfully located..."
+                out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
+            }
+            catch
+            {
+                $getGroupFailure=$true
+                $errorText=$_
+                out-logfile -string "The group was not located by group object id.."
+                out-logfile -string $errorText
+                $errorText = ($errorText -split 'Status: 400')[0]
+                [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
+                $global:telemetrySearcheErrors++
+            }
+
         }
 
+        
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
