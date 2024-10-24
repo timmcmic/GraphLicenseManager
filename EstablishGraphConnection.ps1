@@ -14,6 +14,7 @@ Function EstablishGraphConnection
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
         $global:GraphEnvironment = $environmentBox.selectedItem
+        $LoginStatusLabel.text = ("Environment Changed: "+$global:GraphEnvironment)
     }
 
 
