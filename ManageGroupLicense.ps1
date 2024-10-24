@@ -231,6 +231,8 @@ function ManageGroupLicense
 
         try {
             Set-MgGroupLicense -GroupId $global:groupID -BodyParameter $licenseParams -errorAction Stop
+            [System.Windows.Forms.MessageBox]::Show("LICENSE COMMIT SUCCESSFUL - RUN SEARCH TO REFRESH", 'SUCCESS')
+
         }
         catch {
             out-logfile -string "Error adjusting licenses on group."
