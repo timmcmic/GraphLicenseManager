@@ -29,12 +29,14 @@ Function EstablishGraphConnection
         out-logfile -string "Certifcate radio button selected..."
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
+        $LoginStatusLabel.text = ("Certificate Authentication Selected")
     }
     
     $RadioButton2_CheckedChanged = {
         out-logfile -string "Interactive credentials radio button selected..."
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
+        $LoginStatusLabel.text = ("Interactive Authentication Selected")
     }
 
     $Button1_Click = {
@@ -42,6 +44,7 @@ Function EstablishGraphConnection
         {
             [System.Windows.Forms.MessageBox]::Show("TenantID is required to connnect to Microsoft Graph...", 'Warning')
             out-logfile -string "TenantID is required to connnect to Microsoft Graph..."
+            $LoginStatusLabel.text = ("ERROR:  TenantID is required to connect to Microsoft Graph")
             $tenantIDError=$TRUE
         }
         else
@@ -60,16 +63,22 @@ Function EstablishGraphConnection
             {
                 [System.Windows.Forms.MessageBox]::Show("Certificate Thumbprint and Application ID Required...", 'Warning')
                 out-logfile -string "Certificate Thumbprint and Application ID Required..."
+                $LoginStatusLabel.text = ("ERROR:  Certificate Thumbprint and Application ID Required")
+
             }
             elseif($textBox2.text -eq "")
             {
                 [System.Windows.Forms.MessageBox]::Show("Certificate Thumbprint is required...", 'Warning')
                 out-logfile -string "Certificate Thumbprint is required..."
+                $LoginStatusLabel.text = ("ERROR:  Certificate Thumbprint Required")
+
             }
             elseif($textBox3.text -eq "")
             {
                 [System.Windows.Forms.MessageBox]::Show("Application ID is require...", 'Warning')
                 out-logfile -string "Application ID is require..."
+                $LoginStatusLabel.text = ("ERROR:  Applicatio ID Required")
+
             }
             else
             {
