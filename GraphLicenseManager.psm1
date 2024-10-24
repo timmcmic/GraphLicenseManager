@@ -117,6 +117,8 @@ function Start-GraphLicenseManager
         TotalCommandTime = $telemetryElapsedSeconds
         TotalSearches = $global:telemetrySearches
         TotalCommits = $global:telemetryCommits
+        TotalCommitErrors = $global:telemetryCommitErrors
+        TotalSearchErrors = $global:telemetrySearcheErrors
     }
 
     if ($allowTelemetryCollection -eq $TRUE)
