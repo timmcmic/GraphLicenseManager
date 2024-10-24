@@ -46,7 +46,7 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $commit_Click = {
-        $global:telemetryCommits=0
+        $global:telemetryCommits++
 
         out-logfile -string "It is time to commit the changes that were made."
 
