@@ -57,7 +57,7 @@ function Start-GraphLicenseManager
 
     $telemetryGraphLicenseManagerVersion = Test-PowershellModule -powershellModuleName "GraphLicenseManager" -powershellVersionTest:$TRUE
     $telemetryMSGraphAuthentication = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Authentication" -powershellVersionTest:$TRUE
-    $telemetryMSGraphDirectory = Test-PowershellModule -powershellModuleName "Microsoft.Graph.DirectoryManagement" -powershellVersionTest:$TRUE
+    $telemetryMSGraphDirectory = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Identity.DirectoryManagement" -powershellVersionTest:$TRUE
     $telemetryMSGraphUsers = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Users" -powershellVersionTest:$TRUE
     $telemetryMSGraphGroups = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Groups" -powershellVersionTest:$TRUE
 
