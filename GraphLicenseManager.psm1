@@ -38,6 +38,9 @@ function Start-GraphLicenseManager
     [double]$telemetryElapsedSeconds = 0
     [double]$global:telemetrySearches=0
     [double]$global:telemetryCommits=0
+    [double]$global:telemetrySearcheErrors=0
+    [double]$global:telemetryCommitErrors=0
+
 
     $ErrorActionPreference = 'Stop'
     $global:logFile=$NULL

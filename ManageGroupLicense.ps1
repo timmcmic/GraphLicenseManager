@@ -1,6 +1,3 @@
-$GroupMembersName_Click = {
-}
-
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
@@ -50,7 +47,7 @@ function ManageGroupLicense
 
     $commit_Click = {
         $global:telemetryCommits=0
-        
+
         out-logfile -string "It is time to commit the changes that were made."
 
         foreach ($rootNode in $licenseList.Nodes)
@@ -240,7 +237,7 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
-            out-logfile -string "Resetting arrays for re-validation if license application is checked..."
+            $global:telemetryCommitErrors++        
         }
     }
 
@@ -296,6 +293,7 @@ function ManageGroupLicense
             out-logfile -string "The group was not located by group object id.."
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
+            $global:telemetrySearcheErrors++
         }
 
 
@@ -313,6 +311,7 @@ function ManageGroupLicense
             out-logfile -string "The group was not located by group object id.."
             out-logfile -string $errorText
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
+            $global:telemetrySearcheErrors++
         }
 
         if ($getGroupFailure -eq $FALSE)
@@ -331,6 +330,7 @@ function ManageGroupLicense
                 out-logfile -string "Unable to obtain the skus within the tenant.."
                 out-logfile -string $errorText
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+                $global:telemetrySearcheErrors++
             }
 
             out-logfile -string "Removing all non-user SKUs"
