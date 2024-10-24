@@ -89,7 +89,7 @@ function Start-GraphLicenseManager
     $telemetryLicenseManagementEndTime = get-universalDateTime
     $telemetryLicenseManagementTime = get-elapsedTime -startTime $telemetryLicenseManagementStartTime -endTime $telemetryLicenseManagementEndTime
 
-    $telemetryEndTime = get-universalDateTIme
+    $telemetryEndTime = get-universalDateTime
     $telemetryElapsedSeconds = get-elapsedTime -startTime $telemetryStartTime -endTime $telemetryEndTime
 
     $telemetryEventProperties = @{
@@ -102,15 +102,15 @@ function Start-GraphLicenseManager
         OSVersion = $telemetryOSVersion
         CommandStartTimeUTC = $telemetryStartTime
         CommandEndTimeUTC = $telemetryEndTime
-    }
-
-    $telemetryEventMetrics = @{
         AuthenticationStateTime = $telemetryAuthenticationStartTime
         AuthenticationEndTime = $telemetryAuthenticationEndTime
         AuthenciationElapsedTime = $telemetryAuthentictionTime
         LicenseManagementStartTime = $telemetryLicenseManagementStartTime
         LicenseManagementEndTime = $telemetryLicenseManagementEndTime
         LicenseManagementElapsedTime = $telemetryLicenseManagementTime
+    }
+
+    $telemetryEventMetrics = @{
         TotalCommandTime = $telemetryElapsedSeconds
         TotalSearches = $global:telemetrySearches
         TotalCommits = $global:telemetryCommits
