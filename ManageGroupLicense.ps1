@@ -46,15 +46,20 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $commit_Click = {
+        $ToolLabel.Text = "Beginning license commit operation..."
         $global:telemetryCommits++
 
         out-logfile -string "It is time to commit the changes that were made."
+
+        $ToolLabel.Text = "Pulling all user defined options from the license tree - this may take a minute..."
 
         foreach ($rootNode in $licenseList.Nodes)
         {
             out-logfile -string $rootNode.Text
             $planArray +=PrintTree $rootNode.nodes $rootNode.text
         }
+
+        $ToolLabel.Text = "Comparing previous license state to user defined license state - this may take a minute..."
 
         foreach ($sku in $global:skuTracking)
         {
@@ -79,6 +84,8 @@ function ManageGroupLicense
         $skusToRemove=@()
         $licenseParams = @{}
         $skusToAdd=@()
+
+        $ToolLabel.Text = "Evaluating for existing skus with plan changes..."
              
         out-logfile -string "Searching for changes to existing skus."
         
@@ -120,6 +127,8 @@ function ManageGroupLicense
                 out-logfile -string "The sku was not modified partially."
             }
         }
+
+        $ToolLabel.Text = "Evaluating for SKUs entirely removed..."
         
         out-logfile -string "Begin to look for skus that have been removed..."
 
@@ -148,6 +157,8 @@ function ManageGroupLicense
                 out-logfile -string "The SKU is not a SKU that was entirely removed."
             }
         }
+
+        $ToolLabel.Text = "Evaluating for SKUs entirely added..."
 
         out-logfile -string "Determine if any entire skus were added to the new license template by reviewing skus that were not already there."
 
@@ -180,6 +191,8 @@ function ManageGroupLicense
                 out-logfile -string "The SKU was not a SKU that was entirely added."
             }
         }
+
+        $ToolLabel.Text = "Evaluating SKUs for partial additions..."
 
         out-logfile -string "Searching for new skus that were partially added."
 
@@ -230,7 +243,9 @@ function ManageGroupLicense
         out-xmlFile -itemToExport $licenseParams -itemNameToExport ("LicenseParams-"+(Get-Date -Format FileDateTime))
 
         try {
+            $ToolLabel.Text = "Applying the new license template to the group..."
             Set-MgGroupLicense -GroupId $global:groupID -BodyParameter $licenseParams -errorAction Stop
+            $ToolLabel.Text = "License template successfully applied..."
             [System.Windows.Forms.MessageBox]::Show("LICENSE COMMIT SUCCESSFUL - RUN SEARCH TO REFRESH", 'SUCCESS')
 
         }
@@ -240,6 +255,7 @@ function ManageGroupLicense
             out-logfile -string $errorText
             $errorText = ($errorText -split 'Status: 400')[0]
             $global:errorMessages+=$errorText
+            $ToolLabel.Text = "ERROR:  License template NOT successfully applied..."
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
             $global:telemetryCommitErrors++        
         }
@@ -255,6 +271,7 @@ function ManageGroupLicense
 
     $Button1_Click = {
 
+        $ToolLabel.Text = "Entering Group Search"
         $global:telemetrySearches++
         
         $global:skuTracking = @()
@@ -264,6 +281,8 @@ function ManageGroupLicense
         out-logfile -string "Search button selected..."
 
         out-logfile -string "Clearing all form controls..."
+
+        $ToolLabel.Text = "Resetting Display Dialogs"
 
         $displayNameText.clear()
         $expirationDateTimeText.clear()
@@ -275,6 +294,8 @@ function ManageGroupLicense
         $licenseList.beginUpdate()
         $licenseList.Nodes.Clear()
         $licenseList.endUpdate()
+
+        $ToolLabel.Text = "Obtaining Group ID"
 
         $global:groupID = $groupObjectIDText.Text
         Out-logfile -string "Group ID to Search:"
@@ -289,6 +310,7 @@ function ManageGroupLicense
             out-logfile -string $graphGroup
             $getGroupFailure=$false
             out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime))
+            $ToolLabel.Text = "GET-MGGroup Successful"
         }
         catch
         {
@@ -298,6 +320,7 @@ function ManageGroupLicense
             out-logfile -string $errorText
             $errorText = ($errorText -split 'Status: 400')[0]
             $global:errorMessages+=$errorText
+            $ToolLabel.Text = "GET-MGGroup ERROR"
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
             $global:telemetrySearcheErrors++
         }
@@ -310,6 +333,7 @@ function ManageGroupLicense
                 $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
                 out-logfile -string "Group and licenses were successfully located..."
                 out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
+                $ToolLabel.Text = "Get Group Licenses Successful"
             }
             catch
             {
@@ -319,6 +343,7 @@ function ManageGroupLicense
                 out-logfile -string $errorText
                 $errorText = ($errorText -split 'Status: 400')[0]
                 $global:errorMessages+=$errorText
+                $ToolLabel.Text = "Get Group Licenses ERROR"
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
                 $global:telemetrySearcheErrors++
             }
@@ -335,6 +360,7 @@ function ManageGroupLicense
                 out-logfile -string "SKUs successfully obtained..."
                 $getGroupFailure=$false
                 out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
+                $ToolLabel.Text = "Get-MGSubscribedSKU SUCESSFUL"
             }
             catch {
                 $getGroupFailure=$true
@@ -343,6 +369,7 @@ function ManageGroupLicense
                 out-logfile -string $errorText
                 $errorText = ($errorText -split 'Status: 400')[0]
                 $global:errorMessages+=$errorText
+                $ToolLabel.Text = "Get-MGSubscribedSKU ERROR"
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
                 $global:telemetrySearcheErrors++
             }
@@ -355,6 +382,7 @@ function ManageGroupLicense
 
             out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
+            $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
         
             foreach ($sku in $skus)
             {
@@ -384,6 +412,8 @@ function ManageGroupLicense
             }           
 
             out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+
+            $ToolLabel.Text = "Comparing SKU and SKU-Plan assignments on group to tenant SKU / SKU-Plans"
 
             out-logfile -string "Evaluating the skus in the tenant against the group provided."
 
@@ -418,6 +448,8 @@ function ManageGroupLicense
 
             out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTrackingGroupEvaluation-"+(Get-Date -Format FileDateTime))
         }
+
+        $ToolLabel.Text = "Updating form controls with group and license information..."
 
         if ($getGroupFailure -eq $false)
         {
@@ -582,6 +614,7 @@ function ManageGroupLicense
             $global:skuRootIDNotPresent+=$global:fakePlanID
 
             $licenseList.add_AfterCheck{
+                $ToolLabel.Text = "License option selected - updating tree..."
                 $commit.show()
             #Event Argument: $_ = [System.Windows.Forms.TreeViewEventArgs]
                 if($_.Action -ne 'Unknown'){
