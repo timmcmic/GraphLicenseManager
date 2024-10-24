@@ -40,6 +40,7 @@ function Start-GraphLicenseManager
     [double]$global:telemetryCommits=0
     [double]$global:telemetrySearcheErrors=0
     [double]$global:telemetryCommitErrors=0
+    $global:ErrorMessages=@()
 
 
     $ErrorActionPreference = 'Stop'
@@ -111,6 +112,7 @@ function Start-GraphLicenseManager
         LicenseManagementStartTime = $telemetryLicenseManagementStartTime
         LicenseManagementEndTime = $telemetryLicenseManagementEndTime
         LicenseManagementElapsedTime = $telemetryLicenseManagementTime
+        ErrorText = $global:errorMessages
     }
 
     $telemetryEventMetrics = @{

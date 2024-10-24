@@ -237,6 +237,7 @@ function ManageGroupLicense
             $errorText = $_
             out-logfile -string $errorText
             $errorText = ($errorText -split 'Status: 400')[0]
+            $global:errorMessages+=$errorText
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
             $global:telemetryCommitErrors++        
         }
@@ -294,6 +295,7 @@ function ManageGroupLicense
             out-logfile -string "The group was not located by group object id.."
             out-logfile -string $errorText
             $errorText = ($errorText -split 'Status: 400')[0]
+            $global:errorMessages+=$errorText
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
             $global:telemetrySearcheErrors++
         }
@@ -314,6 +316,7 @@ function ManageGroupLicense
                 out-logfile -string "The group was not located by group object id.."
                 out-logfile -string $errorText
                 $errorText = ($errorText -split 'Status: 400')[0]
+                $global:errorMessages+=$errorText
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
                 $global:telemetrySearcheErrors++
             }
@@ -337,6 +340,7 @@ function ManageGroupLicense
                 out-logfile -string "Unable to obtain the skus within the tenant.."
                 out-logfile -string $errorText
                 $errorText = ($errorText -split 'Status: 400')[0]
+                $global:errorMessages+=$errorText
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
                 $global:telemetrySearcheErrors++
             }
