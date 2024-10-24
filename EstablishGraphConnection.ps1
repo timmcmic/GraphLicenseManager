@@ -69,8 +69,20 @@ Function EstablishGraphConnection
                 out-logfile -string $msGraphCertificateThumbPrint
                 out-logfile -string $msGraphApplicationID
                 out-logfile -string "We are ready to establish the certificate authentication graph request."
-                Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
-                [void]$Form1.close()
+
+                try
+                {
+                    Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
+                    [void]$Form1.close()
+                }
+                catch
+                {
+                    $errorText=$_
+                    out-logfile -string $errorText
+                    $errorText = ($errorText -split 'Status: 400')[0]
+                    out-logfile -string "Unable to connect to Microsoft Graph.."
+                    [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
+                }
             }
         }
         elseif ($radioButton2.checked)
@@ -85,6 +97,7 @@ Function EstablishGraphConnection
             catch {
                 $errorText=$_
                 out-logfile -string $errorText
+                $errorText = ($errorText -split 'Status: 400')[0]
                 out-logfile -string "Unable to connect to Microsoft Graph.."
                 [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
             }
