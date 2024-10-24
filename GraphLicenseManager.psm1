@@ -20,6 +20,7 @@ function Start-GraphLicenseManager
 
     #Define telemetry items.
 
+    $telemetryEventName = "GraphLicenseManager"
     $telemetryGraphLicenseManagerVersion = $NULL
     $telemetryMSGraphAuthentication = $NULL
     $telemetryMSGraphDirectory = $NULL
@@ -35,7 +36,6 @@ function Start-GraphLicenseManager
     [double]$telemetryLicenseManagementTime = 0
     $telemetryEndTime = $NULL
     [double]$telemetryElapsedSeconds = 0
-    $telemetryEventName = "Start-DistributionListMigration"
     [double]$global:telemetrySearches=0
     [double]$global:telemetryCommits=0
 
@@ -91,4 +91,33 @@ function Start-GraphLicenseManager
 
     $telemetryEndTime = get-universalDateTIme
     $telemetryElapsedSeconds = get-elapsedTime -startTime $telemetryStartTime -endTime $telemetryEndTime
+
+    $telemetryEventProperties = @{
+        GraphLicenseManagerCommand = $telemetryEventName
+        GraphLicenseManagerVersion = $telemetryGraphLicenseManagerVersion
+        GraphAuthenticationVersion = $telemetryMSGraphAuthentication
+        GraphIdentityDirectoryManagementVersion = $telemetryMSGraphDirectory
+        GraphUsersVersion = $telemetryMSGraphUsers
+        GraphGroupVersion = $telemetryMSGraphGroups
+        OSVersion = $telemetryOSVersion
+        CommandStartTimeUTC = $telemetryStartTime
+        CommandEndTimeUTC = $telemetryEndTime
+    }
+
+    $telemetryEventMetrics = @{
+        AuthenticationStateTime = $telemetryAuthenticationStartTime
+        AuthenticationEndTime = $telemetryAuthenticationEndTime
+        AuthenciationElapsedTime = $telemetryAuthentictionTime
+        LicenseManagementStartTime = $telemetryLicenseManagementStartTime
+        LicenseManagementEndTime = $telemetryLicenseManagementEndTime
+        LicenseManagementElapsedTime = $telemetryLicenseManagementTime
+        TotalCommandTime = $telemetryElapsedSeconds
+        TotalSearches = $global:telemetrySearches
+        TotalCommits = $global:telemetryCommits
+    }
+
+    if ($allowTelemetryCollection -eq $TRUE)
+    {
+        send-TelemetryEvent -traceModuleName $traceModuleName -eventName $telemetryEventName -eventMetrics $telemetryEventMetrics -eventProperties $telemetryEventProperties
+    }
 }
