@@ -1,3 +1,11 @@
+$TextBox3_TextChanged = {
+}
+$Label2_Click = {
+}
+$TextBox2_TextChanged = {
+}
+$Label1_Click = {
+}
 
 Function EstablishGraphConnection
 {

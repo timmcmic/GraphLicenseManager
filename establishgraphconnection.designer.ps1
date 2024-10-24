@@ -11,6 +11,8 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$ExitButton = $null
 [System.Windows.Forms.ComboBox]$EnvironmentBox = $null
 [System.Windows.Forms.Label]$Label4 = $null
+[System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
+[System.Windows.Forms.ToolStripStatusLabel]$LoginStatusLabel = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -25,6 +27,9 @@ $Button1 = (New-Object -TypeName System.Windows.Forms.Button)
 $ExitButton = (New-Object -TypeName System.Windows.Forms.Button)
 $EnvironmentBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $Label4 = (New-Object -TypeName System.Windows.Forms.Label)
+$StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
+$LoginStatusLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
+$StatusStrip1.SuspendLayout()
 $Form1.SuspendLayout()
 #
 #Label1
@@ -103,7 +108,7 @@ $RadioButton2.add_CheckedChanged($RadioButton2_CheckedChanged)
 #
 #Button1
 #
-$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]246))
+$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]233))
 $Button1.Name = [System.String]'Button1'
 $Button1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]646,[System.Int32]23))
 $Button1.TabIndex = [System.Int32]8
@@ -113,7 +118,7 @@ $Button1.add_Click($Button1_Click)
 #
 #ExitButton
 #
-$ExitButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]683,[System.Int32]246))
+$ExitButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]683,[System.Int32]233))
 $ExitButton.Name = [System.String]'ExitButton'
 $ExitButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]124,[System.Int32]23))
 $ExitButton.TabIndex = [System.Int32]9
@@ -142,10 +147,25 @@ $Label4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $Label4.TabIndex = [System.Int32]11
 $Label4.Text = [System.String]'Graph Environment Selection'
 #
+#StatusStrip1
+#
+$StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($LoginStatusLabel))
+$StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]259))
+$StatusStrip1.Name = [System.String]'StatusStrip1'
+$StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]22))
+$StatusStrip1.TabIndex = [System.Int32]12
+$StatusStrip1.Text = [System.String]'StatusStrip1'
+#
+#LoginStatusLabel
+#
+$LoginStatusLabel.Name = [System.String]'LoginStatusLabel'
+$LoginStatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]0,[System.Int32]17))
+#
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]281))
 $Form1.ControlBox = $false
+$Form1.Controls.Add($StatusStrip1)
 $Form1.Controls.Add($Label4)
 $Form1.Controls.Add($EnvironmentBox)
 $Form1.Controls.Add($ExitButton)
@@ -161,6 +181,8 @@ $Form1.Controls.Add($Label1)
 $Form1.MaximizeBox = $false
 $Form1.MinimizeBox = $false
 $Form1.Text = [System.String]'Connect Microsoft Graph'
+$StatusStrip1.ResumeLayout($false)
+$StatusStrip1.PerformLayout()
 $Form1.ResumeLayout($false)
 $Form1.PerformLayout()
 Add-Member -InputObject $Form1 -Name Label1 -Value $Label1 -MemberType NoteProperty
@@ -175,5 +197,7 @@ Add-Member -InputObject $Form1 -Name Button1 -Value $Button1 -MemberType NotePro
 Add-Member -InputObject $Form1 -Name ExitButton -Value $ExitButton -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name EnvironmentBox -Value $EnvironmentBox -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name Label4 -Value $Label4 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name LoginStatusLabel -Value $LoginStatusLabel -MemberType NoteProperty
 }
 . InitializeComponent

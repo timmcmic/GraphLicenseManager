@@ -23,5 +23,6 @@
 'statusBar.Name' = 'statusBar'
 'StatusStrip1.Name' = 'StatusStrip1'
 'GroupBox1.Name' = 'GroupBox1'
+'LoginStatusLabel.Name' = 'LoginStatusLabel'
 }
 }
