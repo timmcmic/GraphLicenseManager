@@ -399,7 +399,7 @@ function ManageGroupLicense
                         $functionObject = New-Object PSObject -Property @{
                             SkuID = $sku.SkuId
                             SkuPartNumber = $sku.SkuPartNumber +" ("+$sku.capabilityStatus+")"
-                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
+                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$sku.ServicePlanName
                             ServicePlanID = $servicePlan.ServicePlanId
                             ServicePlanName = $servicePlan.ServicePlanName
                             EnabledOnGroup = $false
