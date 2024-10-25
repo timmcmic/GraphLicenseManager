@@ -556,8 +556,8 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNode.text = $sku.SkuPartNumber + " (" + $sku.CapabilityStatus + ")"
-                $rootNode.name = $sku.SkuPartNumber + " (" + $sku.CapabilityStatus + ")"
+                $rootNode.text = $sku.SkuPartNumber
+                $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
 
