@@ -398,7 +398,7 @@ function ManageGroupLicense
 
                         $functionObject = New-Object PSObject -Property @{
                             SkuID = $sku.SkuId
-                            SkuPartNumber = $sku.SkuPartNumber +" ("+$sku.CapabilityStatus+")"
+                            SkuPartNumber = $sku.SkuPartNumber
                             SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$sku.ServicePlanName
                             ServicePlanID = $servicePlan.ServicePlanId
                             ServicePlanName = $servicePlan.ServicePlanName
@@ -556,8 +556,8 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNode.text = $sku.SkuPartNumber
-                $rootNode.name = $sku.SkuPartNumber
+                $rootNode.text = $sku.SkuPartNumber + " (" + $sku.CapabilityStatus + ")"
+                $rootNode.name = $sku.SkuPartNumber + " (" + $sku.CapabilityStatus + ")"
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
 
