@@ -258,6 +258,7 @@ $DataGridView1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentLi
 $DataGridView1.Name = [System.String]'DataGridView1'
 $DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]400,[System.Int32]364))
 $DataGridView1.TabIndex = [System.Int32]22
+$DataGridView1.Visible = $false
 #
 #Form2
 #
