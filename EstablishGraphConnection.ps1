@@ -21,11 +21,26 @@ $GroupPermissiosnBox.Items.AddRange($groupItems)
 Function EstablishGraphConnection
 {
     $global:GraphEnvironment = "Global"
-    
+    $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
+    $global:directoryPermissions = "Organization.Read.All"
+    $global:combinedPermissions = ""
+
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
         $global:GraphEnvironment = $environmentBox.selectedItem
         $LoginStatusLabel.text = ("Environment Changed: "+$global:GraphEnvironment)
+    }
+
+    $GroupPermissionsBox_SelectedIndexChanged{
+        out-logfile -string $groupPermissionsBox.selectedItem
+        $global:groupPermissions = $groupPermissionbox.selectedItem
+        $LoginStatusLabel.text = ("Group Permissions ChangeD: "+$groupPermissionbox.selectedItem)
+    }
+
+    $directoryPermissionsBox_SelectedIndexChanged{
+        out-logfile -string $directoryPermissionsBox.selectedItem
+        $global:DirectoryPermissions = $directoryPermissionsBox.selectedItem
+        $loginStatusLabel.text = ("Directory Permissions Change: "+$directoryPermissionsBox.selectedItem)
     }
 
 
