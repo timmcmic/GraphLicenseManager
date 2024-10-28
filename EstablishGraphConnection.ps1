@@ -15,6 +15,7 @@ $EnvironmentBox.selectedIndex=0
 Function EstablishGraphConnection
 {
     $global:GraphEnvironment = "Global"
+    $global:interactiveAuth = $true
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
@@ -35,6 +36,15 @@ Function EstablishGraphConnection
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
+
+        if ($global:interactiveAuth -eq $false)
+        {
+            $global:interactiveAuth = $TRUE
+        }
+        else
+        {
+            $global:interactiveAuth = $TRUE
+        }
     }
     
     $RadioButton2_CheckedChanged = {
@@ -43,8 +53,16 @@ Function EstablishGraphConnection
         $textBox3.enabled = $false 
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
 
-        $groupPermissions.show()
-        $directoryPermissions.show()
+        if ($global:interactiveAuth -eq $TRUE)
+        {
+            $groupPermissions.show()
+            $directoryPermissions.show()
+            $global:interactiveAuth = $FALSE
+        }
+        else
+        {
+            $global:interactiveAuth = $false
+        }
     }
 
     $Button1_Click = {
