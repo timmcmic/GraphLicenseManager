@@ -49,7 +49,7 @@ Function EstablishGraphConnection
         $groupPermissions.visible = $FALSE
         $directoryPermission.visible = $FALSE
         $groupPermissionsBox.visible = $FALSE
-        $directoryPermissionsBox.visible = $FALSE
+        $DirectoryPermissionsBox.visible = $FALSE
     }
     
     $RadioButton2_CheckedChanged = {
@@ -60,7 +60,7 @@ Function EstablishGraphConnection
         $groupPermissions.visible = $TRUE
         $directoryPermission.visible = $TRUE
         $groupPermissionsBox.visible = $TRUE
-        $directoryPermissionsBox.visible = $TRUE
+        $DirectoryPermissionsBox.visible = $TRUE
     }
 
     $Button1_Click = {
