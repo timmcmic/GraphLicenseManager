@@ -1,12 +1,3 @@
-$TextBox3_TextChanged = {
-}
-$Label2_Click = {
-}
-$TextBox2_TextChanged = {
-}
-$Label1_Click = {
-}
-
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
@@ -15,10 +6,13 @@ $EnvironmentBox.selectedIndex=0
 $directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
 $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
+$DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
+
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
 $GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
+$GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
 
 #>
 
@@ -44,7 +38,7 @@ Function EstablishGraphConnection
         out-logfile -string $global:CalculatedScopes
     }
 
-    $directoryPermissionsBox_SelectedIndexChange = {
+    $directoryPermissionsBox_SelectedIndexChanged = {
         out-logfile -string $directoryPermissionsBox.selectedItem
         $global:directoryPermissions = $directoryPermissionsBox.selectedItem
         $loginStatusLabel.text = ("Directory Permissions Changed: "+$global:DirectoryPermissions)
