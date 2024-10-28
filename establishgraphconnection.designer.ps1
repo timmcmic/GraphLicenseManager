@@ -137,16 +137,16 @@ $ExitButton.add_Click($ExitButton_Click)
 #EnvironmentBox
 #
 $EnvironmentBox.FormattingEnabled = $true
-$EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]654,[System.Int32]191))
+$EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]609,[System.Int32]191))
 $EnvironmentBox.Name = [System.String]'EnvironmentBox'
-$EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
+$EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $EnvironmentBox.TabIndex = [System.Int32]10
 $EnvironmentBox.add_SelectedIndexChanged($EnvironmentBox_SelectedIndexChanged)
 #
 #Label4
 #
 $Label4.ImageAlign = [System.Drawing.ContentAlignment]::MiddleRight
-$Label4.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]490,[System.Int32]189))
+$Label4.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]189))
 $Label4.Name = [System.String]'Label4'
 $Label4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $Label4.TabIndex = [System.Int32]11
@@ -169,7 +169,7 @@ $LoginStatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 #
 #DirectoryPermissions
 #
-$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]490,[System.Int32]216))
+$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]216))
 $DirectoryPermissions.Name = [System.String]'DirectoryPermissions'
 $DirectoryPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $DirectoryPermissions.TabIndex = [System.Int32]13
@@ -179,7 +179,7 @@ $DirectoryPermissions.Visible = $false
 #
 #GroupPermissions
 #
-$GroupPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]490,[System.Int32]243))
+$GroupPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]243))
 $GroupPermissions.Name = [System.String]'GroupPermissions'
 $GroupPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $GroupPermissions.TabIndex = [System.Int32]14
@@ -190,21 +190,20 @@ $GroupPermissions.Visible = $false
 #DirectoryPermissionsBox
 #
 $DirectoryPermissionsBox.FormattingEnabled = $true
-$DirectoryPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]654,[System.Int32]218))
+$DirectoryPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]609,[System.Int32]218))
 $DirectoryPermissionsBox.Name = [System.String]'DirectoryPermissionsBox'
-$DirectoryPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
+$DirectoryPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $DirectoryPermissionsBox.TabIndex = [System.Int32]15
 $DirectoryPermissionsBox.Visible = $false
 #
 #GroupPermissionsBox
 #
 $GroupPermissionsBox.FormattingEnabled = $true
-$GroupPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]654,[System.Int32]245))
+$GroupPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]609,[System.Int32]245))
 $GroupPermissionsBox.Name = [System.String]'GroupPermissionsBox'
-$GroupPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
+$GroupPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $GroupPermissionsBox.TabIndex = [System.Int32]16
 $GroupPermissionsBox.Visible = $false
-
 
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
@@ -215,9 +214,8 @@ $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$groupPermissionBox.Items.AddRange($groupItems)
+$GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
-
 
 #
 #Form1

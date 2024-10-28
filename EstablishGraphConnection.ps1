@@ -1,3 +1,11 @@
+$TextBox3_TextChanged = {
+}
+$Label2_Click = {
+}
+$TextBox2_TextChanged = {
+}
+$Label1_Click = {
+}
 
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
@@ -9,7 +17,7 @@ $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$groupPermissionBox.Items.AddRange($groupItems)
+$GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
 
 #>
@@ -26,6 +34,22 @@ Function EstablishGraphConnection
         out-logfile -string $environmentBox.selectedItem
         $global:GraphEnvironment = $environmentBox.selectedItem
         $LoginStatusLabel.text = ("Environment Changed: "+$global:GraphEnvironment)
+    }
+
+    $groupPermissionsBox_SelectedIndexChanged = {
+        out-logfile -string $groupPermissionsBox.selectedItem
+        $global:GroupPermissions = $groupPermissionsBox.selectedItem
+        $loginStatusLabel.text = ("Group Permissions Changed: "+$global:GroupPermissions)
+        $global:CalculatedScopes = $global:DirectoryPermissions+","+$global:groupPermissions
+        out-logfile -string $global:CalculatedScopes
+    }
+
+    $directoryPermissionsBox_SelectedIndexChange = {
+        out-logfile -string $directoryPermissionsBox.selectedItem
+        $global:directoryPermissions = $directoryPermissionsBox.selectedItem
+        $loginStatusLabel.text = ("Directory Permissions Changed: "+$global:DirectoryPermissions)
+        $global:CalculatedScopes = $global:DirectoryPermissions+","+$global:groupPermissions
+        out-logfile -string $global:CalculatedScopes
     }
 
 
@@ -154,7 +178,7 @@ Function EstablishGraphConnection
             out-logfile -string "Interactive authentication radio box selected..."
 
             try {
-                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $global:GraphEnvironment -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -scopes $global:calculatedScopes -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
                 [void]$Form1.close()
             }
