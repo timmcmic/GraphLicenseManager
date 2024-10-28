@@ -66,6 +66,10 @@ Function EstablishGraphConnection
     }
 
     $Button1_Click = {
+        $global:combinedPermissions = $global:groupPermissions+","+$global:directoryPermissions
+
+        out-logfile -string ("Combined scopes based on user input: "+$global:combinedPermissions)
+
         if ($textBox1.text -eq "")
         {
             [System.Windows.Forms.MessageBox]::Show("TenantID is required to connnect to Microsoft Graph...", 'Warning')
@@ -135,7 +139,7 @@ Function EstablishGraphConnection
             out-logfile -string "Interactive authentication radio box selected..."
 
             try {
-                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $global:GraphEnvironment -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -scopes $global:combinedPermissions -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
                 [void]$Form1.close()
             }

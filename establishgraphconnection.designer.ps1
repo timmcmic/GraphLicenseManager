@@ -141,8 +141,6 @@ $EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentL
 $EnvironmentBox.Name = [System.String]'EnvironmentBox'
 $EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]154,[System.Int32]21))
 $EnvironmentBox.TabIndex = [System.Int32]10
-$items = "Global", "USGov", "USGovDOD" , "China"
-$EnvironmentBox.Items.AddRange($items)
 $EnvironmentBox.add_SelectedIndexChanged($EnvironmentBox_SelectedIndexChanged)
 #
 #Label4
@@ -153,6 +151,7 @@ $Label4.Name = [System.String]'Label4'
 $Label4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $Label4.TabIndex = [System.Int32]11
 $Label4.Text = [System.String]'Graph Environment Selection'
+$Label4.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #StatusStrip1
 #
@@ -170,43 +169,53 @@ $LoginStatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 #
 #DirectoryPermissions
 #
-$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]486,[System.Int32]198))
+$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]505,[System.Int32]200))
 $DirectoryPermissions.Name = [System.String]'DirectoryPermissions'
 $DirectoryPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]139,[System.Int32]23))
 $DirectoryPermissions.TabIndex = [System.Int32]13
 $DirectoryPermissions.Text = [System.String]'Directory Permissions'
-
 $DirectoryPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$DirectoryPermissions.Visible = $false
 #
 #DirectoryPermissionsBox
 #
 $DirectoryPermissionsBox.FormattingEnabled = $true
 $DirectoryPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]650,[System.Int32]200))
 $DirectoryPermissionsBox.Name = [System.String]'DirectoryPermissionsBox'
-$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-$DirectoryPermissiosnBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]154,[System.Int32]21))
 $DirectoryPermissionsBox.TabIndex = [System.Int32]14
+$DirectoryPermissionsBox.Visible = $false
 #
 #GroupPemissions
 #
-$GroupPemissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]486,[System.Int32]221))
+$GroupPemissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]505,[System.Int32]223))
 $GroupPemissions.Name = [System.String]'GroupPemissions'
 $GroupPemissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]139,[System.Int32]23))
 $GroupPemissions.TabIndex = [System.Int32]15
 $GroupPemissions.Text = [System.String]'Group Permissions'
 $GroupPemissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$GroupPemissions.Visible = $false
 #
 #GroupPermissionsBox
 #
 $GroupPermissionsBox.FormattingEnabled = $true
 $GroupPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]650,[System.Int32]227))
 $GroupPermissionsBox.Name = [System.String]'GroupPermissionsBox'
+$GroupPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]154,[System.Int32]21))
+$GroupPermissionsBox.TabIndex = [System.Int32]16
+$GroupPermissionsBox.Visible = $false
+
+
+$items = "Global", "USGov", "USGovDOD" , "China"
+$EnvironmentBox.Items.AddRange($items)
+
+$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$DirectoryPermissiosnBox.Items.AddRange($directoryItems)
+
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
 $GroupPermissiosnBox.Items.AddRange($groupItems)
-$GroupPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]154,[System.Int32]21))
 
-$GroupPermissionsBox.TabIndex = [System.Int32]16
+
 #
 #Form1
 #
