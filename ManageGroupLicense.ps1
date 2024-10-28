@@ -18,8 +18,8 @@ function PrintTree($printNode,$rootNodeName)
 
         $functionObject = New-Object PSObject -Property @{
             SkuPartNumber = $rootNodeName
-            SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.name)
-            ServicePlanName = $node.name
+            SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.text)
+            ServicePlanName = $node.text
             EnabledNew = $node.checked
         }
 
@@ -55,8 +55,8 @@ function ManageGroupLicense
 
         foreach ($rootNode in $licenseList.Nodes)
         {
-            out-logfile -string $rootNode.name
-            $planArray +=PrintTree $rootNode.nodes $rootNode.name
+            out-logfile -string $rootNode.Text
+            $planArray +=PrintTree $rootNode.nodes $rootNode.text
         }
 
         $ToolLabel.Text = "Comparing previous license state to user defined license state - this may take a minute..."
@@ -556,7 +556,7 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNode.text = $sku.SkuPartNumber+" ("+$sku.capabilityStatus+")"
+                $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
