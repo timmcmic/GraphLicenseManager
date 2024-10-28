@@ -289,9 +289,11 @@ function ManageGroupLicense
         $displayNameText.clear()
         $expirationDateTimeText.clear()
         $mailText.clear()
+        $licenseProcessingText.clear()
         $groupTypeText.clear()
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
+        $dataGridView1.rows.clear()
 
         $licenseList.beginUpdate()
         $licenseList.Nodes.Clear()
@@ -475,7 +477,7 @@ function ManageGroupLicense
             $mailText.appendtext($graphGroup.mail)
             $membershipRuleText.appendtext($graphGroup.membershipRule)
             $groupTypeText.appendtext($graphGroup.GroupTypes)
-            $licenseProcessingText.appendTest($groupGroup.LicenseProcessingState)
+            $licenseProcessingText.appendText($graphGroup.LicenseProcessingState.State)
 
             if ($graphGroup.displayName.Length -gt 0)
             {
@@ -679,6 +681,10 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $dataGridView1.rows.add($sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
+            }
+
+            $dataGridView1.Columns | Foreach-Object{
+                $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
             }
         }
     }
