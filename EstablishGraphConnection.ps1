@@ -46,8 +46,8 @@ Function EstablishGraphConnection
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
-        $groupPermissions.hide()
-        $directoryPermission.hide()
+        $groupPermissions.visible = $FALSE
+        $directoryPermission.visible = $FALSE
         $groupPermissionsBox.visible = $FALSE
         $DirectoryPermissionsBox.visible = $FALSE
     }
