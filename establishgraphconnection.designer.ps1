@@ -208,12 +208,15 @@ $GroupPermissionsBox.Visible = $false
 
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
+$EnvironmentBox.selectedIndex=0
 
 $directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-$DirectoryPermissionsBox.Items.AddRange($directoryItems)
+$DirectoryPermissiosnBox.Items.AddRange($directoryItems)
+$DirectoryPermissionsBox.selectedIndex = 0
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$GroupPermissionsBox.Items.AddRange($groupItems)
+$GroupPermissiosnBox.Items.AddRange($groupItems)
+$GroupPermissionsBox.selectedIndex = 0
 
 
 #

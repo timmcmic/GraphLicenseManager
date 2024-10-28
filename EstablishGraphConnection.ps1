@@ -1,12 +1,16 @@
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
+$EnvironmentBox.selectedIndex=0
+
 
 $directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
 $DirectoryPermissiosnBox.Items.AddRange($directoryItems)
+$DirectoryPermissionsBox.selectedIndex = 0
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
 $GroupPermissiosnBox.Items.AddRange($groupItems)
+$GroupPermissionsBox.selectedIndex = 0
 #>
 Function EstablishGraphConnection
 {
@@ -68,8 +72,8 @@ Function EstablishGraphConnection
 
         if ($global:authTypeRadioButton -eq $FALSE)
         {
-                    #$groupPermissions.show()
-            #$directoryPermission.show()
+            $groupPermissions.show()
+            $directoryPermission.show()
             #$groupPermissionsBox.visible = $TRUE
             #$DirectoryPermissionsBox.visible = $TRUE
         }
