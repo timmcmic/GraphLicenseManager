@@ -204,6 +204,21 @@ $GroupPermissionsBox.Name = [System.String]'GroupPermissionsBox'
 $GroupPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
 $GroupPermissionsBox.TabIndex = [System.Int32]16
 $GroupPermissionsBox.Visible = $false
+
+
+$items = "Global", "USGov", "USGovDOD" , "China"
+$EnvironmentBox.Items.AddRange($items)
+$EnvironmentBox.selectedIndex=0
+
+$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$directoryPermisisonsBox.Items.AddRange($directoryItems)
+$directoryPermisisonsBox.selectedIndex = 0
+
+$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
+$groupPermissionBox.Items.Add($groupItems)
+$groupPermissionsBox.selectedIndex = 0
+
+
 #
 #Form1
 #

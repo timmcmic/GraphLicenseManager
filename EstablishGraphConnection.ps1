@@ -1,21 +1,26 @@
-$TextBox3_TextChanged = {
-}
-$Label2_Click = {
-}
-$TextBox2_TextChanged = {
-}
-$Label1_Click = {
-}
+
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
 $EnvironmentBox.selectedIndex=0
+
+$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$directoryPermisisonsBox.Items.AddRange($directoryItems)
+$directoryPermisisonsBox.selectedIndex = 0
+
+$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
+$groupPermissionBox.Items.Add($groupItems)
+$groupPermissionsBox.selectedIndex = 0
+
 #>
 
 Function EstablishGraphConnection
 {
     $global:GraphEnvironment = "Global"
     $global:interactiveAuth = $true
+    $global:directoryPermissions = "Organization.Read.All"
+    $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
+    $global:calculatedScopes = ""
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
@@ -44,6 +49,8 @@ Function EstablishGraphConnection
             out-logfile -string $global:interactiveAuth
             $groupPermissions.hide()
             $directoryPermissions.hide()
+            $directoryPermissionsBox.hide()
+            $groupPermissionsBox.hide()
         }
         else
         {
@@ -63,8 +70,8 @@ Function EstablishGraphConnection
         {
             $groupPermissions.show()
             $directoryPermissions.show()
-            $directoryPermissionsBox.enabled = $true
-            $groupPermissionsBox.enabled = $true
+            $directoryPermissionsBox.show()
+            $groupPermissionsBox.show()
             out-logfile -string $global:interactiveAuth
             $global:interactiveAuth = $FALSE
             out-logfile -string $global:interactiveAuth
