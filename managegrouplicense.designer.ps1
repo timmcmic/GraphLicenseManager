@@ -63,12 +63,12 @@ $Label1.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 $GroupObjectIDText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]22))
 $GroupObjectIDText.Name = [System.String]'GroupObjectIDText'
-$GroupObjectIDText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
+$GroupObjectIDText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
 $GroupObjectIDText.TabIndex = [System.Int32]1
 #
 #Button1
 #
-$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]753,[System.Int32]22))
+$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]919,[System.Int32]22))
 $Button1.Name = [System.String]'Button1'
 $Button1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]75,[System.Int32]23))
 $Button1.TabIndex = [System.Int32]2
@@ -91,7 +91,7 @@ $DisplayName.Visible = $false
 $DisplayNameText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]49))
 $DisplayNameText.Name = [System.String]'DisplayNameText'
 $DisplayNameText.ReadOnly = $true
-$DisplayNameText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
+$DisplayNameText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
 $DisplayNameText.TabIndex = [System.Int32]4
 $DisplayNameText.Visible = $false
 #
@@ -110,7 +110,7 @@ $ExpirationDateTime.Visible = $false
 $ExpirationDateTimeText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]75))
 $ExpirationDateTimeText.Name = [System.String]'ExpirationDateTimeText'
 $ExpirationDateTimeText.ReadOnly = $true
-$ExpirationDateTimeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
+$ExpirationDateTimeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
 $ExpirationDateTimeText.TabIndex = [System.Int32]6
 $ExpirationDateTimeText.Visible = $false
 #
@@ -129,7 +129,7 @@ $Mail.Visible = $false
 $MailText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]102))
 $MailText.Name = [System.String]'MailText'
 $MailText.ReadOnly = $true
-$MailText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
+$MailText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
 $MailText.TabIndex = [System.Int32]8
 $MailText.Visible = $false
 #
@@ -148,7 +148,7 @@ $GroupTypes.Visible = $false
 $GroupTypeText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]125))
 $GroupTypeText.Name = [System.String]'GroupTypeText'
 $GroupTypeText.ReadOnly = $true
-$GroupTypeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
+$GroupTypeText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
 $GroupTypeText.TabIndex = [System.Int32]10
 $GroupTypeText.Visible = $false
 #
@@ -168,7 +168,7 @@ $MembershipRuleText.Location = (New-Object -TypeName System.Drawing.Point -Argum
 $MembershipRuleText.Name = [System.String]'MembershipRuleText'
 $MembershipRuleText.ReadOnly = $true
 $MembershipRuleText.ScrollBars = [System.Windows.Forms.ScrollBars]::Both
-$MembershipRuleText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]536,[System.Int32]21))
+$MembershipRuleText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
 $MembershipRuleText.TabIndex = [System.Int32]12
 $MembershipRuleText.Visible = $false
 #
@@ -201,7 +201,7 @@ $GroupMembersView.Visible = $false
 #
 $LicenseLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]175))
 $LicenseLabel.Name = [System.String]'LicenseLabel'
-$LicenseLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]816,[System.Int32]23))
+$LicenseLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]982,[System.Int32]23))
 $LicenseLabel.TabIndex = [System.Int32]17
 $LicenseLabel.Text = [System.String]'Licenses'
 $LicenseLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
@@ -228,7 +228,7 @@ $exit.add_Click($exit_Click)
 #
 #commit
 #
-$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]568,[System.Int32]571))
+$commit.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]734,[System.Int32]571))
 $commit.Name = [System.String]'commit'
 $commit.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]260,[System.Int32]23))
 $commit.TabIndex = [System.Int32]20
@@ -242,7 +242,7 @@ $commit.add_Click($commit_Click)
 $StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($ToolLabel))
 $StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]597))
 $StatusStrip1.Name = [System.String]'StatusStrip1'
-$StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]834,[System.Int32]22))
+$StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]22))
 $StatusStrip1.TabIndex = [System.Int32]21
 $StatusStrip1.Text = [System.String]'StatusStrip1'
 #
@@ -253,16 +253,22 @@ $ToolLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sys
 #
 #DataGridView1
 #
+$DataGridView1.AllowUserToAddRows = $false
+$DataGridView1.AllowUserToDeleteRows = $false
+$DataGridView1.AllowUserToResizeColumns = $false
+$DataGridView1.AllowUserToResizeRows = $false
 $DataGridView1.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $DataGridView1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]428,[System.Int32]201))
 $DataGridView1.Name = [System.String]'DataGridView1'
-$DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]400,[System.Int32]364))
+$DataGridView1.RowHeadersVisible = $false
+$DataGridView1.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::CellSelect
+$DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]566,[System.Int32]364))
 $DataGridView1.TabIndex = [System.Int32]22
 $DataGridView1.Visible = $false
 #
 #Form2
 #
-$Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]834,[System.Int32]619))
+$Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
 $Form2.ControlBox = $false
 $Form2.Controls.Add($DataGridView1)
 $Form2.Controls.Add($StatusStrip1)
