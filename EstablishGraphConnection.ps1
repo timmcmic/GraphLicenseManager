@@ -1,41 +1,20 @@
-<#
-$items = "Global", "USGov", "USGovDOD" , "China"
-$EnvironmentBox.Items.AddRange($items)
-$EnvironmentBox.selectedIndex=0
+$TextBox3_TextChanged = {
+}
+$Label2_Click = {
+}
+$TextBox2_TextChanged = {
+}
+$Label1_Click = {
+}
 
-
-$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-$DirectoryPermissiosnBox.Items.AddRange($directoryItems)
-$DirectoryPermissionsBox.selectedIndex = 0
-
-$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$GroupPermissiosnBox.Items.AddRange($groupItems)
-$GroupPermissionsBox.selectedIndex = 0
-#>
 Function EstablishGraphConnection
 {
     $global:GraphEnvironment = "Global"
-    $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
-    $global:directoryPermissions = "Organization.Read.All"
-    $global:combinedPermissions = ""
-    $global:authTypeRadioButton = $TRUE
-
+    
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
         $global:GraphEnvironment = $environmentBox.selectedItem
         $LoginStatusLabel.text = ("Environment Changed: "+$global:GraphEnvironment)
-    }
-
-    $GroupPermissionsBox_SelectedIndexChanged = {
-        out-logfile -string $groupPermissionsBox.selectedItem
-        $global:groupPermissions = $groupPermissionbox.selectedItem
-        $LoginStatusLabel.text = ("Group Permissions ChangeD: "+$groupPermissionbox.selectedItem)
-    }
-
-    $directoryPermissionsBox_SelectedIndexChanged = {
-        out-logfile -string $directoryPermissionsBox.selectedItem
-        $global:DirectoryPermissions = $directoryPermissionsBox.selectedItem
-        $loginStatusLabel.text = ("Directory Permissions Change: "+$directoryPermissionsBox.selectedItem)
     }
 
 
@@ -51,17 +30,6 @@ Function EstablishGraphConnection
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
-        if ($global:authTypeRadioButton -eq $TRUE)
-        {
-            #$groupPermissions.visible = $FALSE
-            #$directoryPermission.visible = $FALSE
-            #groupPermissionsBox.visible = $FALSE
-            #$DirectoryPermissionsBox.visible = $FALSE
-        }
-        else
-        {
-            $global:authTypeRadioButton = $FALSE
-        }
     }
     
     $RadioButton2_CheckedChanged = {
@@ -69,25 +37,9 @@ Function EstablishGraphConnection
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
-
-        if ($global:authTypeRadioButton -eq $FALSE)
-        {
-            $groupPermissions.show()
-            $directoryPermission.show()
-            #$groupPermissionsBox.visible = $TRUE
-            #$DirectoryPermissionsBox.visible = $TRUE
-        }
-        else
-        {
-            $global:authTypeRadioButton = $TRUE
-        }
     }
 
     $Button1_Click = {
-        $global:combinedPermissions = $global:groupPermissions+","+$global:directoryPermissions
-
-        out-logfile -string ("Combined scopes based on user input: "+$global:combinedPermissions)
-
         if ($textBox1.text -eq "")
         {
             [System.Windows.Forms.MessageBox]::Show("TenantID is required to connnect to Microsoft Graph...", 'Warning')
@@ -157,7 +109,7 @@ Function EstablishGraphConnection
             out-logfile -string "Interactive authentication radio box selected..."
 
             try {
-                Connect-MgGraph -tenantID $tenantID -scopes $global:combinedPermissions -environment $global:GraphEnvironment -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -scopes "Directory.ReadWrite.All,Group.ReadWrite.All" -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
                 [void]$Form1.close()
             }
