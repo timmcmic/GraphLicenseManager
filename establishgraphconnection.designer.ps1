@@ -171,6 +171,7 @@ $DirectoryPermissions.Size = (New-Object -TypeName System.Drawing.Size -Argument
 $DirectoryPermissions.TabIndex = [System.Int32]13
 $DirectoryPermissions.Text = [System.String]'Directory Permissions'
 $DirectoryPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$DirectoryPermissions.Visible = $false
 #
 #GroupPermissions
 #
@@ -180,6 +181,7 @@ $GroupPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 $GroupPermissions.TabIndex = [System.Int32]14
 $GroupPermissions.Text = [System.String]'Group Permissions'
 $GroupPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$GroupPermissions.Visible = $false
 #
 #Form1
 #
