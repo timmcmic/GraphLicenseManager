@@ -14,6 +14,7 @@ Function EstablishGraphConnection
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
     $global:directoryPermissions = "Organization.Read.All"
     $global:combinedPermissions = ""
+    $global:authTypeRadioButton = $TRUE
 
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
@@ -46,10 +47,17 @@ Function EstablishGraphConnection
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
-        $groupPermissions.visible = $FALSE
-        $directoryPermission.visible = $FALSE
-        #groupPermissionsBox.visible = $FALSE
-        #$DirectoryPermissionsBox.visible = $FALSE
+        if ($global:authTypeRadioButton -eq $TRUE)
+        {
+            #$groupPermissions.visible = $FALSE
+            #$directoryPermission.visible = $FALSE
+            #groupPermissionsBox.visible = $FALSE
+            #$DirectoryPermissionsBox.visible = $FALSE
+        }
+        else
+        {
+            $global:authTypeRadioButton = $FALSE
+        }
     }
     
     $RadioButton2_CheckedChanged = {
@@ -57,10 +65,18 @@ Function EstablishGraphConnection
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
-        $groupPermissions.show()
-        $directoryPermission.show()
-        #$groupPermissionsBox.visible = $TRUE
-        #$DirectoryPermissionsBox.visible = $TRUE
+
+        if ($global:authTypeRadioButton -eq $FALSE)
+        {
+                    #$groupPermissions.show()
+            #$directoryPermission.show()
+            #$groupPermissionsBox.visible = $TRUE
+            #$DirectoryPermissionsBox.visible = $TRUE
+        }
+        else
+        {
+            $global:authTypeRadioButton = $TRUE
+        }
     }
 
     $Button1_Click = {
