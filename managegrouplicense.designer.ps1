@@ -279,6 +279,7 @@ $LicenseProcessingLabel.Size = (New-Object -TypeName System.Drawing.Size -Argume
 $LicenseProcessingLabel.TabIndex = [System.Int32]23
 $LicenseProcessingLabel.Text = [System.String]'License Processing State:'
 $LicenseProcessingLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$LicenseProcessingLabel.Visible = $false
 #
 #LicenseProcessingText
 #
