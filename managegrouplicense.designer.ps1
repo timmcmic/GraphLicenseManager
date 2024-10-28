@@ -21,6 +21,8 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
 [System.Windows.Forms.ToolStripStatusLabel]$ToolLabel = $null
 [System.Windows.Forms.DataGridView]$DataGridView1 = $null
+[System.Windows.Forms.Label]$LicenseProcessingLabel = $null
+[System.Windows.Forms.TextBox]$LicenseProcessingText = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -45,6 +47,8 @@ $commit = (New-Object -TypeName System.Windows.Forms.Button)
 $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
 $ToolLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
 $DataGridView1 = (New-Object -TypeName System.Windows.Forms.DataGridView)
+$LicenseProcessingLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$LicenseProcessingText = (New-Object -TypeName System.Windows.Forms.TextBox)
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
 $StatusStrip1.SuspendLayout()
 ([System.ComponentModel.ISupportInitialize]$DataGridView1).BeginInit()
@@ -199,7 +203,7 @@ $GroupMembersView.Visible = $false
 #
 #LicenseLabel
 #
-$LicenseLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]175))
+$LicenseLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]200))
 $LicenseLabel.Name = [System.String]'LicenseLabel'
 $LicenseLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]982,[System.Int32]23))
 $LicenseLabel.TabIndex = [System.Int32]17
@@ -210,9 +214,9 @@ $LicenseLabel.Visible = $false
 #LicenseList
 #
 $LicenseList.CheckBoxes = $true
-$LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]201))
+$LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]226))
 $LicenseList.Name = [System.String]'LicenseList'
-$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]410,[System.Int32]364))
+$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]488,[System.Int32]339))
 $LicenseList.TabIndex = [System.Int32]18
 $LicenseList.Visible = $false
 #
@@ -258,19 +262,39 @@ $DataGridView1.AllowUserToDeleteRows = $false
 $DataGridView1.AllowUserToResizeColumns = $false
 $DataGridView1.AllowUserToResizeRows = $false
 $DataGridView1.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
-$DataGridView1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]428,[System.Int32]201))
+$DataGridView1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]506,[System.Int32]226))
 $DataGridView1.Name = [System.String]'DataGridView1'
 $DataGridView1.RowHeadersVisible = $false
 $DataGridView1.RowHeadersWidthSizeMode = [System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode]::AutoSizeToAllHeaders
 $DataGridView1.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::FullRowSelect
-$DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]566,[System.Int32]364))
+$DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]488,[System.Int32]339))
 $DataGridView1.TabIndex = [System.Int32]22
 $DataGridView1.Visible = $false
+#
+#LicenseProcessingLabel
+#
+$LicenseProcessingLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]174))
+$LicenseProcessingLabel.Name = [System.String]'LicenseProcessingLabel'
+$LicenseProcessingLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]193,[System.Int32]23))
+$LicenseProcessingLabel.TabIndex = [System.Int32]23
+$LicenseProcessingLabel.Text = [System.String]'License Processing State:'
+$LicenseProcessingLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+#
+#LicenseProcessingText
+#
+$LicenseProcessingText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]176))
+$LicenseProcessingText.Name = [System.String]'LicenseProcessingText'
+$LicenseProcessingText.ReadOnly = $true
+$LicenseProcessingText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
+$LicenseProcessingText.TabIndex = [System.Int32]24
+$LicenseProcessingText.Visible = $false
 #
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
 $Form2.ControlBox = $false
+$Form2.Controls.Add($LicenseProcessingText)
+$Form2.Controls.Add($LicenseProcessingLabel)
 $Form2.Controls.Add($DataGridView1)
 $Form2.Controls.Add($StatusStrip1)
 $Form2.Controls.Add($commit)
@@ -324,5 +348,7 @@ Add-Member -InputObject $Form2 -Name commit -Value $commit -MemberType NotePrope
 Add-Member -InputObject $Form2 -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name ToolLabel -Value $ToolLabel -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name DataGridView1 -Value $DataGridView1 -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name LicenseProcessingLabel -Value $LicenseProcessingLabel -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name LicenseProcessingText -Value $LicenseProcessingText -MemberType NoteProperty
 }
 . InitializeComponent

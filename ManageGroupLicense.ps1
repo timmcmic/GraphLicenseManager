@@ -307,7 +307,7 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to locate the group via groupID..."
-            $graphGroup = get-MGGroup -groupID $global:groupID -errorAction STOP
+            $graphGroup = get-MGGroup -groupID $global:groupID -property LicenseProcessingState,AssignedLicenses -errorAction STOP
             out-logfile -string "Group was successfully located..."
             out-logfile -string $graphGroup
             $getGroupFailure=$false
@@ -332,7 +332,8 @@ function ManageGroupLicense
             try
             {
                 out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-                $graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
+                #$graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
+                $graphGroupLicenses = $graphGroup
                 out-logfile -string "Group and licenses were successfully located..."
                 out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
                 $ToolLabel.Text = "Get Group Licenses Successful"
@@ -466,12 +467,15 @@ function ManageGroupLicense
             $mailText.show()
             $groupTypeText.show()
             $membershipRuleText.show()
+            $licenseProcessingLabel.show()
+            $licenseProcessingText.show()
 
             $displayNameText.appendtext($graphGroup.displayName)
             $expirationDateTimeText.appendTExt($graphGroup.ExpirationDateTime)
             $mailText.appendtext($graphGroup.mail)
             $membershipRuleText.appendtext($graphGroup.membershipRule)
             $groupTypeText.appendtext($graphGroup.GroupTypes)
+            $licenseProcessingText.appendTest($groupGroup.LicenseProcessingState)
 
             if ($graphGroup.displayName.Length -gt 0)
             {
