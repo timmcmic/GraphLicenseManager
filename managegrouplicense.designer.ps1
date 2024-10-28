@@ -273,7 +273,7 @@ $DataGridView1.Visible = $false
 #
 #LicenseProcessingLabel
 #
-$LicenseProcessingLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]174))
+$LicenseProcessingLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]172))
 $LicenseProcessingLabel.Name = [System.String]'LicenseProcessingLabel'
 $LicenseProcessingLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]193,[System.Int32]23))
 $LicenseProcessingLabel.TabIndex = [System.Int32]23
@@ -283,7 +283,7 @@ $LicenseProcessingLabel.Visible = $false
 #
 #LicenseProcessingText
 #
-$LicenseProcessingText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]176))
+$LicenseProcessingText.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]211,[System.Int32]174))
 $LicenseProcessingText.Name = [System.String]'LicenseProcessingText'
 $LicenseProcessingText.ReadOnly = $true
 $LicenseProcessingText.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]702,[System.Int32]21))
