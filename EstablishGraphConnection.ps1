@@ -6,6 +6,17 @@ $TextBox2_TextChanged = {
 }
 $Label1_Click = {
 }
+<#
+$items = "Global", "USGov", "USGovDOD" , "China"
+$EnvironmentBox.Items.AddRange($items)
+
+$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$DirectoryPermissiosnBox.Items.AddRange($directoryItems)
+
+$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
+$GroupPermissiosnBox.Items.AddRange($groupItems)
+#>
+
 
 Function EstablishGraphConnection
 {
