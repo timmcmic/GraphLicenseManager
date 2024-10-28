@@ -211,11 +211,11 @@ $EnvironmentBox.Items.AddRange($items)
 $EnvironmentBox.selectedIndex=0
 
 $directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-$directoryPermisisonsBox.Items.AddRange($directoryItems)
-$directoryPermisisonsBox.selectedIndex = 0
+$DirectoryPermissionsBox.Items.AddRange($directoryItems)
+$DirectoryPermissionsBox.selectedIndex = 0
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$groupPermissionBox.Items.Add($groupItems)
+$groupPermissionsBox.Items.Add($groupItems)
 $groupPermissionsBox.selectedIndex = 0
 
 
