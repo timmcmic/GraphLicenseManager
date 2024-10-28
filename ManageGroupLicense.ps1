@@ -666,8 +666,14 @@ function ManageGroupLicense
             $dataGridView1.columns[3].name = "LockedOut"
             $dataGridView1.columns[4].name = "Suspended"
             $dataGridView1.columns[5].name = "Warning"
-            dataGridView1.Columns | Foreach-Object{
-                $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
+            
+            foreach ($sku in $skus)
+            {
+                $dataGridView1.add($sku.SkuParNumber,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
+            }
+
+            $dataGridView1.Columns | Foreach-Object{
+                $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells}
         }
     }
 
