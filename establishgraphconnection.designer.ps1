@@ -15,6 +15,8 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.ToolStripStatusLabel]$LoginStatusLabel = $null
 [System.Windows.Forms.Label]$DirectoryPermissions = $null
 [System.Windows.Forms.Label]$GroupPermissions = $null
+[System.Windows.Forms.ComboBox]$DirectoryPermissionsBox = $null
+[System.Windows.Forms.ComboBox]$GroupPermissionsBox = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -33,6 +35,8 @@ $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
 $LoginStatusLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
 $DirectoryPermissions = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupPermissions = (New-Object -TypeName System.Windows.Forms.Label)
+$DirectoryPermissionsBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
+$GroupPermissionsBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $StatusStrip1.SuspendLayout()
 $Form1.SuspendLayout()
 #
@@ -133,16 +137,16 @@ $ExitButton.add_Click($ExitButton_Click)
 #EnvironmentBox
 #
 $EnvironmentBox.FormattingEnabled = $true
-$EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]683,[System.Int32]189))
+$EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]654,[System.Int32]191))
 $EnvironmentBox.Name = [System.String]'EnvironmentBox'
-$EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]121,[System.Int32]21))
+$EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
 $EnvironmentBox.TabIndex = [System.Int32]10
 $EnvironmentBox.add_SelectedIndexChanged($EnvironmentBox_SelectedIndexChanged)
 #
 #Label4
 #
 $Label4.ImageAlign = [System.Drawing.ContentAlignment]::MiddleRight
-$Label4.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]519,[System.Int32]192))
+$Label4.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]490,[System.Int32]189))
 $Label4.Name = [System.String]'Label4'
 $Label4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $Label4.TabIndex = [System.Int32]11
@@ -165,7 +169,7 @@ $LoginStatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 #
 #DirectoryPermissions
 #
-$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]519,[System.Int32]215))
+$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]490,[System.Int32]216))
 $DirectoryPermissions.Name = [System.String]'DirectoryPermissions'
 $DirectoryPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $DirectoryPermissions.TabIndex = [System.Int32]13
@@ -175,7 +179,7 @@ $DirectoryPermissions.Visible = $false
 #
 #GroupPermissions
 #
-$GroupPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]519,[System.Int32]238))
+$GroupPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]490,[System.Int32]243))
 $GroupPermissions.Name = [System.String]'GroupPermissions'
 $GroupPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $GroupPermissions.TabIndex = [System.Int32]14
@@ -183,10 +187,30 @@ $GroupPermissions.Text = [System.String]'Group Permissions'
 $GroupPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 $GroupPermissions.Visible = $false
 #
+#DirectoryPermissionsBox
+#
+$DirectoryPermissionsBox.FormattingEnabled = $true
+$DirectoryPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]654,[System.Int32]218))
+$DirectoryPermissionsBox.Name = [System.String]'DirectoryPermissionsBox'
+$DirectoryPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
+$DirectoryPermissionsBox.TabIndex = [System.Int32]15
+$DirectoryPermissionsBox.Visible = $false
+#
+#GroupPermissionsBox
+#
+$GroupPermissionsBox.FormattingEnabled = $true
+$GroupPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]654,[System.Int32]245))
+$GroupPermissionsBox.Name = [System.String]'GroupPermissionsBox'
+$GroupPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]153,[System.Int32]21))
+$GroupPermissionsBox.TabIndex = [System.Int32]16
+$GroupPermissionsBox.Visible = $false
+#
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]331))
 $Form1.ControlBox = $false
+$Form1.Controls.Add($GroupPermissionsBox)
+$Form1.Controls.Add($DirectoryPermissionsBox)
 $Form1.Controls.Add($GroupPermissions)
 $Form1.Controls.Add($DirectoryPermissions)
 $Form1.Controls.Add($StatusStrip1)
@@ -225,5 +249,7 @@ Add-Member -InputObject $Form1 -Name StatusStrip1 -Value $StatusStrip1 -MemberTy
 Add-Member -InputObject $Form1 -Name LoginStatusLabel -Value $LoginStatusLabel -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name DirectoryPermissions -Value $DirectoryPermissions -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name GroupPermissions -Value $GroupPermissions -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name DirectoryPermissionsBox -Value $DirectoryPermissionsBox -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name GroupPermissionsBox -Value $GroupPermissionsBox -MemberType NoteProperty
 }
 . InitializeComponent

@@ -26,5 +26,8 @@
 'statusBar.Name' = 'statusBar'
 'StatusStrip1.Name' = 'StatusStrip1'
 'GroupBox1.Name' = 'GroupBox1'
+'DirectoryPermissionsBox.Name' = 'DirectoryPermissionsBox'
+'ComboBox2.Name' = 'ComboBox2'
+'GroupPermissionsBox.Name' = 'GroupPermissionsBox'
 }
 }

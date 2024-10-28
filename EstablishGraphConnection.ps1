@@ -42,6 +42,8 @@ Function EstablishGraphConnection
             out-logfile -string $global:interactiveAuth 
             $global:interactiveAuth = $TRUE
             out-logfile -string $global:interactiveAuth
+            $groupPermissions.hide()
+            $directoryPermissions.hide()
         }
         else
         {
@@ -61,6 +63,8 @@ Function EstablishGraphConnection
         {
             $groupPermissions.show()
             $directoryPermissions.show()
+            $directoryPermissionsBox.enabled = $true
+            $groupPermissionsBox.enabled = $true
             out-logfile -string $global:interactiveAuth
             $global:interactiveAuth = $FALSE
             out-logfile -string $global:interactiveAuth
