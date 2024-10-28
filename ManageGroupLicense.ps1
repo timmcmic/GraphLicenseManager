@@ -657,14 +657,14 @@ function ManageGroupLicense
         {
             $dataGridView1.show()
 
-            $dataGridView1.columnCount = 5
+            $dataGridView1.columnCount = 6
 
-            $dataGridView1.columns[0] = "SkuPartNumber"
-            $dataGridView1.columns[1] = "ConsumedUnits"
-            $dataGridView1.columns[2] = "Enabled"
-            $dataGridView1.columns[3] = "LockedOut"
-            $dataGridView1.columns[4] = "Suspended"
-            $dataGridView1.columns[5] = "Warning"
+            $dataGridView1.columns[0].name = "SkuPartNumber"
+            $dataGridView1.columns[1].name = "ConsumedUnits"
+            $dataGridView1.columns[2].name = "Enabled"
+            $dataGridView1.columns[3].name = "LockedOut"
+            $dataGridView1.columns[4].name = "Suspended"
+            $dataGridView1.columns[5].name = "Warning"
         }
     }
 
