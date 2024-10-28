@@ -39,11 +39,15 @@ Function EstablishGraphConnection
 
         if ($global:interactiveAuth -eq $false)
         {
+            out-logfile -string $global:interactiveAuth 
             $global:interactiveAuth = $TRUE
+            out-logfile -string $global:interactiveAuth
         }
         else
         {
+            out-logfile -string $global:interactiveAuth
             $global:interactiveAuth = $TRUE
+            out-logfile -string $global:interactiveAuth
         }
     }
     
@@ -57,11 +61,15 @@ Function EstablishGraphConnection
         {
             $groupPermissions.show()
             $directoryPermissions.show()
+            out-logfile -string $global:interactiveAuth
             $global:interactiveAuth = $FALSE
+            out-logfile -string $global:interactiveAuth
         }
         else
         {
+            out-logfile -string $global:interactiveAuth
             $global:interactiveAuth = $false
+            out-logfile -string $global:interactiveAuth
         }
     }
 
