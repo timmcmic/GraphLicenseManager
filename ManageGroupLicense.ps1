@@ -1,3 +1,5 @@
+$GroupMembersName_Click = {
+}
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()

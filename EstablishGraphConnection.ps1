@@ -22,7 +22,7 @@ Function EstablishGraphConnection
     $global:interactiveAuth = $true
     $global:directoryPermissions = "Organization.Read.All"
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
-    $global:calculatedScopes = ""
+    $global:calculatedScopes = $global:directoryPermissions+","+$global:groupPermissions
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem

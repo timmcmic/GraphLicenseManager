@@ -20,6 +20,7 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$commit = $null
 [System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
 [System.Windows.Forms.ToolStripStatusLabel]$ToolLabel = $null
+[System.Windows.Forms.DataGridView]$DataGridView1 = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -43,8 +44,10 @@ $exit = (New-Object -TypeName System.Windows.Forms.Button)
 $commit = (New-Object -TypeName System.Windows.Forms.Button)
 $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
 $ToolLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
+$DataGridView1 = (New-Object -TypeName System.Windows.Forms.DataGridView)
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
 $StatusStrip1.SuspendLayout()
+([System.ComponentModel.ISupportInitialize]$DataGridView1).BeginInit()
 $Form2.SuspendLayout()
 #
 #Label1
@@ -209,7 +212,7 @@ $LicenseLabel.Visible = $false
 $LicenseList.CheckBoxes = $true
 $LicenseList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]201))
 $LicenseList.Name = [System.String]'LicenseList'
-$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]816,[System.Int32]364))
+$LicenseList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]410,[System.Int32]364))
 $LicenseList.TabIndex = [System.Int32]18
 $LicenseList.Visible = $false
 #
@@ -246,13 +249,21 @@ $StatusStrip1.Text = [System.String]'StatusStrip1'
 #ToolLabel
 #
 $ToolLabel.Name = [System.String]'ToolLabel'
-$ToolLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]120,[System.Int32]17))
-$ToolLabel.Text = [System.String]'ToolStripStatusLabel1'
+$ToolLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]0,[System.Int32]17))
+#
+#DataGridView1
+#
+$DataGridView1.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
+$DataGridView1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]428,[System.Int32]201))
+$DataGridView1.Name = [System.String]'DataGridView1'
+$DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]400,[System.Int32]364))
+$DataGridView1.TabIndex = [System.Int32]22
 #
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]834,[System.Int32]619))
 $Form2.ControlBox = $false
+$Form2.Controls.Add($DataGridView1)
 $Form2.Controls.Add($StatusStrip1)
 $Form2.Controls.Add($commit)
 $Form2.Controls.Add($exit)
@@ -280,6 +291,7 @@ $Form2.Text = [System.String]'Graph License Manager'
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).EndInit()
 $StatusStrip1.ResumeLayout($false)
 $StatusStrip1.PerformLayout()
+([System.ComponentModel.ISupportInitialize]$DataGridView1).EndInit()
 $Form2.ResumeLayout($false)
 $Form2.PerformLayout()
 Add-Member -InputObject $Form2 -Name Label1 -Value $Label1 -MemberType NoteProperty
@@ -303,5 +315,6 @@ Add-Member -InputObject $Form2 -Name exit -Value $exit -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name commit -Value $commit -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name ToolLabel -Value $ToolLabel -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name DataGridView1 -Value $DataGridView1 -MemberType NoteProperty
 }
 . InitializeComponent
