@@ -662,18 +662,20 @@ function ManageGroupLicense
             $dataGridViewColumns = @()
             $dataGridViewColumns = @("SkuPartNumber","CapabilityStatus","ConsumedUnits","Enabled","LockedOut","Suspend","Warning")
 
+            foreach ($entry in $dataGridViewColumns )
+            {
+                out-logfile -string $entry
+            }
+
             for ($i = 0 ; $i -lt $dataGridViewColumns.count ; $i++)
             {
-                $dataGridView1.column[$i].name = $dataGridViewColumns[$i]
+                $dataGridView1.columns[$i].name = $dataGridViewColumns[$i]
             }
             
             foreach ($sku in $skus)
             {
                 $dataGridView1.rows.add($sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
             }
-
-            $dataGridView1.Columns | Foreach-Object{
-                $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells}
         }
     }
 
