@@ -657,19 +657,19 @@ function ManageGroupLicense
         {
             $dataGridView1.show()
 
-            $dataGridView1.columnCount = 6
+            $dataGridView1.columnCount = 7
 
-            $dataGridView1.columns[0].name = "SkuPartNumber"
+            $dataGridViewColumns = @()
+            $dataGridViewColumns = @("SkuPartNumber","CapabilityStatus","ConsumedUnits","Enabled","LockedOut","Suspend","Warning")
 
-            $dataGridView1.columns[1].name = "ConsumedUnits"
-            $dataGridView1.columns[2].name = "Enabled"
-            $dataGridView1.columns[3].name = "LockedOut"
-            $dataGridView1.columns[4].name = "Suspended"
-            $dataGridView1.columns[5].name = "Warning"
+            for ($i = 0 ; $i -lt $dataGridViewColumns.count ; $i++)
+            {
+                $dataGridView1.column[$i].name = $dataGridViewColumns[$i]
+            }
             
             foreach ($sku in $skus)
             {
-                $dataGridView1.add($sku.SkuParNumber,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
+                $dataGridView1.rows.add($sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
             }
 
             $dataGridView1.Columns | Foreach-Object{
