@@ -9,7 +9,7 @@ $directoryPermisisonsBox.Items.AddRange($directoryItems)
 $directoryPermisisonsBox.selectedIndex = 0
 
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$groupPermissionBox.Items.Add($groupItems)
+$groupPermissionBox.Items.AddRange($groupItems)
 $groupPermissionsBox.selectedIndex = 0
 
 #>
