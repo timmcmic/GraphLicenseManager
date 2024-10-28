@@ -127,6 +127,4 @@ function Start-GraphLicenseManager
     {
         send-TelemetryEvent -traceModuleName $traceModuleName -eventName $telemetryEventName -eventMetrics $telemetryEventMetrics -eventProperties $telemetryEventProperties
     }
-
-    exit
 }
