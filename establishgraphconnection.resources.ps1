@@ -11,6 +11,7 @@
 'Label3.Name' = 'Label3'
 'TextBox1.Name' = 'TextBox1'
 '$this.Name' = 'Form1'
+'LoginStatusLabel.Name' = 'LoginStatusLabel'
 'Label4.Name' = 'Label4'
 'RadioButton2.Name' = 'RadioButton2'
 'ComboBox1.Name' = 'ComboBox1'
@@ -23,6 +24,7 @@
 'statusBar.Name' = 'statusBar'
 'StatusStrip1.Name' = 'StatusStrip1'
 'GroupBox1.Name' = 'GroupBox1'
-'LoginStatusLabel.Name' = 'LoginStatusLabel'
+'DirectoryPermissions.Name' = 'DirectoryPermissions'
+'GroupPermissions.Name' = 'GroupPermissions'
 }
 }

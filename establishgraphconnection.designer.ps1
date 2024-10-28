@@ -13,6 +13,8 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$Label4 = $null
 [System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
 [System.Windows.Forms.ToolStripStatusLabel]$LoginStatusLabel = $null
+[System.Windows.Forms.Label]$DirectoryPermissions = $null
+[System.Windows.Forms.Label]$GroupPermissions = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -29,6 +31,8 @@ $EnvironmentBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $Label4 = (New-Object -TypeName System.Windows.Forms.Label)
 $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
 $LoginStatusLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
+$DirectoryPermissions = (New-Object -TypeName System.Windows.Forms.Label)
+$GroupPermissions = (New-Object -TypeName System.Windows.Forms.Label)
 $StatusStrip1.SuspendLayout()
 $Form1.SuspendLayout()
 #
@@ -108,7 +112,7 @@ $RadioButton2.add_CheckedChanged($RadioButton2_CheckedChanged)
 #
 #Button1
 #
-$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]233))
+$Button1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]283))
 $Button1.Name = [System.String]'Button1'
 $Button1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]646,[System.Int32]23))
 $Button1.TabIndex = [System.Int32]8
@@ -118,7 +122,7 @@ $Button1.add_Click($Button1_Click)
 #
 #ExitButton
 #
-$ExitButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]683,[System.Int32]233))
+$ExitButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]683,[System.Int32]283))
 $ExitButton.Name = [System.String]'ExitButton'
 $ExitButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]124,[System.Int32]23))
 $ExitButton.TabIndex = [System.Int32]9
@@ -133,9 +137,6 @@ $EnvironmentBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentL
 $EnvironmentBox.Name = [System.String]'EnvironmentBox'
 $EnvironmentBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]121,[System.Int32]21))
 $EnvironmentBox.TabIndex = [System.Int32]10
-$items = "Global", "USGov", "USGovDOD" , "China"
-$EnvironmentBox.Items.AddRange($items)
-$EnvironmentBox.selectedIndex=0
 $EnvironmentBox.add_SelectedIndexChanged($EnvironmentBox_SelectedIndexChanged)
 #
 #Label4
@@ -146,11 +147,12 @@ $Label4.Name = [System.String]'Label4'
 $Label4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $Label4.TabIndex = [System.Int32]11
 $Label4.Text = [System.String]'Graph Environment Selection'
+$Label4.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #StatusStrip1
 #
 $StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($LoginStatusLabel))
-$StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]259))
+$StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]309))
 $StatusStrip1.Name = [System.String]'StatusStrip1'
 $StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]22))
 $StatusStrip1.TabIndex = [System.Int32]12
@@ -161,10 +163,30 @@ $StatusStrip1.Text = [System.String]'StatusStrip1'
 $LoginStatusLabel.Name = [System.String]'LoginStatusLabel'
 $LoginStatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]0,[System.Int32]17))
 #
+#DirectoryPermissions
+#
+$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]519,[System.Int32]215))
+$DirectoryPermissions.Name = [System.String]'DirectoryPermissions'
+$DirectoryPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
+$DirectoryPermissions.TabIndex = [System.Int32]13
+$DirectoryPermissions.Text = [System.String]'Directory Permissions'
+$DirectoryPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+#
+#GroupPermissions
+#
+$GroupPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]519,[System.Int32]238))
+$GroupPermissions.Name = [System.String]'GroupPermissions'
+$GroupPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
+$GroupPermissions.TabIndex = [System.Int32]14
+$GroupPermissions.Text = [System.String]'Group Permissions'
+$GroupPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+#
 #Form1
 #
-$Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]281))
+$Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]331))
 $Form1.ControlBox = $false
+$Form1.Controls.Add($GroupPermissions)
+$Form1.Controls.Add($DirectoryPermissions)
 $Form1.Controls.Add($StatusStrip1)
 $Form1.Controls.Add($Label4)
 $Form1.Controls.Add($EnvironmentBox)
@@ -199,5 +221,7 @@ Add-Member -InputObject $Form1 -Name EnvironmentBox -Value $EnvironmentBox -Memb
 Add-Member -InputObject $Form1 -Name Label4 -Value $Label4 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name LoginStatusLabel -Value $LoginStatusLabel -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name DirectoryPermissions -Value $DirectoryPermissions -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name GroupPermissions -Value $GroupPermissions -MemberType NoteProperty
 }
 . InitializeComponent

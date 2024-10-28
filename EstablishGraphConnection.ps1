@@ -6,6 +6,11 @@ $TextBox2_TextChanged = {
 }
 $Label1_Click = {
 }
+<#
+$items = "Global", "USGov", "USGovDOD" , "China"
+$EnvironmentBox.Items.AddRange($items)
+$EnvironmentBox.selectedIndex=0
+#>
 
 Function EstablishGraphConnection
 {
@@ -37,6 +42,9 @@ Function EstablishGraphConnection
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
+
+        $groupPermissions.show()
+        $directoryPermissions.show()
     }
 
     $Button1_Click = {
