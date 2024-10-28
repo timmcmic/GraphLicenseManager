@@ -48,8 +48,8 @@ Function EstablishGraphConnection
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
         $groupPermissions.visible = $FALSE
         $directoryPermission.visible = $FALSE
-        $groupPermissionsBox.visible = $FALSE
-        $DirectoryPermissionsBox.visible = $FALSE
+        #groupPermissionsBox.visible = $FALSE
+        #$DirectoryPermissionsBox.visible = $FALSE
     }
     
     $RadioButton2_CheckedChanged = {
@@ -59,8 +59,8 @@ Function EstablishGraphConnection
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
         $groupPermissions.show()
         $directoryPermission.show()
-        $groupPermissionsBox.visible = $TRUE
-        $DirectoryPermissionsBox.visible = $TRUE
+        #$groupPermissionsBox.visible = $TRUE
+        #$DirectoryPermissionsBox.visible = $TRUE
     }
 
     $Button1_Click = {
