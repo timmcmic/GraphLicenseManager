@@ -652,6 +652,13 @@ function ManageGroupLicense
                 }
             }
         }
+
+        if ($getGroupFailure -eq $FALSE)
+        {
+            $dataGridView1.show()
+
+            $dataGridView1.columnCount = 5
+        }
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
