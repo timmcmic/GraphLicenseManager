@@ -665,6 +665,8 @@ function ManageGroupLicense
             $dataGridView1.columns[3].name = "LockedOut"
             $dataGridView1.columns[4].name = "Suspended"
             $dataGridView1.columns[5].name = "Warning"
+            $dataGridView1.AutoResizeColumnHeadersHeight()
+            $dataGridView1.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders)
         }
     }
 
