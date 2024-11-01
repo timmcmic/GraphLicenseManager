@@ -309,7 +309,7 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to locate the group via groupID..."
-            $graphGroup = get-MGGroup -groupID $global:groupID -property LicenseProcessingState,AssignedLicenses -errorAction STOP
+            $graphGroup = get-MGGroup -groupID $global:groupID -property DisplayName,ExpirationDateTime,Mail,GroupTypes,MembershipRule,LicenseProcessingState,AssignedLicenses -errorAction STOP
             out-logfile -string "Group was successfully located..."
             out-logfile -string $graphGroup
             $getGroupFailure=$false
