@@ -1,3 +1,7 @@
+$GroupInfo_Click = {
+    $form2.hide()
+    DisplayGroupInfo
+}
 $GroupMembersName_Click = {
 }
 function PrintTree($printNode,$rootNodeName)

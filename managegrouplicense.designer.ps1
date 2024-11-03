@@ -23,6 +23,7 @@ $Form2 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.DataGridView]$DataGridView1 = $null
 [System.Windows.Forms.Label]$LicenseProcessingLabel = $null
 [System.Windows.Forms.TextBox]$LicenseProcessingText = $null
+[System.Windows.Forms.Button]$GroupInfo = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -49,6 +50,7 @@ $ToolLabel = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
 $DataGridView1 = (New-Object -TypeName System.Windows.Forms.DataGridView)
 $LicenseProcessingLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $LicenseProcessingText = (New-Object -TypeName System.Windows.Forms.TextBox)
+$GroupInfo = (New-Object -TypeName System.Windows.Forms.Button)
 ([System.ComponentModel.ISupportInitialize]$GroupMembersView).BeginInit()
 $StatusStrip1.SuspendLayout()
 ([System.ComponentModel.ISupportInitialize]$DataGridView1).BeginInit()
@@ -290,10 +292,21 @@ $LicenseProcessingText.Size = (New-Object -TypeName System.Drawing.Size -Argumen
 $LicenseProcessingText.TabIndex = [System.Int32]24
 $LicenseProcessingText.Visible = $false
 #
+#GroupInfo
+#
+$GroupInfo.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]376,[System.Int32]571))
+$GroupInfo.Name = [System.String]'GroupInfo'
+$GroupInfo.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]256,[System.Int32]23))
+$GroupInfo.TabIndex = [System.Int32]25
+$GroupInfo.Text = [System.String]'View Group Info'
+$GroupInfo.UseVisualStyleBackColor = $true
+$GroupInfo.add_Click($GroupInfo_Click)
+#
 #Form2
 #
 $Form2.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
 $Form2.ControlBox = $false
+$Form2.Controls.Add($GroupInfo)
 $Form2.Controls.Add($LicenseProcessingText)
 $Form2.Controls.Add($LicenseProcessingLabel)
 $Form2.Controls.Add($DataGridView1)
@@ -351,5 +364,6 @@ Add-Member -InputObject $Form2 -Name ToolLabel -Value $ToolLabel -MemberType Not
 Add-Member -InputObject $Form2 -Name DataGridView1 -Value $DataGridView1 -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name LicenseProcessingLabel -Value $LicenseProcessingLabel -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name LicenseProcessingText -Value $LicenseProcessingText -MemberType NoteProperty
+Add-Member -InputObject $Form2 -Name GroupInfo -Value $GroupInfo -MemberType NoteProperty
 }
 . InitializeComponent
