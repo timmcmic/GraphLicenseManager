@@ -1,5 +1,7 @@
 $GroupInfo_Click = {
+    out-logfile -string "Entering display group info."
     $form2.hide()
+    DisplayGroupInfo
     $form2.show()
 }
 
