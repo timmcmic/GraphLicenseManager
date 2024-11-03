@@ -1,5 +1,5 @@
 function DisplayGroupInfo
 {
-    write-host $groupInfo.DisplayName
+    write-host $global:graphGroup.displayName
 
 }
