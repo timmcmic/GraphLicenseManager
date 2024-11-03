@@ -1,6 +1,5 @@
 $GroupInfo_Click = {
     $form2.hide()
-    DisplayGroupInfo -groupInfo $graphGroup
     $form2.show()
 }
 
@@ -315,11 +314,11 @@ function ManageGroupLicense
         try
         {
             out-logfile -string "Attempt to locate the group via groupID..."
-            $graphGroup = get-MGGroup -groupID $global:groupID -property DisplayName,ExpirationDateTime,Mail,GroupTypes,MembershipRule,LicenseProcessingState,AssignedLicenses -errorAction STOP
+            $global:graphGroup = get-MGGroup -groupID $global:groupID -property DisplayName,ExpirationDateTime,Mail,GroupTypes,MembershipRule,LicenseProcessingState,AssignedLicenses -errorAction STOP
             out-logfile -string "Group was successfully located..."
-            out-logfile -string $graphGroup
+            out-logfile -string $global:graphGroup
             $getGroupFailure=$false
-            out-xmlFile -itemToExport $graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime))
+            out-xmlFile -itemToExport $global:graphGroup -itemNameToExport ("GraphGroup-"+(Get-Date -Format FileDateTime))
             $ToolLabel.Text = "GET-MGGroup Successful"
         }
         catch
@@ -340,10 +339,10 @@ function ManageGroupLicense
             try
             {
                 out-logfile -string "Attempt to obtain assigned licenses on the group by groupID..."
-                #$graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
-                $graphGroupLicenses = $graphGroup
+                #$global:graphGroupLicenses = get-MGGroup -groupID $global:groupID -property "AssignedLicenses" -errorAction STOP
+                $global:graphGroupLicenses = $global:graphGroup
                 out-logfile -string "Group and licenses were successfully located..."
-                out-xmlFile -itemToExport $graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
+                out-xmlFile -itemToExport $global:graphGroupLicenses -itemNameToExport ("GraphGroupLicense-"+(Get-Date -Format FileDateTime)) 
                 $ToolLabel.Text = "Get Group Licenses Successful"
             }
             catch
@@ -428,7 +427,7 @@ function ManageGroupLicense
 
             out-logfile -string "Evaluating the skus in the tenant against the group provided."
 
-            if ($graphGroupLicenses.assignedLicenses.count -gt 0)
+            if ($global:graphGroupLicenses.assignedLicenses.count -gt 0)
             {
                 out-logfile -string "The group specified has licenses - being the evaluation."
 
@@ -436,11 +435,11 @@ function ManageGroupLicense
                 {
                     out-logfile -string "Checking to see if the group has the SKU id..."
 
-                    if ($graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
+                    if ($global:graphGroupLicenses.AssignedLicenses.SkuID.contains($skuObject.skuID))
                     {
                         out-logfile -string "The group licenses the sku id - check disabled plans..."
 
-                        $workingLicense = $graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
+                        $workingLicense = $global:graphGroupLicenses.assignedLicenses | where {$_.skuID -eq $skuObject.skuID}
 
                         out-logfile -string ("Evaluating the following sku ID on the group: "+$workingLicense.skuID)
 
@@ -478,36 +477,36 @@ function ManageGroupLicense
             $licenseProcessingLabel.show()
             $licenseProcessingText.show()
 
-            $displayNameText.appendtext($graphGroup.displayName)
-            $expirationDateTimeText.appendTExt($graphGroup.ExpirationDateTime)
-            $mailText.appendtext($graphGroup.mail)
-            $membershipRuleText.appendtext($graphGroup.membershipRule)
-            $groupTypeText.appendtext($graphGroup.GroupTypes)
-            $licenseProcessingText.appendText($graphGroup.LicenseProcessingState.State)
+            $displayNameText.appendtext($global:graphGroup.displayName)
+            $expirationDateTimeText.appendTExt($global:graphGroup.ExpirationDateTime)
+            $mailText.appendtext($global:graphGroup.mail)
+            $membershipRuleText.appendtext($global:graphGroup.membershipRule)
+            $groupTypeText.appendtext($global:graphGroup.GroupTypes)
+            $licenseProcessingText.appendText($global:graphGroup.LicenseProcessingState.State)
 
-            if ($graphGroup.displayName.Length -gt 0)
+            if ($global:graphGroup.displayName.Length -gt 0)
             {
-                out-logfile -string $graphGroup.displayName
+                out-logfile -string $global:graphGroup.displayName
             }
 
-            if ($graphGroup.ExpirationDateTime.Length -gt 0)
+            if ($global:graphGroup.ExpirationDateTime.Length -gt 0)
             {
-                out-logfile -string $graphGroup.ExpirationDateTime
+                out-logfile -string $global:graphGroup.ExpirationDateTime
             }
 
-            if ($graphGroup.mail.Length -gt 0)
+            if ($global:graphGroup.mail.Length -gt 0)
             {
-                out-logfile -string $graphGroup.mail
+                out-logfile -string $global:graphGroup.mail
             }
 
-            if ($graphGroup.membershipRule.Length -gt 0)
+            if ($global:graphGroup.membershipRule.Length -gt 0)
             {
-                out-logfile -string $graphGroup.membershipRule
+                out-logfile -string $global:graphGroup.membershipRule
             }
 
-            if ($graphGroup.GroupTypes.Length -gt 0)
+            if ($global:graphGroup.GroupTypes.Length -gt 0)
             {
-                out-logfile -string $graphGroup.GroupTypes
+                out-logfile -string $global:graphGroup.GroupTypes
             }
         }
         else
