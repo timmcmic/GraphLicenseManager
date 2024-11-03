@@ -300,6 +300,7 @@ $GroupInfo.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sys
 $GroupInfo.TabIndex = [System.Int32]25
 $GroupInfo.Text = [System.String]'View Group Info'
 $GroupInfo.UseVisualStyleBackColor = $true
+$GroupInfo.Visible = $false
 $GroupInfo.add_Click($GroupInfo_Click)
 #
 #Form2

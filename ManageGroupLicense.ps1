@@ -478,6 +478,7 @@ function ManageGroupLicense
             $membershipRuleText.show()
             $licenseProcessingLabel.show()
             $licenseProcessingText.show()
+            $groupInfo.show()
 
             $displayNameText.appendtext($global:graphGroup.displayName)
             $expirationDateTimeText.appendTExt($global:graphGroup.ExpirationDateTime)
