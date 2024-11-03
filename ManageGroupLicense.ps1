@@ -517,50 +517,6 @@ function ManageGroupLicense
             out-logfile -string "Relevant form controls not displayed due to previous failure."
         }
 
-        <#
-
-        if ($getGroupFailure -eq $false)
-        {
-            out-logfile -string "Previous operation was successful proceed with locating membership."
-            try
-            {
-                $groupMembers = get-mgGroupMember -groupID $global:groupID -all -errorAction STOP
-
-                $getGroupFailure=$false
-            }
-            catch
-            {
-                $getGroupFailure=$true
-                $errorText=$_
-                out-logfile -string "The group was not located by group object id.."
-                out-logfile -string $errorText
-                [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
-            }
-
-            out-xmlFile -itemToExport $groupMembers -itemNameToExport ("GroupMembers-"+(Get-Date -Format FileDateTime))
-
-            out-logfile -string "Showing relelvant group member controls..."
-
-            $GroupMembersName.Show()
-            $GroupMembersView.show()
-
-            out-logfile -string "Showing relevant group member information..."
-
-            $groupMembersView.columnCount = 2
-            $groupMembersView.columnHeadersVisible = $TRUE
-            $groupMembersView.columns[0].name = "ID"
-            $groupMembersView.columns[1].name = "DisplayName"
-
-            out-logfile -string "Generate the membership view and log membership for preservation..."
-
-            foreach ($object in $groupMembers)
-            {
-                $groupMembersView.rows.add($object.id,$object.AdditionalProperties.displayName)
-            }
-        }
-
-        #>
-
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Showing license display controls..."
