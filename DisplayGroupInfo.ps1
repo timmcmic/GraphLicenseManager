@@ -140,4 +140,31 @@ function DisplayGroupInfo
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'displaygroupinfo.designer.ps1')
     $GroupInfo.ShowDialog()
+
+    if ($operationSuccessful -eq $TRUE)
+    {
+        $membersView.columnCount = 7
+
+        $membersViewColumns = @()
+        $membersViewColumns = @("ID","DisplayName","UserPrincipalName","ObjectType")
+
+        foreach ($entry in $membersViewColumns )
+        {
+            out-logfile -string $entry
+        }
+
+        for ($i = 0 ; $i -lt $membersViewColumns.count ; $i++)
+        {
+            $membersView.columns[$i].name = $membersViewColumns[$i]
+        }
+        
+        foreach ($member in $graphMembersArray)
+        {
+            $membersView.rows.add($member.ID,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
+        }
+
+        $membersView.Columns | Foreach-Object{
+            $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
+        }
+    }
 }
