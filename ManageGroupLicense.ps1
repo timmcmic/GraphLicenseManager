@@ -560,6 +560,7 @@ function ManageGroupLicense
                     {
                         $subnode = New-Object System.Windows.Forms.TreeNode
                         $subnode.text = $servicePlan.ServicePlanName
+                        $subnode.name = $servicePlan.ServicePlanName
 
                         out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
 
