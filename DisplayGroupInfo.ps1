@@ -4,10 +4,6 @@ $CloseDisplay_Click = {
 
 function DisplayGroupInfo
 {
-    Add-Type -AssemblyName System.Windows.Forms
-    . (Join-Path $PSScriptRoot 'displaygroupinfo.designer.ps1')
-    $GroupInfo.ShowDialog()
-
     out-logfile -string "Obtaining group membership..."
 
     $operationSuccessful = $FALSE
@@ -59,4 +55,8 @@ function DisplayGroupInfo
             out-logfile -string $functionObject
         }
     }
+
+    Add-Type -AssemblyName System.Windows.Forms
+    . (Join-Path $PSScriptRoot 'displaygroupinfo.designer.ps1')
+    $GroupInfo.ShowDialog()
 }
