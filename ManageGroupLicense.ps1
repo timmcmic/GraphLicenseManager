@@ -408,8 +408,12 @@ function ManageGroupLicense
                     {
                         out-logfile -string "Service plan is per user - creating object."
 
+                        $functionCommonName = $global:functionCSVData | where {$_.service_plan_id -eq $sku.skuID} | Select-Object -Unique
+                        $functionCommonName.replace("?","")
+
                         $functionObject = New-Object PSObject -Property @{
                             SkuID = $sku.SkuId
+                            SkuCommonName = $functionCommonName
                             SkuPartNumber = $sku.SkuPartNumber
                             SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
                             ServicePlanID = $servicePlan.ServicePlanId
@@ -532,7 +536,7 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNode.text = $sku.SkuPartNumber
+                $rootNode.text = $sku.SkuCommonName
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
