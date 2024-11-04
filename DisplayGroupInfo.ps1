@@ -22,6 +22,30 @@ $GroupInfo_Load = {
     $membersView.Columns | Foreach-Object{
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
+
+    $errorsView.columnCount = 5
+
+    $errorsViewColumns = @()
+    $errorsViewColumns = @("ID","DisplayName","UserPrincipalName","ObjectType")
+
+    foreach ($entry in $errorsViewColumns )
+    {
+        out-logfile -string $entry
+    }
+
+    for ($i = 0 ; $i -lt $errorsViewColumns.count ; $i++)
+    {
+        $errorsView.columns[$i].name = $errorsViewColumns[$i]
+    }
+    
+    foreach ($member in $global:graphMembersErrorArray)
+    {
+        $errorsView.rows.add($member.ID,$member.error,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
+    }
+
+    $errorsView.Columns | Foreach-Object{
+        $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
+    }
 }
 
 $CloseDisplay_Click = {

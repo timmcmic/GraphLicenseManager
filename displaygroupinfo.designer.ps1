@@ -17,17 +17,29 @@ $GroupInfo.SuspendLayout()
 #
 #MembersView
 #
+$MembersView.AllowUserToAddRows = $false
+$MembersView.AllowUserToDeleteRows = $false
+$MembersView.AllowUserToResizeColumns = $false
+$MembersView.AllowUserToResizeRows = $false
 $MembersView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $MembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]72))
 $MembersView.Name = [System.String]'MembersView'
+$MembersView.RowHeadersWidthSizeMode = [System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode]::AutoSizeToAllHeaders
+$MembersView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::FullRowSelect
 $MembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]980,[System.Int32]240))
 $MembersView.TabIndex = [System.Int32]0
 #
 #ErrorsView
 #
+$ErrorsView.AllowUserToAddRows = $false
+$ErrorsView.AllowUserToDeleteRows = $false
+$ErrorsView.AllowUserToResizeColumns = $false
+$ErrorsView.AllowUserToResizeRows = $false
 $ErrorsView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $ErrorsView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]341))
 $ErrorsView.Name = [System.String]'ErrorsView'
+$ErrorsView.RowHeadersWidthSizeMode = [System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode]::AutoSizeToAllHeaders
+$ErrorsView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::FullRowSelect
 $ErrorsView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]980,[System.Int32]240))
 $ErrorsView.TabIndex = [System.Int32]1
 #
