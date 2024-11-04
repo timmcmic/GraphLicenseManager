@@ -23,6 +23,9 @@ $GroupPermissionsBox.selectedIndex = 0
 $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
 
 $items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
+$userPermissionsBox.items.AddRange($items2)
+$userPermissionsBox.selectedIneex = 0
+$userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
 
 #>
 
@@ -44,18 +47,19 @@ Function EstablishGraphConnection
         out-logfile -string $groupPermissionsBox.selectedItem
         $global:GroupPermissions = $groupPermissionsBox.selectedItem
         $loginStatusLabel.text = ("Group Permissions Changed: "+$global:GroupPermissions)
-        $global:CalculatedScopes = $global:DirectoryPermissions+","+$global:groupPermissions
-        out-logfile -string $global:CalculatedScopes
     }
 
     $directoryPermissionsBox_SelectedIndexChanged = {
         out-logfile -string $directoryPermissionsBox.selectedItem
         $global:directoryPermissions = $directoryPermissionsBox.selectedItem
         $loginStatusLabel.text = ("Directory Permissions Changed: "+$global:DirectoryPermissions)
-        $global:CalculatedScopes = $global:DirectoryPermissions+","+$global:groupPermissions
-        out-logfile -string $global:CalculatedScopes
     }
 
+    $userPermissionsBox_SelectedIndexChanged = {
+        out-logfile -string $userPermissionsBox.selectedItem
+        $global:userPermissions = $userPermissionsbox.selectedItem
+        $loginStatusLabel.text = ("User Permissions Changed: "+$global:userPermissions)
+    }
 
     $ExitButton_Click = {
         $global:exitSelected = $true
@@ -180,6 +184,36 @@ Function EstablishGraphConnection
         elseif ($radioButton2.checked)
         {
             out-logfile -string "Interactive authentication radio box selected..."
+
+            if ($global:userPermissions -ne "None")
+            {
+                out-logfile -string "User permissions are requested."
+
+                $global:CalculatedScopesArray = @()
+                $global:CalculatedScopesArray += $global:userPermissions
+                $global:CalculatedScopesArray += $global:directoryPermissions
+                $global:CalculatedScopesArray += $global:groupPermissions
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
+
+                out-logfile -string "Unique scopes in case there is an overlap"
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                out-logfile -string "Calculate Scopes Array."
+
+                $global:calculatedScopes = $global:CalculatedScopesArray -join ","
+
+                out-logfile -string $global:calculatedScopes
+            }
 
             try {
                 Connect-MgGraph -tenantID $tenantID -scopes $global:calculatedScopes -environment $global:GraphEnvironment -errorAction Stop
