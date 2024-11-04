@@ -186,14 +186,20 @@ Function EstablishGraphConnection
                 [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
             }
         }
+
+        $Details = Get-MgContext
+        $Scopes = $Details | Select -ExpandProperty Scopes
+        $Scopes = $Scopes -Join ", "
+        $OrgName = (Get-MgOrganization).DisplayName
+
+        out-logfile  "Microsoft Graph Connection Information"
+        out-logfile "--------------------------------------"
+        out-logfile " "
+        out-logfile ("Connected to Tenant {0} ({1}) as account {2}" -f $Details.TenantId, $OrgName, $Details.Account)
+        out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
+        out-logfile ("Profile set as {0}. The following permission scope is defined: {1}" -f $ProfileName, $Scopes)
+        out-logfile ""
     }
-
-    out-logfile -string "Showing the authentication form to begin user interation..."
-
-    out-logfile -string "Add items ot the combo box."
-
-
-
 
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'establishgraphconnection.designer.ps1')

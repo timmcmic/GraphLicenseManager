@@ -1,3 +1,5 @@
+$ExitDisplayButton_Click = {
+}
 function DisplayGroupInfo
 {
     out-logfile -string "Entered Display Group Info"
@@ -16,5 +18,8 @@ function DisplayGroupInfo
         [System.Windows.Forms.MessageBox]::Show("Unable to obtain graph group membership.."+$errorText, 'Warning')
     }
 
-    
+    if ($operationSuccessful -eq $TRUE)
+    {
+        out-logfile -string "Proceed with calculating fields."
+    }
 }
