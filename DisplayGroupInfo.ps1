@@ -55,6 +55,8 @@ function DisplayGroupInfo
                 UserPrincipalName = $functionUPN
                 ObjectType = $functionObjectType
             }
+
+            out-logfile -string $functionObject
         }
     }
 }
