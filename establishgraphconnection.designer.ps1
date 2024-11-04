@@ -222,14 +222,13 @@ $UserPermissionsBox.Visible = $false
 #
 #UserPermissions
 #
-$UserPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]496,[System.Int32]241))
+$UserPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]241))
 $UserPermissions.Name = [System.String]'UserPermissions'
-$UserPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]107,[System.Int32]23))
+$UserPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $UserPermissions.TabIndex = [System.Int32]18
-$UserPermissions.Text = [System.String]'User Permissions'
+$UserPermissions.Text = [System.String]'User Permissions (Optional)'
 $UserPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 $UserPermissions.Visible = $false
-
 
 
 $items = "Global", "USGov", "USGovDOD" , "China"
