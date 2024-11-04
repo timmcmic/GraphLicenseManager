@@ -74,6 +74,8 @@ $CloseDisplay_Click = {
 
 function DisplayGroupInfo
 {
+    $global:graphMembersErrorArray = @()
+    $global:graphMembersArray = @()
     out-logfile -string "Obtaining group membership..."
 
     $operationSuccessful = $FALSE
@@ -95,8 +97,6 @@ function DisplayGroupInfo
 
     if ($operationSuccessful -eq $TRUE)
     {
-        $global:graphMembersArray = @()
-
         foreach ($member in $graphGroupMembers)
         {
             if ($member.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.user")
@@ -147,8 +147,6 @@ function DisplayGroupInfo
     {
         if ($global:graphErrorGroupMembers.count -gt 0)
         {
-            $global:graphMembersErrorArray = @()
-
             out-logfile -string "The group has users in error - process each user."
 
             foreach ($member in $global:graphErrorGroupMembers)
