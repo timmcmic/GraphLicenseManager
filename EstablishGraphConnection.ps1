@@ -197,7 +197,7 @@ Function EstablishGraphConnection
         out-logfile " "
         out-logfile ("Connected to Tenant " + $Details.TenantId + " " +  $OrgName + " as account " + $Details.Account)
         out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
-        out-logfile ("Profile set as " + $ProfileName +". The following permission scope is defined: " + $Scopes)
+        out-logfile ("The following permission scope is defined: " + $Scopes)
         out-logfile ""
     }
 
