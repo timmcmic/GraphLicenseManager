@@ -408,12 +408,13 @@ function ManageGroupLicense
                     {
                         out-logfile -string "Service plan is per user - creating object."
 
+                        out-logfile -string $sku.skuID
                         $functionCommonName = $global:functionCSVData | where {$_.service_plan_id -eq $sku.skuID} | Select-Object -Unique
-                        $functionCommonName.replace("?","")
+                        out-logfile -string $functionCommonName.Service_Plans_Included_Friendly_Names
 
                         $functionObject = New-Object PSObject -Property @{
                             SkuID = $sku.SkuId
-                            SkuCommonName = $functionCommonName
+                            SkuCommonName = $functionCommonName.Service_Plans_Included_Friendly_Names
                             SkuPartNumber = $sku.SkuPartNumber
                             SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
                             ServicePlanID = $servicePlan.ServicePlanId
