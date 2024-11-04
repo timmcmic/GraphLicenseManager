@@ -56,6 +56,8 @@ function DisplayGroupInfo
         }
     }
 
+    $membersView.columnCount = 4
+
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'displaygroupinfo.designer.ps1')
     $GroupInfo.ShowDialog()
