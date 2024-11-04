@@ -38,7 +38,7 @@ $GroupInfo_Load = {
         $errorsView.columns[$i].name = $errorsViewColumns[$i]
     }
     
-    foreach ($member in $global:graphErrorGroupMembers)
+    foreach ($member in $global:graphMembersErrorArray)
     {
         $errorsView.rows.add($member.ID,$member.error,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
     }
@@ -104,17 +104,7 @@ function DisplayGroupInfo
 
             $global:graphMembersArray += $functionObject
         }
-    }
-
-    if ($graphGroupMembers.count -gt 0)
-    {
-        $graphMemberCount = $graphGroupMembers.count
-    }
-    else 
-    {
-        $graphMemberCount = 0
-    }
-    
+    }   
 
     $operationSuccessful = $false
 
@@ -178,18 +168,9 @@ function DisplayGroupInfo
                     ObjectType = $functionObjectType
                 }
     
-                $graphMembersErrorArray += $functionObject
+                $global:graphMembersErrorArray += $functionObject
             }
         }
-    }
-
-    if ($graphMembersErrorArray.count -gt 0)
-    {
-        $graphMemberErrorCount = $graphMembersErrorArray.count
-    }
-    else 
-    {
-        $graphMemberErrorCount = 0
     }
 
     Add-Type -AssemblyName System.Windows.Forms

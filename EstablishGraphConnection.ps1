@@ -1,3 +1,11 @@
+$TextBox3_TextChanged = {
+}
+$Label2_Click = {
+}
+$TextBox2_TextChanged = {
+}
+$Label1_Click = {
+}
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
@@ -13,6 +21,8 @@ $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory
 $GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
 $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
+
+$items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
 
 #>
 
