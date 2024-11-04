@@ -52,7 +52,7 @@ function DisplayGroupInfo
 
         $MembersView.columnCount = 4
 
-        $MembersView = @()
+        $memberViewColumns = @()
         $memberViewColumns = @("ID","DisplayName","UserPrincipalName","ObjectType")
 
         foreach ($entry in $memberViewColumns )
