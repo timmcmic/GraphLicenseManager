@@ -29,17 +29,17 @@ function DisplayGroupInfo
 
         foreach ($member in $graphGroupMembers)
         {
-            if ($member.additionalProperites.'@odata.type' -eq "#microsoft.graph.user")
+            if ($member.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.user")
             {
                 $functionObjectType = "User"
                 $functionUPN = $member.AdditionalProperties.userPrincipalName
             }
-            elseif($member.additionalProperites.'@odata.type' -eq "#microsoft.graph.group")
+            elseif($member.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.group")
             {
                 $functionObjectType = "Group"
                 $functionUPN = "N/A"
             }
-            elseif($member.additionalProperites.'@odata.context' -eq "https://graph.microsoft.com/v1.0/$metadata#contacts/$entity")
+            elseif($member.AdditionalProperties.'@odata.context' -eq "https://graph.microsoft.com/v1.0/$metadata#contacts/$entity")
             {
                 $functionObjectType = "Contact"
                 $functionUPN = "N/A"
@@ -47,7 +47,7 @@ function DisplayGroupInfo
 
             $functionObject = New-Object PSObject -Property @{
                 ID = $member.Id
-                DisplayName = $member.AdditionalProperties.display
+                DisplayName = $member.AdditionalProperties.displayName
                 UserPrincipalName = $functionUPN
                 ObjectType = $functionObjectType
             }
