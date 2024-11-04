@@ -18,31 +18,34 @@ function DisplayGroupInfo
         [System.Windows.Forms.MessageBox]::Show("Unable to obtain graph group membership.."+$errorText, 'Warning')
     }
 
-    $graphGroupMemberArray = @()
-
-    foreach ($member in $GraphGRoupMember)
+    if ($operationSuccessful -eq $TRUE)
     {
-        if ($member.AdditionalProperties.'@odata.Type' -eq "#microsoft.graph.user")
-        {
-            $functionObjectType = "User"
-            $functionUPN = $member.AdditionalProperties.UserPrincipalName
-        }
-        elseif($member.AdditionalProperties.'@odata.Type' -eq "#microsoft.graph.group")
-        {
-            $functionObjectType = "Group"
-            $functionUPN = "N/A"
-        }
-        elseif ($member.AdditionalProperties.'@odata.context' -eq "https://graph.microsoft.com/v1.0/$metadata#contacts/$entity")
-        {
-            $functionObjectType = "Contact"
-            $functionUPN = "N/A"
-        }
+        $graphGroupMemberArray = @()
 
-        $functionObject = New-Object PSObject -Property @{
-            ID = $member.Id
-            DisplayName = $member.additionalProperties.displayName
-            UserPrincipalName = $functionUPN
-            ObjectType = $functionObjectType
+        foreach ($member in $GraphGRoupMember)
+        {
+            if ($member.AdditionalProperties.'@odata.Type' -eq "#microsoft.graph.user")
+            {
+                $functionObjectType = "User"
+                $functionUPN = $member.AdditionalProperties.UserPrincipalName
+            }
+            elseif($member.AdditionalProperties.'@odata.Type' -eq "#microsoft.graph.group")
+            {
+                $functionObjectType = "Group"
+                $functionUPN = "N/A"
+            }
+            elseif ($member.AdditionalProperties.'@odata.context' -eq "https://graph.microsoft.com/v1.0/$metadata#contacts/$entity")
+            {
+                $functionObjectType = "Contact"
+                $functionUPN = "N/A"
+            }
+
+            $functionObject = New-Object PSObject -Property @{
+                ID = $member.Id
+                DisplayName = $member.additionalProperties.displayName
+                UserPrincipalName = $functionUPN
+                ObjectType = $functionObjectType
+            }
         }
     }
 
