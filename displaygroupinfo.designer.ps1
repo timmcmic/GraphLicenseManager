@@ -18,6 +18,7 @@ $MembersView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList
 $MembersView.Name = [System.String]'MembersView'
 $MembersView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]490,[System.Int32]480))
 $MembersView.TabIndex = [System.Int32]0
+$MembersView.Visible = $false
 #
 #ErrorsView
 #
@@ -26,6 +27,7 @@ $ErrorsView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList 
 $ErrorsView.Name = [System.String]'ErrorsView'
 $ErrorsView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]490,[System.Int32]480))
 $ErrorsView.TabIndex = [System.Int32]1
+$ErrorsView.Visible = $false
 #
 #CloseDisplay
 #

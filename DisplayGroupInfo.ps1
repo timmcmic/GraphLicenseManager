@@ -25,5 +25,36 @@ function DisplayGroupInfo
         [System.Windows.Forms.MessageBox]::Show("Unable to obtain graph group membership..."+$errorText, 'Warning')
     }
 
-    out-logfile -string $graphGroupMembers
+    out-logfile -string "Parse all members for information to add to the table."
+
+    if ($operationSuccessful -eq $TRUE)
+    {
+        $graphMembersArray = @()
+
+        foreach ($member in $graphGroupMembers)
+        {
+            if ($member.additionalProperites.'@odata.type' -eq "#microsoft.graph.user")
+            {
+                $functionObjectType = "User"
+                $functionUPN = $member.AdditionalProperties.userPrincipalName
+            }
+            elseif($member.additionalProperites.'@odata.type' -eq "#microsoft.graph.group")
+            {
+                $functionObjectType = "Group"
+                $functionUPN = "N/A"
+            }
+            elseif($member.additionalProperites.'@odata.context' -eq "https://graph.microsoft.com/v1.0/$metadata#contacts/$entity")
+            {
+                $functionObjectType = "Contact"
+                $functionUPN = "N/A"
+            }
+
+            $functionObject = New-Object PSObject -Property @{
+                ID = $member.Id
+                DisplayName = $member.AdditionalProperties.display
+                UserPrincipalName = $functionUPN
+                ObjectType = $functionObjectType
+            }
+        }
+    }
 }
