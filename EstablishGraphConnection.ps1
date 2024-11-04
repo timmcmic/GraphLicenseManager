@@ -192,10 +192,10 @@ Function EstablishGraphConnection
         $Scopes = $Scopes -Join ", "
         $OrgName = (Get-MgOrganization).DisplayName
 
-        out-logfile  "Microsoft Graph Connection Information"
+        out-logfile "Microsoft Graph Connection Information"
         out-logfile "--------------------------------------"
         out-logfile " "
-        out-logfile ("Connected to Tenant " + $Details.TenantId + " " +  $OrgName + "as account " + $Details.Account)
+        out-logfile ("Connected to Tenant " + $Details.TenantId + " " +  $OrgName + " as account " + $Details.Account)
         out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
         out-logfile ("Profile set as " + $ProfileName +". The following permission scope is defined: " + $Scopes)
         out-logfile ""
