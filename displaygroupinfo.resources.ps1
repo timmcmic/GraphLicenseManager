@@ -4,5 +4,7 @@
 'MembersView.Name' = 'MembersView'
 'ErrorsView.Name' = 'ErrorsView'
 'CloseDisplay.Name' = 'CloseDisplay'
+'ErrorLabel.Name' = 'ErrorLabel'
+'MemberLabel.Name' = 'MemberLabel'
 }
 }
