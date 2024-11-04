@@ -14,7 +14,7 @@ function PrintTree($printNode,$rootNodeName)
     foreach ($node in $printNode)
     {
         out-logfile -string $rootNodeName
-        out-logfile -string $node.text
+        out-logfile -string $node.name
 
         if ($node.checked)
         {
@@ -27,8 +27,8 @@ function PrintTree($printNode,$rootNodeName)
 
         $functionObject = New-Object PSObject -Property @{
             SkuPartNumber = $rootNodeName
-            SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.text)
-            ServicePlanName = $node.text
+            SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.name)
+            ServicePlanName = $node.name
             EnabledNew = $node.checked
         }
 
