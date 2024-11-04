@@ -1,3 +1,7 @@
+$groupInfo_shown = {
+    write-host "Here"
+}
+
 $PoplateMembers_Click = {
 
     $membersView.columnCount = 4
