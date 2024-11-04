@@ -1,10 +1,4 @@
 $GroupInfo_Load = {
-    out-logfile -string "Here"
-}
-
-
-$PoplateMembers_Click = {
-
     $membersView.columnCount = 4
 
     $membersViewColumns = @()
@@ -20,7 +14,7 @@ $PoplateMembers_Click = {
         $membersView.columns[$i].name = $membersViewColumns[$i]
     }
     
-    foreach ($member in $graphMembersArray)
+    foreach ($member in $global:graphMembersArray)
     {
         $membersView.rows.add($member.ID,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
     }
@@ -29,6 +23,7 @@ $PoplateMembers_Click = {
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
 }
+
 $CloseDisplay_Click = {
     $GroupInfo.close()
 }
@@ -56,7 +51,7 @@ function DisplayGroupInfo
 
     if ($operationSuccessful -eq $TRUE)
     {
-        $graphMembersArray = @()
+        $global:graphMembersArray = @()
 
         foreach ($member in $graphGroupMembers)
         {
@@ -83,7 +78,7 @@ function DisplayGroupInfo
                 ObjectType = $functionObjectType
             }
 
-            $graphMembersArray += $functionObject
+            $global:graphMembersArray += $functionObject
         }
     }
 
@@ -102,7 +97,7 @@ function DisplayGroupInfo
     out-logfile -string "Determine if any group license errors exist."
 
     try {
-        $graphErrorGroupMembers = Get-MgGroupMemberWithLicenseError -GroupId $global:graphGroup.id -errorAction Stop
+        $global:$graphErrorGroupMembers = Get-MgGroupMemberWithLicenseError -GroupId $global:graphGroup.id -errorAction Stop
         $operationSuccessful = $true
     }
     catch {
@@ -116,13 +111,13 @@ function DisplayGroupInfo
 
     if ($operationSuccessful -eq $TRUE)
     {
-        if ($graphErrorGroupMembers.count -gt 0)
+        if ($global:$graphErrorGroupMembers.count -gt 0)
         {
             $graphMembersErrorArray = @()
 
             out-logfile -string "The group has users in error - process each user."
 
-            foreach ($member in $graphErrorGroupMembers)
+            foreach ($member in $global:$graphErrorGroupMembers)
             {
                 $functionUser = get-MGUser -userID $member.id -Property ID,DisplayName,assignedLicenses,licenseAssignmentStates | Select-Object -ExpandProperty LicenseAssignmentStates
 
