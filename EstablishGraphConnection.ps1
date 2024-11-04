@@ -24,7 +24,7 @@ $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndex
 
 $items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
 $userPermissionsBox.items.AddRange($items2)
-$userPermissionsBox.selectedIneex = 0
+$userPermissionsBox.selectedIndex = 0
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
 
 #>

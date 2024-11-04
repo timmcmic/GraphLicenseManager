@@ -219,10 +219,10 @@ $UserPermissionsBox.Name = [System.String]'UserPermissionsBox'
 $UserPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $UserPermissionsBox.TabIndex = [System.Int32]17
 #
-#User Permissions
+#UserPermissions
 #
 $UserPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]496,[System.Int32]241))
-$UserPermissions.Name = [System.String]'User Permissions'
+$UserPermissions.Name = [System.String]'UserPermissions'
 $UserPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]107,[System.Int32]23))
 $UserPermissions.TabIndex = [System.Int32]18
 $UserPermissions.Text = [System.String]'User Permissions'
@@ -246,8 +246,10 @@ $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndex
 
 $items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
 $userPermissionsBox.items.AddRange($items2)
-$userPermissionsBox.selectedIneex = 0
+$userPermissionsBox.selectedIndex = 0
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
+
+
 
 #
 #Form1
@@ -299,6 +301,6 @@ Add-Member -InputObject $Form1 -Name GroupPermissions -Value $GroupPermissions -
 Add-Member -InputObject $Form1 -Name DirectoryPermissionsBox -Value $DirectoryPermissionsBox -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name GroupPermissionsBox -Value $GroupPermissionsBox -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name UserPermissionsBox -Value $UserPermissionsBox -MemberType NoteProperty
-Add-Member -InputObject $Form1 -Name User Permissions -Value $UserPermissions -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name UserPermissions -Value $UserPermissions -MemberType NoteProperty
 }
 . InitializeComponent
