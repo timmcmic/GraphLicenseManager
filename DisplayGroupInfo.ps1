@@ -1,6 +1,7 @@
-$groupInfo_shown = {
+$GroupInfo_Load = {
     write-host "Here"
 }
+
 
 $PoplateMembers_Click = {
 
