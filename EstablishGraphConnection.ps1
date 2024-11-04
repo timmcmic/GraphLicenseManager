@@ -84,7 +84,7 @@ Function EstablishGraphConnection
             $directoryPermissions.hide()
             $directoryPermissionsBox.hide()
             $groupPermissionsBox.hide()
-            $userPermissiosn.hide()
+            $userPermissions.hide()
             $userPermissionsBox.hide()
         }
         else
