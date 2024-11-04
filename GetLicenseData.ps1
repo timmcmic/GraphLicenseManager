@@ -3,7 +3,7 @@ function GetLicenseData
     [string]$licenseDownloadURL = "https://learn.microsoft.com/en-us/entra/identity/users/licensing-service-plan-reference"
     $licenseJSON = $null
 
-    $licenseExport = $global:logFile.replace(".log",".xml")
+    $licenseExport = $global:logFile.replace(".log",".csv")
 
     try
     {
@@ -39,5 +39,20 @@ function GetLicenseData
     catch {
         out-logfile -string "Unable to convert the data to CSV."
         out-logfile -string $_ -errorAction:STOP
+    }
+
+    out-logfile -string "Retaining the CSV file that was used for evaluation on this run."
+
+    try
+    {
+        $global:functionCSVData | export-csv $licenseExport -errorAction STOP
+    }
+    try {
+        
+    }
+    catch 
+    {
+        out-logfile -string "Unable to export the csv license data."
+        out-logfile -string $_ -isError:$TRUE
     }
 }
