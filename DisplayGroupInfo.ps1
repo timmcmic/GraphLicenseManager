@@ -46,6 +46,26 @@ $GroupInfo_Load = {
     $errorsView.Columns | Foreach-Object{
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
+
+    if ($global:graphMembersArray.count -gt 0)
+    {
+        $groupCountBox.appendtext($global:graphMembersArray.count.tostring())
+    }
+    else 
+    {
+        $groupCountBox.appendtext("0")
+    }
+
+    if ($global:graphMembersErrorArray.count -gt 0)
+    {
+        $errorCountBox.appendtext($global:graphMembersErrorArray.count.tostring())
+    }
+    else 
+    {
+        $errorCountBox.appendtext("0")
+    }
+
+    $LicenseTextBox.appendText($global:graphGroup.LicenseProcessingState.State)
 }
 
 $CloseDisplay_Click = {
@@ -127,7 +147,7 @@ function DisplayGroupInfo
     {
         if ($global:graphErrorGroupMembers.count -gt 0)
         {
-            $graphMembersErrorArray = @()
+            $global:graphMembersErrorArray = @()
 
             out-logfile -string "The group has users in error - process each user."
 
