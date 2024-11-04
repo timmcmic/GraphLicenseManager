@@ -65,7 +65,6 @@ function Start-GraphLicenseManager
     $telemetryMSGraphUsers = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Users" -powershellVersionTest:$TRUE
     $telemetryMSGraphGroups = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Groups" -powershellVersionTest:$TRUE
 
-
     out-logfile -string "************************************************************************"
     out-logfile -string "Starting graph license manager."
     out-logfile -string "************************************************************************"

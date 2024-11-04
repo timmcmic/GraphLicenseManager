@@ -8,7 +8,7 @@ function GetLicenseData
     try
     {
         out-logfile -string "Invoking web request to obtain HTML data."
-        $functionHTMLData = invoke-WebRequest -URL $licenseDownloadURL -errorAction STOP
+        $functionHTMLData = invoke-WebRequest -URI $licenseDownloadURL -errorAction STOP
         out-logfile -string "License URL HTML successfully obtained."
     }
     catch 
