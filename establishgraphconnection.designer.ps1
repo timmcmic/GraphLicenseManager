@@ -218,6 +218,7 @@ $UserPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -Argum
 $UserPermissionsBox.Name = [System.String]'UserPermissionsBox'
 $UserPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $UserPermissionsBox.TabIndex = [System.Int32]17
+$UserPermissionsBox.Visible = $false
 #
 #UserPermissions
 #
@@ -227,6 +228,8 @@ $UserPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList 
 $UserPermissions.TabIndex = [System.Int32]18
 $UserPermissions.Text = [System.String]'User Permissions'
 $UserPermissions.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+$UserPermissions.Visible = $false
+
 
 
 $items = "Global", "USGov", "USGovDOD" , "China"
@@ -248,7 +251,6 @@ $items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Rea
 $userPermissionsBox.items.AddRange($items2)
 $userPermissionsBox.selectedIndex = 0
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
-
 
 
 #
