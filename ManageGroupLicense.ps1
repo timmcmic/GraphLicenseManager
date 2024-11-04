@@ -5,19 +5,6 @@ $GroupInfo_Click = {
     $form2.show()
 }
 
-$form2_Load = {
-    out-logfile -string "Determining if user scopes were provided - if so provide the group info button."
-
-    if ($global:userPermissions -ne "None")
-    {
-        $groupInfo.show()
-    }
-    else 
-    {
-        $groupInfo.hide()
-    }
-}
-
 $GroupMembersName_Click = {
 }
 function PrintTree($printNode,$rootNodeName)
@@ -491,7 +478,11 @@ function ManageGroupLicense
             $membershipRuleText.show()
             $licenseProcessingLabel.show()
             $licenseProcessingText.show()
-            $groupInfo.show()
+
+            if ($global:userPermissions -ne "None")
+            {
+                $groupInfo.show()
+            }
 
             $displayNameText.appendtext($global:graphGroup.displayName)
             $expirationDateTimeText.appendTExt($global:graphGroup.ExpirationDateTime)
