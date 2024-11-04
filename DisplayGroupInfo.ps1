@@ -38,7 +38,7 @@ $GroupInfo_Load = {
         $errorsView.columns[$i].name = $errorsViewColumns[$i]
     }
     
-    foreach ($member in $global:graphMembersErrorArray)
+    foreach ($member in $global:graphErrorGroupMembers)
     {
         $errorsView.rows.add($member.ID,$member.error,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
     }
