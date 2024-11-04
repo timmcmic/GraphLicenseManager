@@ -97,7 +97,7 @@ function DisplayGroupInfo
     out-logfile -string "Determine if any group license errors exist."
 
     try {
-        $global:$graphErrorGroupMembers = Get-MgGroupMemberWithLicenseError -GroupId $global:graphGroup.id -errorAction Stop
+        $global:graphErrorGroupMembers = Get-MgGroupMemberWithLicenseError -GroupId $global:graphGroup.id -errorAction Stop
         $operationSuccessful = $true
     }
     catch {
@@ -111,13 +111,13 @@ function DisplayGroupInfo
 
     if ($operationSuccessful -eq $TRUE)
     {
-        if ($global:$graphErrorGroupMembers.count -gt 0)
+        if ($global:graphErrorGroupMembers.count -gt 0)
         {
             $graphMembersErrorArray = @()
 
             out-logfile -string "The group has users in error - process each user."
 
-            foreach ($member in $global:$graphErrorGroupMembers)
+            foreach ($member in $global:graphErrorGroupMembers)
             {
                 $functionUser = get-MGUser -userID $member.id -Property ID,DisplayName,assignedLicenses,licenseAssignmentStates | Select-Object -ExpandProperty LicenseAssignmentStates
 
