@@ -149,6 +149,11 @@ function DisplayGroupInfo
 
                 $functionError = $functionUser.Error
 
+                out-logfile -string ("The user error type is:")
+                out-logfile -string $functionError
+                out-logfile -string "The user error type 2 is :"
+                out-logfile -string $functionError.error   
+
                 if ($member.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.user")
                 {
                     $functionObjectType = "User"
