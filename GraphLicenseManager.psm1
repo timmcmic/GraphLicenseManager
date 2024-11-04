@@ -70,6 +70,10 @@ function Start-GraphLicenseManager
     out-logfile -string "Starting graph license manager."
     out-logfile -string "************************************************************************"
 
+    out-logfile -string "Obtaining license CSV data."
+
+    GetLicenseData
+
     out-logfile -string "Invoking establish graph connection..."
 
     $telemetryAuthenticationStartTime = get-universalDateTime
