@@ -1,5 +1,5 @@
 $GroupInfo_Load = {
-    write-host "Here"
+    out-logfile -string "Here"
 }
 
 
