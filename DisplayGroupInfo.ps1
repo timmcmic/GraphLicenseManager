@@ -26,7 +26,7 @@ $GroupInfo_Load = {
     $errorsView.columnCount = 5
 
     $errorsViewColumns = @()
-    $errorsViewColumns = @("ID","DisplayName","UserPrincipalName","ObjectType")
+    $errorsViewColumns = @("ID","Error","DisplayName","UserPrincipalName","ObjectType")
 
     foreach ($entry in $errorsViewColumns )
     {
@@ -148,9 +148,6 @@ function DisplayGroupInfo
                 $functionUser = $functionUser | where {$_.AssignedByGroup -eq $global:graphGroup.Id}
 
                 $functionError = $functionUser.Error
-
-                out-logfile -string $functionError
-                out-logfile -string $functionError.error
 
                 if ($member.AdditionalProperties.'@odata.type' -eq "#microsoft.graph.user")
                 {
