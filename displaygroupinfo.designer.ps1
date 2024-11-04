@@ -87,46 +87,46 @@ $MemberLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
 #
 $LicenseProcessingState.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]547))
 $LicenseProcessingState.Name = [System.String]'LicenseProcessingState'
-$LicenseProcessingState.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]25))
+$LicenseProcessingState.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]155,[System.Int32]25))
 $LicenseProcessingState.TabIndex = [System.Int32]5
 $LicenseProcessingState.Text = [System.String]'License Processing State'
 $LicenseProcessingState.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #LicenseTextBox
 #
-$LicenseTextBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]148,[System.Int32]549))
+$LicenseTextBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]173,[System.Int32]549))
 $LicenseTextBox.Name = [System.String]'LicenseTextBox'
 $LicenseTextBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]21))
 $LicenseTextBox.TabIndex = [System.Int32]6
 #
 #Label1
 #
-$Label1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]358,[System.Int32]547))
+$Label1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]334,[System.Int32]547))
 $Label1.Name = [System.String]'Label1'
-$Label1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]25))
+$Label1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]155,[System.Int32]25))
 $Label1.TabIndex = [System.Int32]7
 $Label1.Text = [System.String]'Group Member Count'
 $Label1.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #GroupCountBox
 #
-$GroupCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]494,[System.Int32]549))
+$GroupCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]495,[System.Int32]550))
 $GroupCountBox.Name = [System.String]'GroupCountBox'
 $GroupCountBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]21))
 $GroupCountBox.TabIndex = [System.Int32]8
 #
 #ErrorCountBox
 #
-$ErrorCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]864,[System.Int32]550))
+$ErrorCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]837,[System.Int32]549))
 $ErrorCountBox.Name = [System.String]'ErrorCountBox'
 $ErrorCountBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]21))
 $ErrorCountBox.TabIndex = [System.Int32]9
 #
 #Label2
 #
-$Label2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]728,[System.Int32]547))
+$Label2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]676,[System.Int32]547))
 $Label2.Name = [System.String]'Label2'
-$Label2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]25))
+$Label2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]155,[System.Int32]25))
 $Label2.TabIndex = [System.Int32]10
 $Label2.Text = [System.String]'Group Error Count'
 $Label2.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
