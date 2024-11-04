@@ -47,9 +47,6 @@ function GetLicenseData
     {
         $global:functionCSVData | export-csv $licenseExport -errorAction STOP
     }
-    try {
-        
-    }
     catch 
     {
         out-logfile -string "Unable to export the csv license data."
