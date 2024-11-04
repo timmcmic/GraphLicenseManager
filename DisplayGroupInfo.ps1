@@ -46,6 +46,32 @@ function DisplayGroupInfo
                 UserPrincipalName = $functionUPN
                 ObjectType = $functionObjectType
             }
+
+            $graphGroupMemberArray += $functionObject
+        }
+
+        $MembersView.columnCount = 4
+
+        $MembersView = @()
+        $memberViewColumns = @("ID","DisplayName","UserPrincipalName","ObjectType")
+
+        foreach ($entry in $memberViewColumns )
+        {
+            out-logfile -string $entry
+        }
+
+        for ($i = 0 ; $i -lt $memberViewColumns.count ; $i++)
+        {
+            $MembersView.columns[$i].name = $memberViewColumns[$i]
+        }
+        
+        foreach ($member in $graphGroupMemberArray)
+        {
+            $MembersView.rows.add($member.id,$member.displayName,$member.UserPrincipalName,$member.ObjectType)
+        }
+
+        $MembersView.Columns | Foreach-Object{
+            $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
         }
     }
 
