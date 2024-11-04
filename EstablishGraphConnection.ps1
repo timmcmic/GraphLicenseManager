@@ -84,6 +84,8 @@ Function EstablishGraphConnection
             $directoryPermissions.hide()
             $directoryPermissionsBox.hide()
             $groupPermissionsBox.hide()
+            $userPermissiosn.hide()
+            $userPermissionsBox.hide()
         }
         else
         {
@@ -105,6 +107,8 @@ Function EstablishGraphConnection
             $directoryPermissions.show()
             $directoryPermissionsBox.show()
             $groupPermissionsBox.show()
+            $userPermissions.show()
+            $userPermissionsbox.show()
             out-logfile -string $global:interactiveAuth
             $global:interactiveAuth = $FALSE
             out-logfile -string $global:interactiveAuth
