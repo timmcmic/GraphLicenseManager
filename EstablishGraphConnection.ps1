@@ -1,11 +1,3 @@
-$TextBox3_TextChanged = {
-}
-$Label2_Click = {
-}
-$TextBox2_TextChanged = {
-}
-$Label1_Click = {
-}
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
