@@ -5,8 +5,6 @@ $GroupInfo_Click = {
     $form2.show()
 }
 
-$GroupMembersName_Click = {
-}
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
@@ -48,6 +46,8 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    $skus = gatherSkUS
+
     $planArray = @()
     $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
     out-logfile -string "Entered manage group license..."
@@ -273,7 +273,7 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $exit_Click = {
-        $form2.close()
+        [void]$form2.close()
     }
 
 #****************************************************************************************************************************
@@ -283,7 +283,6 @@ function ManageGroupLicense
         $ToolLabel.Text = "Entering Group Search"
         $global:telemetrySearches++
         
-        $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
 
@@ -362,7 +361,6 @@ function ManageGroupLicense
 
         }
 
-        
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
@@ -424,6 +422,11 @@ function ManageGroupLicense
             }           
 
             out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+        }
+        
+        if ($getGroupFailure -eq $FALSE)
+        {
+            out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
 
             $ToolLabel.Text = "Comparing SKU and SKU-Plan assignments on group to tenant SKU / SKU-Plans"
 
@@ -536,7 +539,7 @@ function ManageGroupLicense
                 if ($global:skuHash[$sku.skuPartNumber])
                 {
                     out-logfile -string "The sku part number was located in the csv file."
-                    $rootNodeNameString = $rootNodeName.'???Product_Display_Name'
+                    $rootNodeNameString = $global:skuHash[$sku.skuPartNumber].'???Product_Display_Name'
                     out-logfile -string $rootNodeNameString
                 }
                 else 
@@ -576,12 +579,10 @@ function ManageGroupLicense
                     {
                         out-logfile -string "Determine if the service plan information is contained in the sku download."
 
-                        if ($subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName})
+                        if ($global:servicePlanHash[$servicePlan.servicePlanName])
                         {
                             out-logfile -string "The service plan was located in the sku download."
-                            $subNodeName = $subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName}
-                            $subNodeName = $subNodeName | Select-Object Service_Plans_Included_Friendly_Names -Unique
-                            $subNodeNameString = $subNodeName.Service_Plans_Included_Friendly_Names
+                            $subNodeNameString = $global:servicePlanHash[$servicePlan.servicePlanName].Service_Plans_Included_Friendly_Names
                             out-logfile -string $subNodeNameString
                         }
                         else 
@@ -702,7 +703,6 @@ function ManageGroupLicense
                 $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
             }
         }
-
     }
 
     . (Join-Path $PSScriptRoot 'managegrouplicense.designer.ps1')
