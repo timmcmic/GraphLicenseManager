@@ -194,10 +194,4 @@ function DisplayGroupInfo
     Add-Type -AssemblyName System.Windows.Forms
     . (Join-Path $PSScriptRoot 'displaygroupinfo.designer.ps1')
     $GroupInfo.ShowDialog()
-
-    if ($operationSuccessful -eq $TRUE)
-    {
-        out-logfile -string "Made it here."
-        $PoplateMembers_Click
-    }
 }

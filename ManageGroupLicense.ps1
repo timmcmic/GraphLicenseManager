@@ -1,4 +1,5 @@
-$form2_Load = {
+function gatherSkUS
+{
     out-logfile -string "Load all SKU information from the tenant."
 
     try {
@@ -111,6 +112,8 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    gatherSkUS
+    
     $planArray = @()
     $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
     out-logfile -string "Entered manage group license..."
