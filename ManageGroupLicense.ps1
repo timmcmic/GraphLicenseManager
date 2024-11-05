@@ -342,7 +342,6 @@ function ManageGroupLicense
         $ToolLabel.Text = "Entering Group Search"
         $global:telemetrySearches++
         
-        $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
 
