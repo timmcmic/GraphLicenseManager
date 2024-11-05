@@ -1,63 +1,3 @@
-function gatherSkUS
-{
-    $global:isFirstRun = $false
-
-    out-logfile -string "Load all SKU information from the tenant."
-
-    try {
-        $skus = Get-MgSubscribedSku -errorAction Stop
-        out-logfile -string "SKUs successfully obtained..."
-        out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
-    }
-    catch {
-        $errorText=$_
-        $errorText = ($errorText -split 'Status: 400')[0]
-        [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
-        out-logfile -string "Unable to obtain the skus within the tenant.."
-        out-logfile -string $errorText -isError:$true
-    }
-
-    out-logfile -string "Removing all non-user SKUs"
-
-    $skus = $skus | where {$_.appliesTo -eq "User"}
-
-    out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUSUserOnly-"+(Get-Date -Format FileDateTime))
-
-    out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
-
-    foreach ($sku in $skus)
-    {
-        out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
-
-        foreach ($servicePlan in $sku.ServicePlans)
-        {
-            out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-
-            if ($servicePlan.AppliesTo -eq "User")
-            {
-                out-logfile -string "Service plan is per user - creating object."
-
-                $functionObject = New-Object PSObject -Property @{
-                    SkuID = $sku.SkuId
-                    SkuPartNumber = $sku.SkuPartNumber
-                    SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
-                    ServicePlanID = $servicePlan.ServicePlanId
-                    ServicePlanName = $servicePlan.ServicePlanName
-                    EnabledOnGroup = $false
-                    EnabledNew = $false
-                }
-
-                $global:skuTracking += $functionObject
-            }
-        }
-    }           
-
-    out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
-
-    return $skus
-}
-
-
 $GroupInfo_Click = {
     out-logfile -string "Entering display group info."
     $form2.hide()
@@ -65,6 +5,8 @@ $GroupInfo_Click = {
     $form2.show()
 }
 
+$GroupMembersName_Click = {
+}
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
@@ -106,9 +48,6 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
-    $global:skuTracking = @()
-    $skus = gatherSkUS
-
     $planArray = @()
     $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
     out-logfile -string "Entered manage group license..."
@@ -334,7 +273,7 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $exit_Click = {
-        [void]$form2.close()
+        $form2.close()
     }
 
 #****************************************************************************************************************************
@@ -344,6 +283,7 @@ function ManageGroupLicense
         $ToolLabel.Text = "Entering Group Search"
         $global:telemetrySearches++
         
+        $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
 
@@ -361,14 +301,6 @@ function ManageGroupLicense
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
         $dataGridView1.rows.clear()
-
-        if ($global:isFirstRun -eq $FALSE)
-        {
-            foreach ($member in $global:skuTracking)
-            {
-                $member.EnabledOnGroup = $false
-            }
-        }
 
         $licenseList.beginUpdate()
         $licenseList.Nodes.Clear()
@@ -430,9 +362,68 @@ function ManageGroupLicense
 
         }
 
+        
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
+
+            try {
+                $skus = Get-MgSubscribedSku -errorAction Stop
+                out-logfile -string "SKUs successfully obtained..."
+                $getGroupFailure=$false
+                out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
+                $ToolLabel.Text = "Get-MGSubscribedSKU SUCESSFUL"
+            }
+            catch {
+                $getGroupFailure=$true
+                $errorText=$_
+                out-logfile -string "Unable to obtain the skus within the tenant.."
+                out-logfile -string $errorText
+                $errorText = ($errorText -split 'Status: 400')[0]
+                $global:errorMessages+=$errorText
+                $ToolLabel.Text = "Get-MGSubscribedSKU ERROR"
+                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+                $global:telemetrySearcheErrors++
+            }
+
+            out-logfile -string "Removing all non-user SKUs"
+
+            $skus = $skus | where {$_.appliesTo -eq "User"}
+
+            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUSUserOnly-"+(Get-Date -Format FileDateTime))
+
+            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
+
+            $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
+        
+            foreach ($sku in $skus)
+            {
+                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+                foreach ($servicePlan in $sku.ServicePlans)
+                {
+                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+                    if ($servicePlan.AppliesTo -eq "User")
+                    {
+                        out-logfile -string "Service plan is per user - creating object."
+
+                        $functionObject = New-Object PSObject -Property @{
+                            SkuID = $sku.SkuId
+                            SkuPartNumber = $sku.SkuPartNumber
+                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
+                            ServicePlanID = $servicePlan.ServicePlanId
+                            ServicePlanName = $servicePlan.ServicePlanName
+                            EnabledOnGroup = $false
+                            EnabledNew = $false
+                        }
+
+                        $global:skuTracking += $functionObject
+                    }
+                }
+            }           
+
+            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
 
             $ToolLabel.Text = "Comparing SKU and SKU-Plan assignments on group to tenant SKU / SKU-Plans"
 
@@ -545,7 +536,7 @@ function ManageGroupLicense
                 if ($global:skuHash[$sku.skuPartNumber])
                 {
                     out-logfile -string "The sku part number was located in the csv file."
-                    $rootNodeNameString = $global:skuHash[$sku.skuPartNumber].'???Product_Display_Name'
+                    $rootNodeNameString = $rootNodeName.'???Product_Display_Name'
                     out-logfile -string $rootNodeNameString
                 }
                 else 
@@ -585,10 +576,12 @@ function ManageGroupLicense
                     {
                         out-logfile -string "Determine if the service plan information is contained in the sku download."
 
-                        if ($global:servicePlanHash[$servicePlan.servicePlanName])
+                        if ($subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName})
                         {
                             out-logfile -string "The service plan was located in the sku download."
-                            $subNodeNameString = $global:servicePlanHash[$servicePlan.servicePlanName].Service_Plans_Included_Friendly_Names
+                            $subNodeName = $subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName}
+                            $subNodeName = $subNodeName | Select-Object Service_Plans_Included_Friendly_Names -Unique
+                            $subNodeNameString = $subNodeName.Service_Plans_Included_Friendly_Names
                             out-logfile -string $subNodeNameString
                         }
                         else 
@@ -673,10 +666,10 @@ function ManageGroupLicense
         {
             $dataGridView1.show()
 
-            $dataGridView1.columnCount = 8
+            $dataGridView1.columnCount = 7
 
             $dataGridViewColumns = @()
-            $dataGridViewColumns = @("SkuCommonName","SkuPartNumber","CapabilityStatus","ConsumedUnits","Enabled","LockedOut","Suspend","Warning")
+            $dataGridViewColumns = @("SkuPartNumber","CapabilityStatus","ConsumedUnits","Enabled","LockedOut","Suspend","Warning")
 
             foreach ($entry in $dataGridViewColumns )
             {
@@ -690,19 +683,7 @@ function ManageGroupLicense
             
             foreach ($sku in $skus)
             {
-                if ($global:skuHash[$sku.skuPartNumber])
-                {
-                    out-logfile -string "The sku part number was located in the csv file."
-                    $rootNodeNameString = $global:skuHash[$sku.skuPartNumber].'???Product_Display_Name'
-                    out-logfile -string $rootNodeNameString
-                }
-                else 
-                {
-                    out-logfile -string "The sku part number was not located in the CSV file."
-                    $rootNodeNameString = "Unavailable"
-                }
-
-                $dataGridView1.rows.add($rootNodeNameString,$sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
+                $dataGridView1.rows.add($sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
             }
 
             $dataGridView1.Columns | Foreach-Object{
