@@ -5,20 +5,14 @@ function gatherSkUS
     try {
         $skus = Get-MgSubscribedSku -errorAction Stop
         out-logfile -string "SKUs successfully obtained..."
-        $getGroupFailure=$false
         out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
-        $ToolLabel.Text = "Get-MGSubscribedSKU SUCESSFUL"
     }
     catch {
-        $getGroupFailure=$true
         $errorText=$_
-        out-logfile -string "Unable to obtain the skus within the tenant.."
-        out-logfile -string $errorText
         $errorText = ($errorText -split 'Status: 400')[0]
-        $global:errorMessages+=$errorText
-        $ToolLabel.Text = "Get-MGSubscribedSKU ERROR"
         [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
-        $global:telemetrySearcheErrors++
+        out-logfile -string "Unable to obtain the skus within the tenant.."
+        out-logfile -string $errorText -isError:$true
     }
 
     out-logfile -string "Removing all non-user SKUs"
@@ -113,7 +107,7 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 function ManageGroupLicense
 {
     gatherSkUS
-    
+
     $planArray = @()
     $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
     out-logfile -string "Entered manage group license..."
