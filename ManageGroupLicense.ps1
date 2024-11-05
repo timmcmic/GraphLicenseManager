@@ -533,7 +533,7 @@ function ManageGroupLicense
             {
                 out-logfile -string "Determine if the root sku is contained within the sku download."
 
-                if ($global:functionCSVData | where {$_.String_ID -eq $sku.skuID})
+                if ($global:functionCSVData | where {$_.GUID -eq $sku.skuID})
                 {
                     out-logfile -string "The SKU was located in the csv file."
 
