@@ -539,11 +539,15 @@ function ManageGroupLicense
 
                     if ($rootNodeCommonName.count -gt 0)
                     {
+                        out-logfile -string "More than one SKU was returned."
+                        out-logfile -string $rootNodeCommonName[0].Product_Display_Name
                         $rootNodeCommonName = $rootNodeCommonName[0].Product_Display_Name
                     }
                     else 
                     {
+                        out-logfile -string "Only a single SKU was returned."
                         $rootNodeCommonName = $rootNodeCommonName.Product_Display_Name
+                        out-logfile -string $rootNodeCommonName
                     }
                     out-logfile -string ("Common name located in sku download: "+$rootNodeCommonName)
                 }
