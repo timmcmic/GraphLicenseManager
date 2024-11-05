@@ -576,12 +576,10 @@ function ManageGroupLicense
                     {
                         out-logfile -string "Determine if the service plan information is contained in the sku download."
 
-                        if ($subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName})
+                        if ($global:servicePlanHash[$servicePlan.servicePlanName])
                         {
                             out-logfile -string "The service plan was located in the sku download."
-                            $subNodeName = $subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName}
-                            $subNodeName = $subNodeName | Select-Object Service_Plans_Included_Friendly_Names -Unique
-                            $subNodeNameString = $subNodeName.Service_Plans_Included_Friendly_Names
+                            $subNodeNameString = $global:servicePlanHash[$servicePlan.servicePlanName].Service_Plans_Included_Friendly_Names
                             out-logfile -string $subNodeNameString
                         }
                         else 
