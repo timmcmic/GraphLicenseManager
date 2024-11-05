@@ -23,8 +23,6 @@ function gatherSkUS
 
     out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
-    $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
-
     foreach ($sku in $skus)
     {
         out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
