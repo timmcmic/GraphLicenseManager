@@ -251,16 +251,22 @@ Function EstablishGraphConnection
 
         foreach ($permission in $directoryPermissionsArray)
         {
+            out-logfile -string $permission
+
             if ($scopes.contains($permission))
             {
+                out-logfile -string "Permission Found"
                 $directoryPermissionOK -eq $true
             }
         }
 
         foreach ($permission in $userPermissionsArray)
         {
+            out-logfile -string $permission
+
             if ($scopes.contains($permission))
             {
+                out-logfile -string "Permission Found"
                 $global:userPermissions = $permission
             }
         }
@@ -268,7 +274,8 @@ Function EstablishGraphConnection
         if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
         {
             out-logfile -string "The directory or group permissions required to proceed are not present."
-            out-logfile -string "Please verify the permissions on the app registration in Entra." -isError:$TRUE
+            out-logfile -string "Please verify the permissions on the app registration in Entra."
+            exit
         }
 
         out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
