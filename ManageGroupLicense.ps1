@@ -535,7 +535,7 @@ function ManageGroupLicense
                 $rootNodeCommonName = $global:functionCSVData | where {$_.GUID -eq $sku.skuID}
                 $rootNodeCommonName = $rootNodeCommonName | Select-Object -Unique
                 #$rootNode.text = $sku.SkuPartNumber
-                $rootNode.text = $rootNodeCommonName.Service_Plans_Included_Friendly_Names
+                $rootNode.text = $rootNodeCommonName.Product_Display_Name
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
