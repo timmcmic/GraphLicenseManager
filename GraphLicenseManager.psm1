@@ -82,8 +82,8 @@ function Start-GraphLicenseManager
 
     out-logfile -string "Invoking manage group license..."
     $telemetryLicenseManagementStartTime = get-universalDateTime
-    
-    if ($global:exitSelected -eq $TRUE)
+
+    if ($global:exitSelected -eq $false)
     {
         manageGroupLicense
     }
