@@ -533,35 +533,8 @@ function ManageGroupLicense
             {
                 out-logfile -string "Determine if the root sku is contained within the sku download."
 
-                if ($global:functionCSVData | where {$_.GUID -eq $sku.skuID})
-                {
-                    out-logfile -string "The SKU was located in the csv file."
-
-                    $rootNodeName = $global:functionCSVData | where {$_.String_ID -eq $sku.skuID}
-
-                    if ($rootNodeName.count -gt 0)
-                    {
-                        out-logfile -string "More than one sku was located."
-
-                        $rootNodeName = $rootNodeName[0].'???Product_Display_Name'
-                    }
-                    else 
-                    {
-                        out-logfile -string "Only a single sku was located."
-                        $rootNodeName = $rootNodeName.'???Product_Display_Name'
-                    }
-
-                    out-logfile -string $rootNodeName
-                }
-                else 
-                {
-                    $rootNodeName = $sku.skuPartNumber
-                    out-logfile -string $rootNodeName
-                }
-
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                #$rootNode.text = $sku.SkuPartNumber
-                $rootNode.text = $rootNodeName
+                $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
