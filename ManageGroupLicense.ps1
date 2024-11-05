@@ -63,8 +63,6 @@ $GroupInfo_Click = {
     $form2.show()
 }
 
-$GroupMembersName_Click = {
-}
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
