@@ -531,8 +531,23 @@ function ManageGroupLicense
 
             foreach ($sku in $skus)
             {
+                out-logfile -string "Determine if the root sku is contained within the sku download."
+
+                if ($global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber})
+                {
+                    $rootNodeCommonName = $global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber}
+                    $rootNodeCommonName = $rootNodeCommonName | Select-Object Product_Display_Name -Unique
+                    out-logfile -string ("Common name located in sku download: "+$rootNodeCommonName)
+                }
+                else
+                {
+                    $rootNodeCommonName = $sku.skuPartNumber
+                    out-logfile -string ("Common name not located in sku download: "+$rootNodeCommonName)
+                }
+
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNode.text = $sku.SkuPartNumber
+                #$rootNode.text = $sku.SkuPartNumber
+                $rootNode.text = $rootNodeCommonName
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
