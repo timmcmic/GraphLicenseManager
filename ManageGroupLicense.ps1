@@ -664,10 +664,10 @@ function ManageGroupLicense
         {
             $dataGridView1.show()
 
-            $dataGridView1.columnCount = 7
+            $dataGridView1.columnCount = 8
 
             $dataGridViewColumns = @()
-            $dataGridViewColumns = @("SkuPartNumber","CapabilityStatus","ConsumedUnits","Enabled","LockedOut","Suspend","Warning")
+            $dataGridViewColumns = @("SkuCommonName","SkuPartNumber","CapabilityStatus","ConsumedUnits","Enabled","LockedOut","Suspend","Warning")
 
             foreach ($entry in $dataGridViewColumns )
             {
@@ -681,7 +681,19 @@ function ManageGroupLicense
             
             foreach ($sku in $skus)
             {
-                $dataGridView1.rows.add($sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
+                if ($global:skuHash[$sku.skuPartNumber])
+                {
+                    out-logfile -string "The sku part number was located in the csv file."
+                    $rootNodeNameString = $global:skuHash[$sku.skuPartNumber].'???Product_Display_Name'
+                    out-logfile -string $rootNodeNameString
+                }
+                else 
+                {
+                    out-logfile -string "The sku part number was not located in the CSV file."
+                    $rootNodeNameString = $sku.skuPartNumber
+                }
+
+                $dataGridView1.rows.add($rootNodeNameString,$sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
             }
 
             $dataGridView1.Columns | Foreach-Object{
