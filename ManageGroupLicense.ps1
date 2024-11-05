@@ -536,7 +536,15 @@ function ManageGroupLicense
                 if ($global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber})
                 {
                     $rootNodeCommonName = $global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber}
-                    $rootNodeCommonName = $rootNodeCommonName | Select-Object Product_Display_Name -Unique
+
+                    if ($rootNodeCommonName.count -gt 0)
+                    {
+                        $rootNodeCommonName = $rootNodeCommonName[0].Product_Display_Name
+                    }
+                    else 
+                    {
+                        $rootNodeCommonName = $rootNodeCommonName.Product_Display_Name
+                    }
                     out-logfile -string ("Common name located in sku download: "+$rootNodeCommonName)
                 }
                 else
