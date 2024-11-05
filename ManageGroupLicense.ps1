@@ -273,7 +273,7 @@ function ManageGroupLicense
 #****************************************************************************************************************************
 
     $exit_Click = {
-        $form2.close()
+        [void]$form2.close()
     }
 
 #****************************************************************************************************************************
@@ -690,7 +690,7 @@ function ManageGroupLicense
                 else 
                 {
                     out-logfile -string "The sku part number was not located in the CSV file."
-                    $rootNodeNameString = $sku.skuPartNumber
+                    $rootNodeNameString = "Unavailable"
                 }
 
                 $dataGridView1.rows.add($rootNodeNameString,$sku.SkuPartNumber,$sku.capabilityStatus,$sku.consumedUnits,$sku.prepaidUnits.Enabled,$sku.prepaidUnits.LockedOut,$sku.prepaidUnits.Suspended,$sku.prepaidUnits.Warning)
