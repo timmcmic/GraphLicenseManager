@@ -104,6 +104,7 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    $global:skuTracking = @()
     $skus = gatherSkUS
 
     $planArray = @()
