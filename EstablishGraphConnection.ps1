@@ -262,10 +262,10 @@ Function EstablishGraphConnection
         {
             out-logfile -string $permission
 
-            if ($scopes.contains($permission))
+            if (($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
             {
-                out-logfile -string "Permission Found"
-                $global:userPermissions -eq $permission
+                out-logfile -string "Permission Found - setting random user permission to show all options."
+                $global:userPermissions = $permission
             }
         }
 
