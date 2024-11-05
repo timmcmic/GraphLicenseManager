@@ -121,6 +121,8 @@ function Start-GraphLicenseManager
         TotalSearchErrors = $global:telemetrySearcheErrors
     }
 
+    out-logfile -string "Sending telemetry event."
+
     if ($allowTelemetryCollection -eq $TRUE)
     {
         send-TelemetryEvent -traceModuleName $traceModuleName -eventName $telemetryEventName -eventMetrics $telemetryEventMetrics -eventProperties $telemetryEventProperties
