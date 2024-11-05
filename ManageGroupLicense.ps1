@@ -535,20 +535,28 @@ function ManageGroupLicense
 
                 if ($global:functionCSVData | where {$_.String_ID -eq $sku.skuID})
                 {
+                    out-logfile -string "The SKU was located in the csv file."
+
                     $rootNodeName = $global:functionCSVData | where {$_.String_ID -eq $sku.skuID}
 
                     if ($rootNodeName.count -gt 0)
                     {
+                        out-logfile -string "More than one sku was located."
+
                         $rootNodeName = $rootNodeName[0].'???Product_Display_Name'
                     }
                     else 
                     {
+                        out-logfile -string "Only a single sku was located."
                         $rootNodeName = $rootNodeName.'???Product_Display_Name'
                     }
+
+                    out-logfile -string $rootNodeName
                 }
                 else 
                 {
                     $rootNodeName = $sku.skuPartNumber
+                    out-logfile -string $rootNodeName
                 }
 
                 $rootNode = New-Object System.Windows.Forms.TreeNode
