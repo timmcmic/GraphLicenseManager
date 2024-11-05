@@ -1,4 +1,4 @@
-$form2_Load {
+$form2_Load = {
     out-logfile -string "Load all SKU information from the tenant."
 
     try {
