@@ -254,7 +254,7 @@ Function EstablishGraphConnection
             if ($scopes.contains($permission))
             {
                 out-logfile -string "Permission Found"
-                $directoryPermissionOK = $true
+                $directoryPermissionOK = $false
             }
         }
 
