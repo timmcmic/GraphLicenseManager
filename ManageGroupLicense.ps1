@@ -590,6 +590,7 @@ function ManageGroupLicense
                         else 
                         {
                             $subNodeNameString = $servicePlan.ServicePlanName
+                            out-logfile -string $subNodeNameString
                         }
 
 
