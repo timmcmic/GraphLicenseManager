@@ -1,5 +1,7 @@
 function gatherSkUS
 {
+    $global:isFirstRun = $false
+
     out-logfile -string "Load all SKU information from the tenant."
 
     try {
@@ -359,6 +361,14 @@ function ManageGroupLicense
         $membershipRuleText.clear()
         $GroupMembersView.rows.clear()
         $dataGridView1.rows.clear()
+
+        if ($global:isFirstRun -eq $FALSE)
+        {
+            foreach ($member in $global:skuTracking)
+            {
+                $member.EnabledOnGroup = $false
+            }
+        }
 
         $licenseList.beginUpdate()
         $licenseList.Nodes.Clear()
