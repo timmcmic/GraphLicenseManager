@@ -1,3 +1,66 @@
+$form2_Load {
+    out-logfile -string "Load all SKU information from the tenant."
+
+    try {
+        $skus = Get-MgSubscribedSku -errorAction Stop
+        out-logfile -string "SKUs successfully obtained..."
+        $getGroupFailure=$false
+        out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
+        $ToolLabel.Text = "Get-MGSubscribedSKU SUCESSFUL"
+    }
+    catch {
+        $getGroupFailure=$true
+        $errorText=$_
+        out-logfile -string "Unable to obtain the skus within the tenant.."
+        out-logfile -string $errorText
+        $errorText = ($errorText -split 'Status: 400')[0]
+        $global:errorMessages+=$errorText
+        $ToolLabel.Text = "Get-MGSubscribedSKU ERROR"
+        [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
+        $global:telemetrySearcheErrors++
+    }
+
+    out-logfile -string "Removing all non-user SKUs"
+
+    $skus = $skus | where {$_.appliesTo -eq "User"}
+
+    out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUSUserOnly-"+(Get-Date -Format FileDateTime))
+
+    out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
+
+    $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
+
+    foreach ($sku in $skus)
+    {
+        out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
+
+        foreach ($servicePlan in $sku.ServicePlans)
+        {
+            out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
+
+            if ($servicePlan.AppliesTo -eq "User")
+            {
+                out-logfile -string "Service plan is per user - creating object."
+
+                $functionObject = New-Object PSObject -Property @{
+                    SkuID = $sku.SkuId
+                    SkuPartNumber = $sku.SkuPartNumber
+                    SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
+                    ServicePlanID = $servicePlan.ServicePlanId
+                    ServicePlanName = $servicePlan.ServicePlanName
+                    EnabledOnGroup = $false
+                    EnabledNew = $false
+                }
+
+                $global:skuTracking += $functionObject
+            }
+        }
+    }           
+
+    out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+}
+
+
 $GroupInfo_Click = {
     out-logfile -string "Entering display group info."
     $form2.hide()
@@ -362,68 +425,9 @@ function ManageGroupLicense
 
         }
 
-        
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
-
-            try {
-                $skus = Get-MgSubscribedSku -errorAction Stop
-                out-logfile -string "SKUs successfully obtained..."
-                $getGroupFailure=$false
-                out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
-                $ToolLabel.Text = "Get-MGSubscribedSKU SUCESSFUL"
-            }
-            catch {
-                $getGroupFailure=$true
-                $errorText=$_
-                out-logfile -string "Unable to obtain the skus within the tenant.."
-                out-logfile -string $errorText
-                $errorText = ($errorText -split 'Status: 400')[0]
-                $global:errorMessages+=$errorText
-                $ToolLabel.Text = "Get-MGSubscribedSKU ERROR"
-                [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
-                $global:telemetrySearcheErrors++
-            }
-
-            out-logfile -string "Removing all non-user SKUs"
-
-            $skus = $skus | where {$_.appliesTo -eq "User"}
-
-            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUSUserOnly-"+(Get-Date -Format FileDateTime))
-
-            out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
-
-            $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
-        
-            foreach ($sku in $skus)
-            {
-                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
-
-                foreach ($servicePlan in $sku.ServicePlans)
-                {
-                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-
-                    if ($servicePlan.AppliesTo -eq "User")
-                    {
-                        out-logfile -string "Service plan is per user - creating object."
-
-                        $functionObject = New-Object PSObject -Property @{
-                            SkuID = $sku.SkuId
-                            SkuPartNumber = $sku.SkuPartNumber
-                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
-                            ServicePlanID = $servicePlan.ServicePlanId
-                            ServicePlanName = $servicePlan.ServicePlanName
-                            EnabledOnGroup = $false
-                            EnabledNew = $false
-                        }
-
-                        $global:skuTracking += $functionObject
-                    }
-                }
-            }           
-
-            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
 
             $ToolLabel.Text = "Comparing SKU and SKU-Plan assignments on group to tenant SKU / SKU-Plans"
 
