@@ -28,7 +28,12 @@ Function EstablishGraphConnection
     $global:directoryPermissions = "Organization.Read.All"
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
     $global:userPermissions = "None"
-    $global:calculatedScopes = $global:directoryPermissions+","+$global:groupPermissions
+
+    $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
+    $directoryPermissionsArray = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+    $groupPermissionsArray = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
+    $groupPermissionOK = $false
+    $directoryPermissionOK = $false
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
@@ -232,6 +237,39 @@ Function EstablishGraphConnection
         $Scopes = $Details | Select -ExpandProperty Scopes
         $Scopes = $Scopes -Join ", "
         $OrgName = (Get-MgOrganization).DisplayName
+
+        out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
+
+        foreach ($permission in $groupPermissionsArray)
+        {
+            if ($scopes.contains($permission))
+            {
+                $groupPermissionOK = $true
+                break
+            }
+        }
+
+        foreach ($permission in $directoryPermissionsArray)
+        {
+            if ($scopes.contains($permission))
+            {
+                $directoryPermissionOK -eq $true
+            }
+        }
+
+        foreach ($permission in $userPermissionsArray)
+        {
+            if ($scopes.contains($permission))
+            {
+                $global:userPermissions = $permission
+            }
+        }
+
+        if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
+        {
+            out-logfile -string "The directory or group permissions required to proceed are not present."
+            out-logfile -string "Please verify the permissions on the app registration in Entra." -isError:$TRUE
+        }
 
         out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
         out-logfile "Microsoft Graph Connection Information"
