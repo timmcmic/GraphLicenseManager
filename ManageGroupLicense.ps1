@@ -51,6 +51,8 @@ function gatherSkUS
     }           
 
     out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+
+    return $skus
 }
 
 
@@ -104,7 +106,7 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
-    gatherSkUS
+    $skus = gatherSkUS
 
     $planArray = @()
     $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
