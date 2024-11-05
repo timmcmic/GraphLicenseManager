@@ -529,15 +529,17 @@ function ManageGroupLicense
             $licenseLabel.show()
             $LicenseList.show()
 
+            $rootNodeCSV = $global:functionCSVData | Group-Object String_ID | ForEach-Object {$_.Group[0] }
+
             foreach ($sku in $skus)
             {
                 out-logfile -string "Determine if the root sku is contained within the sku download."
                 
-                if ($global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber})
+                if ($rootNodeCSV | where {$_.string_ID -eq $sku.skuPartNumber})
                 {
                     out-logfile -string "The sku part number was located in the csv file."
 
-                    $rootNodeName = $global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber}
+                    $rootNodeName = $rootNodeCSV | where {$_.string_ID -eq $sku.skuPartNumber}
                     $rootNodeName = $rootNodeName | Select-Object '???Product_Display_Name' -Unique
                     $rootNodeNameString = $rootNodeName.'???Product_Display_Name'
                     out-logfile -string $rootNodeNameString
@@ -573,16 +575,18 @@ function ManageGroupLicense
 
                 [void]$licenseList.nodes.add($rootNode)
 
+                $subNodeCSV = $global:functionCSVData | Group-Object Service_Plan_Name | ForEach-Object {$_.Group[0] }
+
                 foreach ($servicePlan in $sku.servicePlans)
                 {
                     if ($servicePlan.appliesTo -ne "Company")
                     {
                         out-logfile -string "Determine if the service plan information is contained in the sku download."
 
-                        if ($global:functionCSVData | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName})
+                        if ($subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName})
                         {
                             out-logfile -string "The service plan was located in the sku download."
-                            $subNodeName = $global:functionCSVData | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName}
+                            $subNodeName = $subNodeCSV | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName}
                             $subNodeName = $subNodeName | Select-Object Service_Plans_Included_Friendly_Names -Unique
                             $subNodeNameString = $subNodeName.Service_Plans_Included_Friendly_Names
                             out-logfile -string $subNodeNameString
