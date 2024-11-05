@@ -533,28 +533,22 @@ function ManageGroupLicense
             {
                 out-logfile -string "Determine if the root sku is contained within the sku download."
 
-                if ($global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber})
+                if ($global:functionCSVData | where {$_.String_ID -eq $sku.skuID})
                 {
-                    $rootNodeCommonName = $global:functionCSVData | where {$_.string_ID -eq $sku.skuPartNumber}
+                    $rootNodeName = $global:functionCSVData | where {$_.String_ID -eq $sku.skuID}
 
-                    if ($rootNodeCommonName.count -gt 0)
+                    if ($rootNodeName.count -gt 0)
                     {
-                        out-logfile -string "More than one SKU was returned."
-                        out-logfile -string $rootNodeCommonName[0].'???Product_Display_Name'
-                        $rootNodeCommonName = $rootNodeCommonName[0].'???Product_Display_Name'
+                        $rootNodeName = $rootNodeName[0].'???Product_Display_Name'
                     }
                     else 
                     {
-                        out-logfile -string "Only a single SKU was returned."
-                        $rootNodeCommonName = $rootNodeCommonName.'???Product_Display_Name'
-                        out-logfile -string $rootNodeCommonName
+                        $rootNodeName = $rootNodeName.'???Product_Display_Name'
                     }
-                    out-logfile -string ("Common name located in sku download: "+$rootNodeCommonName)
                 }
-                else
+                else 
                 {
-                    $rootNodeCommonName = $sku.skuPartNumber
-                    out-logfile -string ("Common name not located in sku download: "+$rootNodeCommonName)
+                    $rootNodeName = $sku.skuPartNumber
                 }
 
                 $rootNode = New-Object System.Windows.Forms.TreeNode
