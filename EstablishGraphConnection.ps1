@@ -282,7 +282,8 @@ Function EstablishGraphConnection
         if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
         {
             [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
-            $ExitButton_Click
+            $global:exitSelected = $true
+            [void]$Form1.close()
         }
         else 
         {
