@@ -532,12 +532,7 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNodeCommonName = $global:functionCSVData | where {$_.GUID -eq $sku.skuID}
-                $rootNodeCommonName = $rootNodeCommonName | Select-Object Product_Display_Name
-                $rootNodeCommonName = $rootNodeCommonName | Select-Object -Unique
-                out-logfile -string $rootNodeCommonName
-                #$rootNode.text = $sku.SkuPartNumber
-                $rootNode.text = $rootNodeCommonName
+                $rootNode.text = $sku.SkuPartNumber
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
@@ -564,12 +559,7 @@ function ManageGroupLicense
                     if ($servicePlan.appliesTo -ne "Company")
                     {
                         $subnode = New-Object System.Windows.Forms.TreeNode
-                        $subNodeCommonName = $global:functionCSVData | where {$_.Service_Plan_ID -eq $servicePlan.ServicePlanID}
-                        $subNodeCommonName = $subNodeCommonName | Select-Object Service_Plans_Included_Friendly_Names
-                        $subNodeCommonName = $subnodeCommonName | Select-Object -Unique
-                        out-logfile -string $subNodeCommonName
-                        #$subnode.text = $servicePlan.ServicePlanName
-                        $subnode.text = $subNodeCommonName
+                        $subnode.text = $servicePlan.ServicePlanName
                         $subnode.name = $servicePlan.ServicePlanName
 
                         out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
