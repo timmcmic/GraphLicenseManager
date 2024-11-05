@@ -529,8 +529,6 @@ function ManageGroupLicense
             $licenseLabel.show()
             $LicenseList.show()
 
-            $rootNodeCSV = $global:functionCSVData | Group-Object String_ID | ForEach-Object {$_.Group[0] }
-
             foreach ($sku in $skus)
             {
                 out-logfile -string "Determine if the root sku is contained within the sku download."
@@ -574,8 +572,6 @@ function ManageGroupLicense
                 }
 
                 [void]$licenseList.nodes.add($rootNode)
-
-                $subNodeCSV = $global:functionCSVData | Group-Object Service_Plan_Name | ForEach-Object {$_.Group[0] }
 
                 foreach ($servicePlan in $sku.servicePlans)
                 {

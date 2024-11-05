@@ -23,7 +23,7 @@ function GetLicenseData
 
     try {
         out-logfile -string "Attempting to obtain the license CSV."
-        $global:functionCSVData = Invoke-WebRequest -Uri $functionDownloadLink -errorAction Stop
+        $functionCSVData = Invoke-WebRequest -Uri $functionDownloadLink -errorAction Stop
         out-logfile -string "The license CSV data was successfully obtained."
     }
     catch {
@@ -34,7 +34,7 @@ function GetLicenseData
     out-logfile -string "Converting the raw data downloaded to CSV format."
 
     try {
-        $global:functionCSVData = ConvertFrom-CSV $functionCSVData -ErrorAction STOP
+        $functionCSVData = ConvertFrom-CSV $functionCSVData -ErrorAction STOP
     }
     catch {
         out-logfile -string "Unable to convert the data to CSV."
@@ -45,11 +45,31 @@ function GetLicenseData
 
     try
     {
-        $global:functionCSVData | export-csv $licenseExport -errorAction STOP
+        $functionCSVData | export-csv $licenseExport -errorAction STOP
     }
     catch 
     {
         out-logfile -string "Unable to export the csv license data."
         out-logfile -string $_ -isError:$TRUE
+    }
+
+    out-logfile -string "Convert the CSV file to indexed hash tables."
+
+    $skuCSV = $functionCSVData | Group-Object String_ID | ForEach-Object {$_.Group[0] }
+    $servicePlanCSV = $functionCSVData | Group-Object Service_Plan_Name | ForEach-Object {$_.Group[0] }
+
+    $global:skuHash = @{}
+    $global:servicePlanHash = @{}
+
+    foreach ($member in $skuCSV)
+    {
+        $key = $member.string_ID
+        $global:skuHash[$key] = $member
+    }
+
+    foreach ($member in $servicePlanCSV)
+    {
+        $key = $member.Service_Plan_Name
+        $global:servicePlanhash[$key] = $member
     }
 }
