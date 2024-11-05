@@ -553,7 +553,7 @@ function ManageGroupLicense
 
                 $rootNode = New-Object System.Windows.Forms.TreeNode
                 #$rootNode.text = $sku.SkuPartNumber
-                $rootNode.text = $rootNodeCommonName
+                $rootNode.text = $rootNodeName
                 $rootNode.name = $sku.SkuPartNumber
 
                 out-logfile -string "Testing all licenses on the group to determine if any portion of the sku is available..."
