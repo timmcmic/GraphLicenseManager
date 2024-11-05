@@ -577,8 +577,25 @@ function ManageGroupLicense
                 {
                     if ($servicePlan.appliesTo -ne "Company")
                     {
+                        out-logfile -string "Determine if the service plan information is contained in the sku download."
+
+                        if ($global:functionCSVData | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName})
+                        {
+                            out-logfile -string "The service plan was located in the sku download."
+                            $subNodeName = $global:functionCSVData | where {$_.Service_Plan_Name -eq $servicePlan.servicePlanName}
+                            $subNodeName = $subNodeName | Select-Object Service_Plans_Included_Friendly_Names -Unique
+                            $subNodeNameString = $subNodeName.Service_Plans_Included_Friendly_Names
+                            out-logfile -string $subNodeNameString
+                        }
+                        else 
+                        {
+                            $subNodeNameString = $servicePlan.ServicePlanName
+                        }
+
+
                         $subnode = New-Object System.Windows.Forms.TreeNode
-                        $subnode.text = $servicePlan.ServicePlanName
+                        #$subnode.text = $servicePlan.ServicePlanName
+                        $subNode.Text = $subNodeNameString
                         $subnode.name = $servicePlan.ServicePlanName
 
                         out-logfile -string "Testing all enabled plans to determine if the plan name within the sku is enabled on the group..."
