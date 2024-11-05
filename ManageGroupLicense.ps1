@@ -541,7 +541,7 @@ function ManageGroupLicense
                     {
                         out-logfile -string "More than one SKU was returned."
                         out-logfile -string $rootNodeCommonName[0].Product_Display_Name
-                        $rootNodeCommonName = $rootNodeCommonName[0].Product_Display_Name
+                        $rootNodeCommonName = $rootNodeCommonName[0].'Product_Display_Name'
                     }
                     else 
                     {
