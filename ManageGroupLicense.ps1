@@ -532,7 +532,7 @@ function ManageGroupLicense
             foreach ($sku in $skus)
             {
                 $rootNode = New-Object System.Windows.Forms.TreeNode
-                $rootNodeCommonName = $global:functionCSVData | where {$_.GUID -eq $sku.skuPartNumber}
+                $rootNodeCommonName = $global:functionCSVData | where {$_.GUID -eq $sku.skuID}
                 $rootNodeCommonName = $rootNodeCommonName | Select-Object -Unique
                 #$rootNode.text = $sku.SkuPartNumber
                 $rootNode.text = $rootNodeCommonName.Service_Plans_Included_Friendly_Names
