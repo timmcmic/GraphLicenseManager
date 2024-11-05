@@ -282,7 +282,7 @@ function ManageGroupLicense
 
         $ToolLabel.Text = "Entering Group Search"
         $global:telemetrySearches++
-        
+        $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
 
@@ -423,7 +423,7 @@ function ManageGroupLicense
 
             out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
         }
-        
+
         if ($getGroupFailure -eq $FALSE)
         {
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
