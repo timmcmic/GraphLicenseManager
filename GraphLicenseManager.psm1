@@ -80,19 +80,14 @@ function Start-GraphLicenseManager
     $telemetryAuthenticationEndTime = get-universalDateTime
     $telemetryAuthentictionTime= get-elapsedTime -startTime $telemetryAuthenticationStartTime -endTime $telemetryAuthenticationEndTime
 
-    if ($global:exitSelected -eq $TRUE)
-    {
-        out-logfile -string "The quit button was selected - exit."
-        exit
-    }
-    else 
-    {
-        out-logfile -string "No exit selected - continue."
-    }
-
     out-logfile -string "Invoking manage group license..."
     $telemetryLicenseManagementStartTime = get-universalDateTime
-    manageGroupLicense
+    
+    if ($global:exitSelected -eq $TRUE)
+    {
+        manageGroupLicense
+    }
+
     $telemetryLicenseManagementEndTime = get-universalDateTime
     $telemetryLicenseManagementTime = get-elapsedTime -startTime $telemetryLicenseManagementStartTime -endTime $telemetryLicenseManagementEndTime
 
