@@ -65,7 +65,7 @@ function ManageGroupLicense
         foreach ($rootNode in $licenseList.Nodes)
         {
             out-logfile -string $rootNode.Text
-            $planArray +=PrintTree $rootNode.nodes $rootNode.text
+            $planArray +=PrintTree $rootNode.nodes $rootNode.name
         }
 
         $ToolLabel.Text = "Comparing previous license state to user defined license state - this may take a minute..."
