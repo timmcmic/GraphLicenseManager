@@ -170,7 +170,6 @@ Function EstablishGraphConnection
                 try
                 {
                     Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
-                    [void]$Form1.close()
                 }
                 catch
                 {
@@ -220,7 +219,6 @@ Function EstablishGraphConnection
             try {
                 Connect-MgGraph -tenantID $tenantID -scopes $global:calculatedScopes -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
-                [void]$Form1.close()
             }
             catch {
                 $errorText=$_
@@ -256,7 +254,7 @@ Function EstablishGraphConnection
             if ($scopes.contains($permission))
             {
                 out-logfile -string "Permission Found"
-                $directoryPermissionOK -eq $true
+                $directoryPermissionOK = $true
             }
         }
 
@@ -267,15 +265,8 @@ Function EstablishGraphConnection
             if ($scopes.contains($permission))
             {
                 out-logfile -string "Permission Found"
-                $global:userPermissions = $permission
+                $global:userPermissions -eq $permission
             }
-        }
-
-        if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
-        {
-            out-logfile -string "The directory or group permissions required to proceed are not present."
-            out-logfile -string "Please verify the permissions on the app registration in Entra."
-            exit
         }
 
         out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
@@ -287,6 +278,16 @@ Function EstablishGraphConnection
         out-logfile ("The following permission scope is defined: " + $Scopes)
         out-logfile ""
         out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
+
+        if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
+        {
+            [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
+            $ExitButton_Click
+        }
+        else 
+        {
+            [void]$form1.close()
+        }
     }
 
     Add-Type -AssemblyName System.Windows.Forms
