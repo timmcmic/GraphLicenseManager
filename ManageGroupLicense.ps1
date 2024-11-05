@@ -533,13 +533,10 @@ function ManageGroupLicense
             {
                 out-logfile -string "Determine if the root sku is contained within the sku download."
                 
-                if ($rootNodeCSV | where {$_.string_ID -eq $sku.skuPartNumber})
+                if ($global:skuHash[$sku.skuPartNumber])
                 {
                     out-logfile -string "The sku part number was located in the csv file."
-
-                    $rootNodeName = $rootNodeCSV | where {$_.string_ID -eq $sku.skuPartNumber}
-                    $rootNodeName = $rootNodeName | Select-Object '???Product_Display_Name' -Unique
-                    $rootNodeNameString = $rootNodeName.'???Product_Display_Name'
+                    $rootNodeNameString = $global:skuHash[$sku.skuPartNumber].'???Product_Display_Name'
                     out-logfile -string $rootNodeNameString
                 }
                 else 
