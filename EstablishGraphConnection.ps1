@@ -170,6 +170,7 @@ Function EstablishGraphConnection
                 try
                 {
                     Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
+                    $connectionSuccessful = $true
                 }
                 catch
                 {
@@ -179,6 +180,7 @@ Function EstablishGraphConnection
                     $global:errorMessages+=$errorText
                     out-logfile -string "Unable to connect to Microsoft Graph.."
                     [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
+                    $connectionSuccessful = $false
                 }
             }
         }
@@ -219,6 +221,7 @@ Function EstablishGraphConnection
             try {
                 Connect-MgGraph -tenantID $tenantID -scopes $global:calculatedScopes -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
+                $connectionSuccessful = $true
             }
             catch {
                 $errorText=$_
@@ -228,66 +231,70 @@ Function EstablishGraphConnection
                 out-logfile -string "Unable to connect to Microsoft Graph.."
                 $LoginStatusLabel.text = ("ERROR:  Unable to connect to Microsoft Graph")
                 [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
+                $connectionSuccessful = $FALSE
             }
         }
 
-        $Details = Get-MgContext
-        $Scopes = $Details | Select -ExpandProperty Scopes
-        $Scopes = $Scopes -Join ", "
-        $OrgName = (Get-MgOrganization).DisplayName
-
-        out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
-
-        foreach ($permission in $groupPermissionsArray)
+        if ($connectionSuccessful -eq $TRUE)
         {
-            if ($scopes.contains($permission))
+            $Details = Get-MgContext
+            $Scopes = $Details | Select -ExpandProperty Scopes
+            $Scopes = $Scopes -Join ", "
+            $OrgName = (Get-MgOrganization).DisplayName
+    
+            out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
+    
+            foreach ($permission in $groupPermissionsArray)
             {
-                $groupPermissionOK = $true
-                break
+                if ($scopes.contains($permission))
+                {
+                    $groupPermissionOK = $true
+                    break
+                }
             }
-        }
-
-        foreach ($permission in $directoryPermissionsArray)
-        {
-            out-logfile -string $permission
-
-            if ($scopes.contains($permission))
+    
+            foreach ($permission in $directoryPermissionsArray)
             {
-                out-logfile -string "Permission Found"
-                $directoryPermissionOK = $true
+                out-logfile -string $permission
+    
+                if ($scopes.contains($permission))
+                {
+                    out-logfile -string "Permission Found"
+                    $directoryPermissionOK = $true
+                }
             }
-        }
-
-        foreach ($permission in $userPermissionsArray)
-        {
-            out-logfile -string $permission
-
-            if (($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
+    
+            foreach ($permission in $userPermissionsArray)
             {
-                out-logfile -string "Permission Found - setting random user permission to show all options."
-                $global:userPermissions = $permission
+                out-logfile -string $permission
+    
+                if (($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
+                {
+                    out-logfile -string "Permission Found - setting random user permission to show all options."
+                    $global:userPermissions = $permission
+                }
             }
-        }
-
-        out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
-        out-logfile "Microsoft Graph Connection Information"
-        out-logfile "--------------------------------------"
-        out-logfile ""
-        out-logfile ("Connected to Tenant " + $Details.TenantId + " " +  $OrgName + " as account " + $Details.Account + "in environment " + $details.Environment)
-        out-logfile "--------------------------------------"
-        out-logfile ("The following permission scope is defined: " + $Scopes)
-        out-logfile ""
-        out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
-
-        if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
-        {
-            [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
-            $global:exitSelected = $true
-            [void]$Form1.close()
-        }
-        else 
-        {
-            [void]$form1.close()
+    
+            out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
+            out-logfile "Microsoft Graph Connection Information"
+            out-logfile "--------------------------------------"
+            out-logfile ""
+            out-logfile ("Connected to Tenant " + $Details.TenantId + " " +  $OrgName + " as account " + $Details.Account + "in environment " + $details.Environment)
+            out-logfile "--------------------------------------"
+            out-logfile ("The following permission scope is defined: " + $Scopes)
+            out-logfile ""
+            out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
+    
+            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
+            {
+                [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
+                $global:exitSelected = $true
+                [void]$Form1.close()
+            }
+            else 
+            {
+                [void]$form1.close()
+            }
         }
     }
 
