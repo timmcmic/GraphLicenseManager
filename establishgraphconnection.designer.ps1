@@ -280,6 +280,7 @@ $Form1.Controls.Add($TextBox1)
 $Form1.Controls.Add($Label1)
 $Form1.MaximizeBox = $false
 $Form1.MinimizeBox = $false
+$Form1.add_Load($Form1_Load)
 $Form1.Text = [System.String]'Connect Microsoft Graph'
 $StatusStrip1.ResumeLayout($false)
 $StatusStrip1.PerformLayout()

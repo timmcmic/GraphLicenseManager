@@ -21,8 +21,8 @@ $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexCh
 
 #>
 
-$form1_load = {
-    $textBox2.appendText("Test")
+$Form1_Load = {
+    $TextBox1.appendText("Test")
 }
 
 Function EstablishGraphConnection
