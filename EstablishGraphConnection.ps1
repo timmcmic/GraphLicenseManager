@@ -44,7 +44,8 @@ $Form1_Load = {
 
     if (($global:EntraTenantID -ne "") -and ($global:appID -ne "") -and ($global:CertificateThumbprint -ne ""))
     {
-        $Button1_Click
+        out-logfile -string "Invoking button click."
+        $Button1.performClick()
     }
 }
 
