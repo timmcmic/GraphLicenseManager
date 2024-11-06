@@ -82,7 +82,7 @@ function DisplayGroupInfo
 
     try
     {
-        $graphGroupMembers = Get-MgGroupMember -GroupId $global:graphGroup.id -errorAction Stop
+        $graphGroupMembers = Get-MgGroupMember -GroupId $global:graphGroup.id -all -errorAction Stop
         $operationSuccessful = $TRUE
     }
     catch
