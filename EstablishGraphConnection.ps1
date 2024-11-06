@@ -22,24 +22,13 @@ $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexCh
 #>
 
 $Form1_Load = {
-    $TextBox1.appendText("Test")
+    out-logfile -string "Testing to see if administrator provided connection information in calling command."
+
+    out-logfile -string $global:EntraTenantID
 }
 
 Function EstablishGraphConnection
 {
-    [CmdletBinding()]
-    param (
-        [Parameter(Mandatory = $true)]
-        [AllowEmptyString()]
-        [string]$tenantID,
-        [Parameter(Mandatory = $true)]
-        [AllowEmptyString()]
-        [string]$certificateThumbprint,
-        [AllowEmptyString()]
-        [Parameter(Mandatory = $true)]
-        [string]$appID
-    )
-
     $global:GraphEnvironment = "Global"
     $global:interactiveAuth = $true
     $global:directoryPermissions = "Organization.Read.All"
