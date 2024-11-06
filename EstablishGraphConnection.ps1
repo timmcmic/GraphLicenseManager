@@ -24,7 +24,23 @@ $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexCh
 $Form1_Load = {
     out-logfile -string "Testing to see if administrator provided connection information in calling command."
 
-    out-logfile -string $global:EntraTenantID
+    if ($global:EntraTenantID -ne "")
+    {
+        out-logfile -string $global:EntraTenantID
+        $textBox1.appendText($global:EntraTenantID)
+    }
+
+    if ($global:CertificateThumbprint -ne "")
+    {
+        out-logfile -string $global:CertificateThumbprint
+        $textBox2.appendText($global:CertificateThumbprint)
+    }
+
+    if ($global:AppID -ne "")
+    {
+        out-logfile -string $global:AppID
+        $textBox3.appendText($global:AppID)
+    }
 }
 
 Function EstablishGraphConnection

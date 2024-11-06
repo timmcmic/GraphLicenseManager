@@ -25,6 +25,8 @@ function Start-GraphLicenseManager
     }
 
     Set-Variable -Name "EntraTenantID" -Value $EntraTenantID -Scope Global
+    Set-Variable -name "CertificateThumbPrint" -Value $certificateThumbprint -scope Global
+    set-variable -name "AppID" -Value $appID -scope global
     #Define telemetry items.
 
     $telemetryEventName = "GraphLicenseManager"
