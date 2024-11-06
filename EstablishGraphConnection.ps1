@@ -41,6 +41,11 @@ $Form1_Load = {
         out-logfile -string $global:AppID
         $textBox3.appendText($global:AppID)
     }
+
+    if (($global:EntraTenantID -ne "") -and ($global:appID -ne "") -and ($global:CertificateThumbprint -ne ""))
+    {
+        $Button1_Click
+    }
 }
 
 Function EstablishGraphConnection
