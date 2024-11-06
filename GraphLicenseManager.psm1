@@ -5,11 +5,11 @@ function Start-GraphLicenseManager
         [Parameter(Mandatory = $true)]
         [string]$logFolderPath,
         [Parameter(Mandatory = $false)]
-        [string]$global:EntraTenantID="",
+        [string]$EntraTenantID="",
         [Parameter(Mandatory = $false)]
-        [string]$global:certificateThumbprint="",
+        [string]$certificateThumbprint="",
         [Parameter(Mandatory = $false)]
-        [string]$globla:appID="",
+        [string]$appID="",
         [Parameter(Mandatory = $false)]
         [boolean]$allowTelemetryCollection=$TRUE
     )
@@ -24,6 +24,7 @@ function Start-GraphLicenseManager
         start-telemetryConfiguration -allowTelemetryCollection $allowTelemetryCollection -appInsightAPIKey $appInsightAPIKey -traceModuleName $traceModuleName
     }
 
+    Set-Variable -Name "EntraTenantID" -Value $EntraTenantID -Scope Global
     #Define telemetry items.
 
     $telemetryEventName = "GraphLicenseManager"
