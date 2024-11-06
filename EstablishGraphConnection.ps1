@@ -21,8 +21,25 @@ $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexCh
 
 #>
 
+$form1_load = {
+    $textBox2.appendText("Test")
+}
+
 Function EstablishGraphConnection
 {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string]$tenantID,
+        [Parameter(Mandatory = $true)]
+        [AllowEmptyString()]
+        [string]$certificateThumbprint,
+        [AllowEmptyString()]
+        [Parameter(Mandatory = $true)]
+        [string]$appID
+    )
+
     $global:GraphEnvironment = "Global"
     $global:interactiveAuth = $true
     $global:directoryPermissions = "Organization.Read.All"

@@ -5,6 +5,12 @@ function Start-GraphLicenseManager
         [Parameter(Mandatory = $true)]
         [string]$logFolderPath,
         [Parameter(Mandatory = $false)]
+        [string]$tenantID="",
+        [Parameter(Mandatory = $false)]
+        [string]$certificateThumbprint="",
+        [Parameter(Mandatory = $false)]
+        [string]$appID="",
+        [Parameter(Mandatory = $false)]
         [boolean]$allowTelemetryCollection=$TRUE
     )
 
@@ -76,7 +82,7 @@ function Start-GraphLicenseManager
     out-logfile -string "Invoking establish graph connection..."
 
     $telemetryAuthenticationStartTime = get-universalDateTime
-    establishGraphConnection
+    establishGraphConnection -tenantID $tenantID -appID $appID -certificateThumbprint $certificateThumbprint
     $telemetryAuthenticationEndTime = get-universalDateTime
     $telemetryAuthentictionTime= get-elapsedTime -startTime $telemetryAuthenticationStartTime -endTime $telemetryAuthenticationEndTime
 
