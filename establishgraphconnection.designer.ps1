@@ -273,7 +273,7 @@ $userPermissionsBox.items.AddRange($items2)
 $userPermissionsBox.selectedIndex = 0
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
 
-$operations = "Group License Manager","License Assignment Reporting"
+$operations = "Group License Manager","License Assignment Report"
 $selectedOperationBox.items.addRange($operations)
 $selectedOperationBox.selectedIndex = 0
 $selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
