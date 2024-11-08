@@ -1,3 +1,11 @@
+$TextBox3_TextChanged = {
+}
+$Label2_Click = {
+}
+$TextBox2_TextChanged = {
+}
+$Label1_Click = {
+}
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
@@ -18,6 +26,11 @@ $items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Rea
 $userPermissionsBox.items.AddRange($items2)
 $userPermissionsBox.selectedIndex = 0
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
+
+$operations = "Group License Manager","License Assignment Reporting"
+$selectedOperationBox.items.addRange($operations)
+$selectedOperationsBox.selectedIndex = 0
+$selectedOperationsBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
 
 #>
 
@@ -56,12 +69,19 @@ Function EstablishGraphConnection
     $global:directoryPermissions = "Organization.Read.All"
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
     $global:userPermissions = "None"
+    $global:selectedOperation = "Group License Manager"
 
     $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
     $directoryPermissionsArray = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
     $groupPermissionsArray = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
     $groupPermissionOK = $false
     $directoryPermissionOK = $false
+
+    $SelectedOperationsBox_SelectedIndexChanged = {
+        out-logfile -string $selectOperationsBox.selectedItem
+        $global:selectedOperation = $selectedOperationsBox.selectedItem
+        $LoginStatusLabel.text = ("Operation Changed: "+$selectedOperationsBox.selectedItem)
+    }
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
