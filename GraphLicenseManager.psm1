@@ -94,7 +94,14 @@ function Start-GraphLicenseManager
 
     if ($global:exitSelected -eq $false)
     {
-        manageGroupLicense
+        if ($global:selectedOperation -eq "Graph License Manager")
+        {
+            manageGroupLicense
+        }
+        elseif ($global:selectedOperation -eq "License Assignment Report")
+        {
+            
+        }
     }
 
     $telemetryLicenseManagementEndTime = get-universalDateTime
