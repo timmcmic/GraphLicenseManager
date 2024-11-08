@@ -204,7 +204,7 @@ Function EstablishGraphConnection
                 {
                     $errorText=$_
                     out-logfile -string $errorText
-                    $errorText = ($errorText -split 'Status: 400')[0]
+                    $errorText = CalculateError $errorText
                     $global:errorMessages+=$errorText
                     out-logfile -string "Unable to connect to Microsoft Graph.."
                     [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
@@ -254,7 +254,7 @@ Function EstablishGraphConnection
             catch {
                 $errorText=$_
                 out-logfile -string $errorText
-                $errorText = ($errorText -split 'Status: 400')[0]
+                $errorText = CalculateError $errorText
                 $global:errorMessages+=$errorText
                 out-logfile -string "Unable to connect to Microsoft Graph.."
                 $LoginStatusLabel.text = ("ERROR:  Unable to connect to Microsoft Graph")

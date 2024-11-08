@@ -260,7 +260,7 @@ function ManageGroupLicense
             out-logfile -string "Error adjusting licenses on group."
             $errorText = $_
             out-logfile -string $errorText
-            $errorText = ($errorText -split 'Status: 400')[0]
+            $errorText = CalculateError $errorText
             $global:errorMessages+=$errorText
             $ToolLabel.Text = "ERROR:  License template NOT successfully applied..."
             [System.Windows.Forms.MessageBox]::Show("Unable to adjust the licenses on the group: "+$errorText, 'Warning')
@@ -326,7 +326,7 @@ function ManageGroupLicense
             $errorText=$_
             out-logfile -string "The group was not located by group object id.."
             out-logfile -string $errorText
-            $errorText = ($errorText -split 'Status: 400')[0]
+            $errorText = CalculateError $errorText
             $global:errorMessages+=$errorText
             $ToolLabel.Text = "GET-MGGroup ERROR"
             [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
@@ -350,7 +350,7 @@ function ManageGroupLicense
                 $errorText=$_
                 out-logfile -string "The group was not located by group object id.."
                 out-logfile -string $errorText
-                $errorText = ($errorText -split 'Status: 400')[0]
+                $errorText = CalculateError $errorText
                 $global:errorMessages+=$errorText
                 $ToolLabel.Text = "Get Group Licenses ERROR"
                 [System.Windows.Forms.MessageBox]::Show("The group was not located by group object id.."+$errorText, 'Warning')
@@ -364,10 +364,10 @@ function ManageGroupLicense
             out-logfile -string "Previous operations were successfuly - determine all skus within the tenant..."
 
             try {
-                $skus = Get-MgSubscribedSku -errorAction Stop
+                #$skus = Get-MgSubscribedSku -errorAction Stop
+                $skus = getMGSku -errorAction STOP
                 out-logfile -string "SKUs successfully obtained..."
                 $getGroupFailure=$false
-                out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUS-"+(Get-Date -Format FileDateTime))
                 $ToolLabel.Text = "Get-MGSubscribedSKU SUCESSFUL"
             }
             catch {
@@ -375,7 +375,7 @@ function ManageGroupLicense
                 $errorText=$_
                 out-logfile -string "Unable to obtain the skus within the tenant.."
                 out-logfile -string $errorText
-                $errorText = ($errorText -split 'Status: 400')[0]
+                $errorText = CalculateError $errorText
                 $global:errorMessages+=$errorText
                 $ToolLabel.Text = "Get-MGSubscribedSKU ERROR"
                 [System.Windows.Forms.MessageBox]::Show("Unable to obtain the skus within the tenant.."+$errorText, 'Warning')
