@@ -100,7 +100,7 @@ function Start-GraphLicenseManager
         }
         elseif ($global:selectedOperation -eq "License Assignment Report")
         {
-
+            LicenseAssignmentReport
         }
     }
 
