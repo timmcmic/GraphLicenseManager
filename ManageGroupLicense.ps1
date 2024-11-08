@@ -389,7 +389,7 @@ function ManageGroupLicense
 
             $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
 
-            CalculateSkuTracking
+            CalculateSkuTracking -skus $skus
         }
 
         if ($getGroupFailure -eq $FALSE)

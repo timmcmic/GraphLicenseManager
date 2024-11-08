@@ -54,7 +54,7 @@ function Start-GraphLicenseManager
 
     $ErrorActionPreference = 'Stop'
     $global:logFile=$NULL
-    $logFileName = "LicenseChangeOperation_"+(Get-Date -Format FileDateTime)
+    $logFileName = "GraphLicenseManager_"+(Get-Date -Format FileDateTime)
 
     $global:exitSelected = $false
 
