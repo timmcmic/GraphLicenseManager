@@ -78,7 +78,7 @@ Function EstablishGraphConnection
     $directoryPermissionOK = $false
 
     $SelectedOperationsBox_SelectedIndexChanged = {
-        out-logfile -string $selectOperationBox.selectedItem
+        out-logfile -string $selectedOperationBox.selectedItem
         $global:selectedOperation = $selectedOperationBox.selectedItem
         $LoginStatusLabel.text = ("Operation Changed: "+$selectedOperationBox.selectedItem)
     }
