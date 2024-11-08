@@ -280,7 +280,6 @@ function ManageGroupLicense
 
         $ToolLabel.Text = "Entering Group Search"
         $global:telemetrySearches++
-        $global:skuTracking = @()
         $global:skuRootIDPresent = @()
         $global:skuRootIDNotPresent = @()
 
@@ -384,42 +383,13 @@ function ManageGroupLicense
 
             out-logfile -string "Removing all non-user SKUs"
 
-            $skus = $skus | where {$_.appliesTo -eq "User"}
-
-            out-xmlFile -itemToExport $skus -itemNameToExport ("GraphSKUSUserOnly-"+(Get-Date -Format FileDateTime))
+            $skus = GetMGUserSku -skus $skus
 
             out-logfile -string "Build the custom powershell object for each of the sku / plan combinations that could be enabled."
 
             $ToolLabel.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
         
-            foreach ($sku in $skus)
-            {
-                out-logfile -string ("Evaluating Sku: "+$sku.skuPartNumber)
-
-                foreach ($servicePlan in $sku.ServicePlans)
-                {
-                    out-logfile -string ("Evaluating Service Plan: "+$servicePlan.ServicePlanName)
-
-                    if ($servicePlan.AppliesTo -eq "User")
-                    {
-                        out-logfile -string "Service plan is per user - creating object."
-
-                        $functionObject = New-Object PSObject -Property @{
-                            SkuID = $sku.SkuId
-                            SkuPartNumber = $sku.SkuPartNumber
-                            SkuPartNumber_ServicePlanName = $sku.SkuPartNumber+"_"+$servicePlan.ServicePlanName
-                            ServicePlanID = $servicePlan.ServicePlanId
-                            ServicePlanName = $servicePlan.ServicePlanName
-                            EnabledOnGroup = $false
-                            EnabledNew = $false
-                        }
-
-                        $global:skuTracking += $functionObject
-                    }
-                }
-            }           
-
-            out-xmlFile -itemToExport $global:skuTracking -itemNameToExport ("SkuTracking-"+(Get-Date -Format FileDateTime))
+            
         }
 
         if ($getGroupFailure -eq $FALSE)
