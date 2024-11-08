@@ -73,7 +73,7 @@ RequiredModules = @(
 # FormatsToProcess = @()
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-NestedModules = @('GetLicenseData.ps1','DisplayGroupInfo.ps1','send-TelemetryEvent.ps1','get-universalDateTime.ps1','get-elapsedTime.ps1','test-powerShellModule.ps1','start-telemetryconfiguration.ps1','EstablishGraphConnection.ps1','ManageGroupLicense.ps1','new-logfile.ps1','Out-LogFile.ps1','Out-XMLFile.ps1')
+NestedModules = @('GetMGSku.ps1','GetLicenseData.ps1','DisplayGroupInfo.ps1','send-TelemetryEvent.ps1','get-universalDateTime.ps1','get-elapsedTime.ps1','test-powerShellModule.ps1','start-telemetryconfiguration.ps1','EstablishGraphConnection.ps1','ManageGroupLicense.ps1','new-logfile.ps1','Out-LogFile.ps1','Out-XMLFile.ps1')
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @('start-GraphLicenseManager')
