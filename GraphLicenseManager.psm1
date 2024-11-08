@@ -94,13 +94,13 @@ function Start-GraphLicenseManager
 
     if ($global:exitSelected -eq $false)
     {
-        if ($global:selectedOperation -eq "Graph License Manager")
+        if ($global:selectedOperation -eq "Group License Manager")
         {
             manageGroupLicense
         }
         elseif ($global:selectedOperation -eq "License Assignment Report")
         {
-            
+
         }
     }
 
