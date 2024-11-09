@@ -16,13 +16,12 @@ $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
 
-
-$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All,None"
+$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
 $GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
 $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
 
-$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All","None"
+$items2 = "None","User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
 $userPermissionsBox.items.AddRange($items2)
 $userPermissionsBox.selectedIndex = 0
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
@@ -81,6 +80,28 @@ Function EstablishGraphConnection
         out-logfile -string $selectedOperationBox.selectedItem
         $global:selectedOperation = $selectedOperationBox.selectedItem
         $LoginStatusLabel.text = ("Operation Changed: "+$selectedOperationBox.selectedItem)
+
+        if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+        {
+            out-logfile -string "Group permissions are not required."
+            $groupPermissions.hide()
+            $groupPermissionsBox.hide()
+            $global:groupPermissions = "None"
+            $userPermissionsBox.selectedIndex = 1
+            $global:userPermissions = $userPermissionsBox.selectedItem
+            out-logfile -string "User permissions are required."
+            $userPermissions.text = "User Permissions"
+        }
+        elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+        {
+            out-logfile -string "Group permissions are required."
+            $groupPermissions.show()
+            $groupPermissionsBox.show()
+            $global:GroupPermissions = $groupPermissionsbox.selectedItem
+            $userPermissions.text = "User Permissions (Optional)"
+            $userPermissionsBox.selectedIndex = 0
+            $global:userPermissions = $userPermissionsBox.selectedItem
+        }
     }
     
     $EnvironmentBox_SelectedIndexChanged = {
@@ -167,6 +188,12 @@ Function EstablishGraphConnection
     }
 
     $Button1_Click = {
+        out-logfile -string "A directory permission is always required - add this to required scopes."
+        $global:CalculatedScopesArray = @()
+        $global:CalculatedScopesArray += $global:directoryPermissions
+
+        out-logfile -string "Validate that mandatory tenant ID is specified."
+
         if ($textBox1.text -eq "")
         {
             [System.Windows.Forms.MessageBox]::Show("TenantID is required to connnect to Microsoft Graph...", 'Warning')
@@ -236,13 +263,39 @@ Function EstablishGraphConnection
         {
             out-logfile -string "Interactive authentication radio box selected..."
 
+            out-logfile -string "Validate that the minimum scopes for required functions are selected."
+
             if ($global:userPermissions -ne "None")
             {
                 out-logfile -string "User permissions are requested."
 
-                $global:CalculatedScopesArray = @()
                 $global:CalculatedScopesArray += $global:userPermissions
-                $global:CalculatedScopesArray += $global:directoryPermissions
+                $global:CalculatedScopesArray += $global:groupPermissions
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
+
+                out-logfile -string "Unique scopes in case there is an overlap"
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                out-logfile -string "Calculate Scopes Array."
+
+                $global:calculatedScopes = $global:CalculatedScopesArray -join ","
+
+                out-logfile -string $global:calculatedScopes
+            }
+            else 
+            {
+                out-logfile -string "User permissions are note requested."
+
                 $global:CalculatedScopesArray += $global:groupPermissions
 
                 foreach ($member in $global:CalculatedScopesArray)
