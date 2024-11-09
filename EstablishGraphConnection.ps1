@@ -350,37 +350,99 @@ Function EstablishGraphConnection
             $OrgName = (Get-MgOrganization).DisplayName
     
             out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
-    
-            foreach ($permission in $groupPermissionsArray)
+
+            if ($global:selectedOperation -eq "Group License Manager")
             {
-                if ($scopes.contains($permission))
+                foreach ($permission in $groupPermissionsArray)
                 {
-                    $groupPermissionOK = $true
-                    break
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Permission Found"
+                        $groupPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "Permission NOT Found"  
+                        $groupPermissionOK = $false                  
+                    }
+                }
+        
+                foreach ($permission in $directoryPermissionsArray)
+                {
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Permission Found"
+                        $directoryPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "Permission NOT Found"
+                        $directoryPermissionOK = $false
+                    }
+                }
+        
+                foreach ($permission in $userPermissionsArray)
+                {
+                    out-logfile -string $permission
+
+                    if($scopes.contains($permission))
+                    {
+                        $userPermissionOK = $TRUE
+                        break
+                    }
+                    else 
+                    {
+                        $userPermissionOK = $false
+                    }
+                }
+
+                if (($global:userPermissions -eq "None") -and ($userPermissionOK -eq $FALSE))
+                {
+                    out-logfile -string "A user permission was not specified - see if it overlaps with another permission."
+
+                    foreach ($permission in $userPermissionsArray)
+                    {
+                        if ($scopes.contains($permission))
+                        {
+                            out-logfile -string "Permission Found - setting random user permission to show all options."
+                            $global:userPermissions = $permission
+                            $userPermissionOK = $true
+                        }
+                    }
                 }
             }
-    
-            foreach ($permission in $directoryPermissionsArray)
-            {
-                out-logfile -string $permission
-    
-                if ($scopes.contains($permission))
+            elseif ($global:selectedOperation -eq "License Assignment Report")
+            {    
+                $groupPermissionOK = $true
+
+                foreach ($permission in $directoryPermissionsArray)
                 {
-                    out-logfile -string "Permission Found"
-                    $directoryPermissionOK = $true
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Permission Found"
+                        $directoryPermissionOK = $true
+                    }
+                }
+        
+                foreach ($permission in $userPermissionsArray)
+                {
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Permission Found"
+                        $userPermissionsOK = $true
+                    }
                 }
             }
-    
-            foreach ($permission in $userPermissionsArray)
-            {
-                out-logfile -string $permission
-    
-                if (($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
-                {
-                    out-logfile -string "Permission Found - setting random user permission to show all options."
-                    $global:userPermissions = $permission
-                }
-            }
+        }
+           
     
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
             out-logfile "Microsoft Graph Connection Information"
