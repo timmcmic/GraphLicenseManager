@@ -357,13 +357,13 @@ Function EstablishGraphConnection
                 {
                     if ($scopes.contains($permission))
                     {
-                        out-logfile -string "Permission Found"
+                        out-logfile -string "Group Permission Found"
                         $groupPermissionOK = $true
                         break
                     }
                     else 
                     {
-                        out-logfile -string "Permission NOT Found"  
+                        out-logfile -string "Group Permission NOT Found"  
                         $groupPermissionOK = $false                  
                     }
                 }
@@ -374,13 +374,13 @@ Function EstablishGraphConnection
         
                     if ($scopes.contains($permission))
                     {
-                        out-logfile -string "Permission Found"
+                        out-logfile -string "Directory Permission Found"
                         $directoryPermissionOK = $true
                         break
                     }
                     else 
                     {
-                        out-logfile -string "Permission NOT Found"
+                        out-logfile -string "Directory Permission NOT Found"
                         $directoryPermissionOK = $false
                     }
                 }
@@ -391,11 +391,13 @@ Function EstablishGraphConnection
 
                     if($scopes.contains($permission))
                     {
+                        out-logfile -string "User Permission Found"
                         $userPermissionOK = $TRUE
                         break
                     }
                     else 
                     {
+                        out-logfile -string "User Permission NOT Found"
                         $userPermissionOK = $false
                     }
                 }
@@ -440,9 +442,7 @@ Function EstablishGraphConnection
                         $userPermissionsOK = $true
                     }
                 }
-            }
-        }
-           
+            }           
     
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
             out-logfile "Microsoft Graph Connection Information"
@@ -454,7 +454,7 @@ Function EstablishGraphConnection
             out-logfile ""
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
     
-            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
+            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE) -or ($userPermissionOK -ne $true))
             {
                 [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
                 $global:exitSelected = $true
