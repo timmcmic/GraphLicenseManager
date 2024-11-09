@@ -427,8 +427,14 @@ Function EstablishGraphConnection
         
                     if ($scopes.contains($permission))
                     {
-                        out-logfile -string "Permission Found"
+                        out-logfile -string "Directory Permission Found"
                         $directoryPermissionOK = $true
+                        break
+                    }
+                    else
+                    {
+                        out-logfile -string "Directory Permission NOT Found"
+                        $directoryPermissionOK = $false
                     }
                 }
         
@@ -438,8 +444,14 @@ Function EstablishGraphConnection
         
                     if ($scopes.contains($permission))
                     {
-                        out-logfile -string "Permission Found"
-                        $userPermissionsOK = $true
+                        out-logfile -string "User Permission Found"
+                        $userPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "User Permission NOT Found"
+                        $userPermissionOK = $FALSE
                     }
                 }
             }           
