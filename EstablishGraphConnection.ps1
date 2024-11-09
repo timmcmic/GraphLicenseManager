@@ -265,7 +265,7 @@ Function EstablishGraphConnection
                 }
             }
         }
-        elseif ($radioButton2.checked)
+        elseif (($RadioButton2.checked) -and ($tenantIDError -eq $FALSE))
         {
             out-logfile -string "Interactive authentication radio box selected..."
 
