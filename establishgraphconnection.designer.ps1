@@ -267,10 +267,11 @@ $GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
 $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
 
-$items2 = "None","User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
+$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All","None"
 $userPermissionsBox.items.AddRange($items2)
-$userPermissionsBox.selectedIndex = 0
+$userPermissionsBox.selectedIndex = 7
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
+
 
 $operations = "Group License Manager","License Assignment Report"
 $selectedOperationBox.items.addRange($operations)
