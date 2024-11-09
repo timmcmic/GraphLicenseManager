@@ -86,9 +86,9 @@ Function EstablishGraphConnection
             out-logfile -string "Group permissions are not required."
             $groupPermissions.hide()
             $groupPermissionsBox.hide()
-            $global:groupPermissions = "None"
             $userPermissionsBox.selectedIndex = 0
             $global:userPermissions = $userPermissionsBox.selectedItem
+            $global:groupPermissions = $global:userPermissions
             out-logfile -string "User permissions are required."
             $userPermissions.text = "User Permissions"
             $userPermissionsBox.items.remove("None")
