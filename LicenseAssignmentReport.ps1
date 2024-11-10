@@ -26,6 +26,16 @@ $LicenseAssignmentReport_Load = {
     $ToolStripStatusLabel1.Text = "Enumerating all SKUs and SKU-Plans in tenant..."
 
     CalculateSkuTracking -skus $skus
+
+    out-logfile -string "Populate the SKUBox with all of the USER skus in the tenant."
+
+    $items = @()
+
+    $items += $global:skuTracking | select-object SkuID -Unique
+
+    $skuBox.items.addRange($items.SkuCommonName)
+    $skuBox.selectedIndex = 0
+    $SkuBox.add_SelectedIndexChanged($SkuBox_SelectedIndexChanged)
 }
 function LicenseAssignmentReport
 {
