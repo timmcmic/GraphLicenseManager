@@ -3,23 +3,27 @@ $LicenseAssignmentReport = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.ComboBox]$SkuBox = $null
 [System.Windows.Forms.Label]$PlanName = $null
 [System.Windows.Forms.ComboBox]$PlanBox = $null
-[System.Windows.Forms.DataGridView]$DataGridView1 = $null
+[System.Windows.Forms.DataGridView]$UserLicenseView = $null
 [System.Windows.Forms.Button]$ReportExitButton = $null
 [System.Windows.Forms.Button]$ExportCSV = $null
 [System.Windows.Forms.StatusStrip]$StatusStrip1 = $null
 [System.Windows.Forms.ToolStripStatusLabel]$ToolStripStatusLabel1 = $null
+[System.Windows.Forms.CheckedListBox]$PropertyBox = $null
+[System.Windows.Forms.Button]$RefreshButton = $null
 function InitializeComponent
 {
 $SkuName = (New-Object -TypeName System.Windows.Forms.Label)
 $SkuBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $PlanName = (New-Object -TypeName System.Windows.Forms.Label)
 $PlanBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
-$DataGridView1 = (New-Object -TypeName System.Windows.Forms.DataGridView)
+$UserLicenseView = (New-Object -TypeName System.Windows.Forms.DataGridView)
 $ReportExitButton = (New-Object -TypeName System.Windows.Forms.Button)
 $ExportCSV = (New-Object -TypeName System.Windows.Forms.Button)
 $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
 $ToolStripStatusLabel1 = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
-([System.ComponentModel.ISupportInitialize]$DataGridView1).BeginInit()
+$PropertyBox = (New-Object -TypeName System.Windows.Forms.CheckedListBox)
+$RefreshButton = (New-Object -TypeName System.Windows.Forms.Button)
+([System.ComponentModel.ISupportInitialize]$UserLicenseView).BeginInit()
 $StatusStrip1.SuspendLayout()
 $LicenseAssignmentReport.SuspendLayout()
 #
@@ -57,13 +61,13 @@ $PlanBox.Name = [System.String]'PlanBox'
 $PlanBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]351,[System.Int32]21))
 $PlanBox.TabIndex = [System.Int32]3
 #
-#DataGridView1
+#UserLicenseView
 #
-$DataGridView1.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
-$DataGridView1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]55))
-$DataGridView1.Name = [System.String]'DataGridView1'
-$DataGridView1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]982,[System.Int32]509))
-$DataGridView1.TabIndex = [System.Int32]4
+$UserLicenseView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
+$UserLicenseView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]55))
+$UserLicenseView.Name = [System.String]'UserLicenseView'
+$UserLicenseView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]728,[System.Int32]500))
+$UserLicenseView.TabIndex = [System.Int32]4
 #
 #ReportExitButton
 #
@@ -97,20 +101,42 @@ $StatusStrip1.Text = [System.String]'StatusStrip1'
 $ToolStripStatusLabel1.Name = [System.String]'ToolStripStatusLabel1'
 $ToolStripStatusLabel1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]0,[System.Int32]17))
 #
+#PropertyBox
+#
+$PropertyBox.CheckOnClick = $true
+$PropertyBox.FormattingEnabled = $true
+$PropertyBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]746,[System.Int32]55))
+$PropertyBox.Name = [System.String]'PropertyBox'
+$PropertyBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]248,[System.Int32]468))
+$PropertyBox.TabIndex = [System.Int32]8
+$PropertyBox.add_SelectedIndexChanged($PropertyBox_SelectedIndexChanged)
+#
+#RefreshButton
+#
+$RefreshButton.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]746,[System.Int32]532))
+$RefreshButton.Name = [System.String]'RefreshButton'
+$RefreshButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]248,[System.Int32]23))
+$RefreshButton.TabIndex = [System.Int32]9
+$RefreshButton.Text = [System.String]'Refresh Data'
+$RefreshButton.UseVisualStyleBackColor = $true
+$RefreshButton.add_Click($RefreshButton_Click)
+#
 #LicenseAssignmentReport
 #
 $LicenseAssignmentReport.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
+$LicenseAssignmentReport.Controls.Add($RefreshButton)
+$LicenseAssignmentReport.Controls.Add($PropertyBox)
 $LicenseAssignmentReport.Controls.Add($StatusStrip1)
 $LicenseAssignmentReport.Controls.Add($ExportCSV)
 $LicenseAssignmentReport.Controls.Add($ReportExitButton)
-$LicenseAssignmentReport.Controls.Add($DataGridView1)
+$LicenseAssignmentReport.Controls.Add($UserLicenseView)
 $LicenseAssignmentReport.Controls.Add($PlanBox)
 $LicenseAssignmentReport.Controls.Add($PlanName)
 $LicenseAssignmentReport.Controls.Add($SkuBox)
 $LicenseAssignmentReport.Controls.Add($SkuName)
 $LicenseAssignmentReport.Text = [System.String]'License Assignment Report'
 $LicenseAssignmentReport.add_Load($LicenseAssignmentReport_Load)
-([System.ComponentModel.ISupportInitialize]$DataGridView1).EndInit()
+([System.ComponentModel.ISupportInitialize]$UserLicenseView).EndInit()
 $StatusStrip1.ResumeLayout($false)
 $StatusStrip1.PerformLayout()
 $LicenseAssignmentReport.ResumeLayout($false)
@@ -119,10 +145,12 @@ Add-Member -InputObject $LicenseAssignmentReport -Name SkuName -Value $SkuName -
 Add-Member -InputObject $LicenseAssignmentReport -Name SkuBox -Value $SkuBox -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name PlanName -Value $PlanName -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name PlanBox -Value $PlanBox -MemberType NoteProperty
-Add-Member -InputObject $LicenseAssignmentReport -Name DataGridView1 -Value $DataGridView1 -MemberType NoteProperty
+Add-Member -InputObject $LicenseAssignmentReport -Name UserLicenseView -Value $UserLicenseView -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name ReportExitButton -Value $ReportExitButton -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name ExportCSV -Value $ExportCSV -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name StatusStrip1 -Value $StatusStrip1 -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name ToolStripStatusLabel1 -Value $ToolStripStatusLabel1 -MemberType NoteProperty
+Add-Member -InputObject $LicenseAssignmentReport -Name PropertyBox -Value $PropertyBox -MemberType NoteProperty
+Add-Member -InputObject $LicenseAssignmentReport -Name RefreshButton -Value $RefreshButton -MemberType NoteProperty
 }
 . InitializeComponent

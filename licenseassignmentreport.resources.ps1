@@ -13,5 +13,10 @@
 'StatusStrip1.Name' = 'StatusStrip1'
 'StatusStrip1.TrayLocation' = New-Object -TypeName System.Drawing.Point -ArgumentList @(17, 17)
 'ToolStripStatusLabel1.Name' = 'ToolStripStatusLabel1'
+'UserLicenseView.Name' = 'UserLicenseView'
+'v.Name' = 'v'
+'CheckedListBox1.Name' = 'CheckedListBox1'
+'PropertyBox.Name' = 'PropertyBox'
+'RefreshButton.Name' = 'RefreshButton'
 }
 }
