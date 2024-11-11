@@ -389,9 +389,16 @@ Function EstablishGraphConnection
                 {
                     out-logfile -string $permission
 
-                    if($scopes.contains($permission))
+                    if(($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
                     {
-                        out-logfile -string "User Permission Found"
+                        out-logfile -string "User Permission Found and was none - resetting."
+                        $global:userPermissions = $permission
+                        $userPermissionOK = $TRUE
+                        break
+                    }
+                    elseif ($scopes.contains($permission)) 
+                    {
+                        out-logfile -string "User permission was specified and was found in scopes."
                         $userPermissionOK = $TRUE
                         break
                     }
@@ -401,6 +408,8 @@ Function EstablishGraphConnection
                         $userPermissionOK = $false
                     }
                 }
+
+                <#
 
                 if (($global:userPermissions -eq "None") -and ($userPermissionOK -eq $FALSE))
                 {
@@ -416,6 +425,8 @@ Function EstablishGraphConnection
                         }
                     }
                 }
+
+                #>
             }
             elseif ($global:selectedOperation -eq "License Assignment Report")
             {    

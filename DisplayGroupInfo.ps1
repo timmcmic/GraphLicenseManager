@@ -131,7 +131,7 @@ function DisplayGroupInfo
     out-logfile -string "Determine if any group license errors exist."
 
     try {
-        $global:graphErrorGroupMembers = Get-MgGroupMemberWithLicenseError -GroupId $global:graphGroup.id -all errorAction Stop
+        $global:graphErrorGroupMembers = Get-MgGroupMemberWithLicenseError -GroupId $global:graphGroup.id -all -errorAction Stop
         $operationSuccessful = $true
     }
     catch {
