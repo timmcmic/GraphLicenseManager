@@ -1,24 +1,44 @@
+$PropertyBox_SelectedIndexChanged = {
+}
 $ReportExitButton_Click = {
 
     [void]$LicenseAssignmentReport.close()
 
 }
+
 $ExportCSV_Click = {
+    $ToolStripStatusLabel1.Text = "Attempting export to csv."
+
     out-logfile -string "Export to CSV Selected."
 
-    $selectedID = $skuBox.Selected
+    $selectedID = $skuBox.selectedItem
+
+    out-logfile -string $selectedID
     
     $sku = getSkuInfo -returnType "SkuPartNumber" -commonName $selectedID
 
-    $licenseExport = $global:logFile.replace(".log",$sku+".csv")
+    out-logfile -string $sku
+
+    $licenseExport = $global:logFile.replace(".log","_"+$sku+".csv")
 
     out-logfile -string $licenseExport
 
     $output = $global:licensedUsers | select-object $global:selectedAttributes
 
-    $output | export-csv $licenseExport
+    try {
+        $output | export-csv $licenseExport -errorAction STOP
+        [System.Windows.Forms.MessageBox]::Show("Data exported to CSV", 'Success')
+        $ToolStripStatusLabel1.Text = "Export to CSV was successful."
+    }
+    catch {
+        out-logfile -string $_
+        [System.Windows.Forms.MessageBox]::Show("Unable to create CSV file"+$_, 'Warning')
+    }
 }
+
 $RefreshButton_Click = {
+    $ToolStripStatusLabel1.Text = "Attempting to refresh the users license view with new fields."
+
     out-logfile -string "The administrator has selected the refresh button."
 
     out-logfile -string "Clearing all columns and rows."
@@ -45,6 +65,9 @@ $RefreshButton_Click = {
     {
         [System.Windows.Forms.MessageBox]::Show("A property option is required in order to refresh", 'Warning')
     }
+
+    $ToolStripStatusLabel1.Text = "User license view refreshed with new fields."
+
 }
 
 #=====================================================================================================
@@ -220,7 +243,7 @@ $SkuBox_SelectedIndexChanged = {
 
     if ($global:isFormLoad -eq $FALSE)
     {
-        $ToolStripStatusLabel1.Text = ("SKU Selection: "+$itemSelected+" Plan Selected: "+$planBox.selectedItem)
+        $ToolStripStatusLabel1.Text = ("SKU Selection: "+$itemSelected)
     }
     
     $global:isFormLoad = $false
@@ -231,7 +254,7 @@ $SkuBox_SelectedIndexChanged = {
 
     out-logfile -string "Build the users output table for review."
 
-    BuildDataView -skuUsers $licensedUsers
+    BuildDataView -skuUsers $global:licensedUsers
 }
 
 

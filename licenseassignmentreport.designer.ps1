@@ -58,6 +58,7 @@ $ReportExitButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 $ReportExitButton.TabIndex = [System.Int32]5
 $ReportExitButton.Text = [System.String]'Exit'
 $ReportExitButton.UseVisualStyleBackColor = $true
+$ReportExitButton.add_Click($ReportExitButton_Click)
 #
 #ExportCSV
 #
@@ -67,6 +68,7 @@ $ExportCSV.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sys
 $ExportCSV.TabIndex = [System.Int32]6
 $ExportCSV.Text = [System.String]'Export to CSV'
 $ExportCSV.UseVisualStyleBackColor = $true
+$ExportCSV.add_Click($ExportCSV_Click)
 #
 #StatusStrip1
 #

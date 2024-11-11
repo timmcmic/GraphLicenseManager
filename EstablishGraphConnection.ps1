@@ -445,6 +445,7 @@ Function EstablishGraphConnection
                     if ($scopes.contains($permission))
                     {
                         out-logfile -string "User Permission Found"
+                        $global:userPermissions = $permission
                         $userPermissionOK = $true
                         break
                     }
