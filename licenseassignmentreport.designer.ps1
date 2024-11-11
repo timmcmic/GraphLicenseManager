@@ -1,8 +1,6 @@
 $LicenseAssignmentReport = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$SkuName = $null
 [System.Windows.Forms.ComboBox]$SkuBox = $null
-[System.Windows.Forms.Label]$PlanName = $null
-[System.Windows.Forms.ComboBox]$PlanBox = $null
 [System.Windows.Forms.DataGridView]$UserLicenseView = $null
 [System.Windows.Forms.Button]$ReportExitButton = $null
 [System.Windows.Forms.Button]$ExportCSV = $null
@@ -14,8 +12,6 @@ function InitializeComponent
 {
 $SkuName = (New-Object -TypeName System.Windows.Forms.Label)
 $SkuBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
-$PlanName = (New-Object -TypeName System.Windows.Forms.Label)
-$PlanBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $UserLicenseView = (New-Object -TypeName System.Windows.Forms.DataGridView)
 $ReportExitButton = (New-Object -TypeName System.Windows.Forms.Button)
 $ExportCSV = (New-Object -TypeName System.Windows.Forms.Button)
@@ -29,7 +25,7 @@ $LicenseAssignmentReport.SuspendLayout()
 #
 #SkuName
 #
-$SkuName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]19))
+$SkuName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]249,[System.Int32]17))
 $SkuName.Name = [System.String]'SkuName'
 $SkuName.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]23))
 $SkuName.TabIndex = [System.Int32]0
@@ -39,27 +35,10 @@ $SkuName.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #SkuBox
 #
 $SkuBox.FormattingEnabled = $true
-$SkuBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]115,[System.Int32]19))
+$SkuBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]355,[System.Int32]19))
 $SkuBox.Name = [System.String]'SkuBox'
 $SkuBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]351,[System.Int32]21))
 $SkuBox.TabIndex = [System.Int32]1
-#
-#PlanName
-#
-$PlanName.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]472,[System.Int32]17))
-$PlanName.Name = [System.String]'PlanName'
-$PlanName.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]23))
-$PlanName.TabIndex = [System.Int32]2
-$PlanName.Text = [System.String]'Plan Name'
-$PlanName.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
-#
-#PlanBox
-#
-$PlanBox.FormattingEnabled = $true
-$PlanBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]578,[System.Int32]19))
-$PlanBox.Name = [System.String]'PlanBox'
-$PlanBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]351,[System.Int32]21))
-$PlanBox.TabIndex = [System.Int32]3
 #
 #UserLicenseView
 #
@@ -130,8 +109,6 @@ $LicenseAssignmentReport.Controls.Add($StatusStrip1)
 $LicenseAssignmentReport.Controls.Add($ExportCSV)
 $LicenseAssignmentReport.Controls.Add($ReportExitButton)
 $LicenseAssignmentReport.Controls.Add($UserLicenseView)
-$LicenseAssignmentReport.Controls.Add($PlanBox)
-$LicenseAssignmentReport.Controls.Add($PlanName)
 $LicenseAssignmentReport.Controls.Add($SkuBox)
 $LicenseAssignmentReport.Controls.Add($SkuName)
 $LicenseAssignmentReport.Text = [System.String]'License Assignment Report'
@@ -143,8 +120,6 @@ $LicenseAssignmentReport.ResumeLayout($false)
 $LicenseAssignmentReport.PerformLayout()
 Add-Member -InputObject $LicenseAssignmentReport -Name SkuName -Value $SkuName -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name SkuBox -Value $SkuBox -MemberType NoteProperty
-Add-Member -InputObject $LicenseAssignmentReport -Name PlanName -Value $PlanName -MemberType NoteProperty
-Add-Member -InputObject $LicenseAssignmentReport -Name PlanBox -Value $PlanBox -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name UserLicenseView -Value $UserLicenseView -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name ReportExitButton -Value $ReportExitButton -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name ExportCSV -Value $ExportCSV -MemberType NoteProperty
