@@ -42,6 +42,8 @@ $SkuBox.TabIndex = [System.Int32]1
 #
 #UserLicenseView
 #
+$UserLicenseView.AllowUserToAddRows = $false
+$UserLicenseView.AllowUserToDeleteRows = $false
 $UserLicenseView.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $UserLicenseView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]55))
 $UserLicenseView.Name = [System.String]'UserLicenseView'
