@@ -1,3 +1,11 @@
+$TextBox3_TextChanged = {
+}
+$Label2_Click = {
+}
+$TextBox2_TextChanged = {
+}
+$Label1_Click = {
+}
 <#
 $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
@@ -8,16 +16,20 @@ $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
 
-
 $groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
 $GroupPermissionsBox.Items.AddRange($groupItems)
 $GroupPermissionsBox.selectedIndex = 0
 $GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
 
-$items2 = "None" , "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
+$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All","None"
 $userPermissionsBox.items.AddRange($items2)
-$userPermissionsBox.selectedIndex = 0
+$userPermissionsBox.selectedIndex = 7
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
+
+$operations = "Group License Manager","License Assignment Report"
+$selectedOperationBox.items.addRange($operations)
+$selectedOperationBox.selectedIndex = 0
+$selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
 
 #>
 
@@ -42,11 +54,15 @@ $Form1_Load = {
         $textBox3.appendText($global:AppID)
     }
 
+    <#
+
     if (($global:EntraTenantID -ne "") -and ($global:appID -ne "") -and ($global:CertificateThumbprint -ne ""))
     {
         out-logfile -string "Invoking button click."
         $Button1.performClick()
     }
+
+    #>
 }
 
 Function EstablishGraphConnection
@@ -56,12 +72,43 @@ Function EstablishGraphConnection
     $global:directoryPermissions = "Organization.Read.All"
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
     $global:userPermissions = "None"
+    $global:selectedOperation = "Group License Manager"
 
     $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
     $directoryPermissionsArray = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
     $groupPermissionsArray = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
     $groupPermissionOK = $false
     $directoryPermissionOK = $false
+
+    $SelectedOperationsBox_SelectedIndexChanged = {
+        out-logfile -string $selectedOperationBox.selectedItem
+        $global:selectedOperation = $selectedOperationBox.selectedItem
+        $LoginStatusLabel.text = ("Operation Changed: "+$selectedOperationBox.selectedItem)
+
+        if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+        {
+            out-logfile -string "Group permissions are not required."
+            $groupPermissions.hide()
+            $groupPermissionsBox.hide()
+            $userPermissionsBox.selectedIndex = 0
+            $global:userPermissions = $userPermissionsBox.selectedItem
+            $global:groupPermissions = $global:userPermissions
+            out-logfile -string "User permissions are required."
+            $userPermissions.text = "User Permissions"
+            $userPermissionsBox.items.remove("None")
+        }
+        elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+        {
+            out-logfile -string "Group permissions are required."
+            $groupPermissions.show()
+            $groupPermissionsBox.show()
+            $global:GroupPermissions = $groupPermissionsbox.selectedItem
+            $userPermissions.text = "User Permissions (Optional)"
+            $userPermissionsBox.items.Add("None")
+            $userPermissionsBox.selectedIndex = 7
+            $global:userPermissions = $userPermissionsBox.selectedItem
+        }
+    }
     
     $EnvironmentBox_SelectedIndexChanged = {
         out-logfile -string $environmentBox.selectedItem
@@ -128,10 +175,14 @@ Function EstablishGraphConnection
 
         if ($global:interactiveAuth -eq $TRUE)
         {
-            $groupPermissions.show()
+            if ($global:selectedOperation -eq "Group License Manager")
+            {
+                $groupPermissions.show()
+                $groupPermissionsBox.show()
+            }
+
             $directoryPermissions.show()
             $directoryPermissionsBox.show()
-            $groupPermissionsBox.show()
             $userPermissions.show()
             $userPermissionsbox.show()
             out-logfile -string $global:interactiveAuth
@@ -147,6 +198,12 @@ Function EstablishGraphConnection
     }
 
     $Button1_Click = {
+        out-logfile -string "A directory permission is always required - add this to required scopes."
+        $global:CalculatedScopesArray = @()
+        $global:CalculatedScopesArray += $global:directoryPermissions
+
+        out-logfile -string "Validate that mandatory tenant ID is specified."
+
         if ($textBox1.text -eq "")
         {
             [System.Windows.Forms.MessageBox]::Show("TenantID is required to connnect to Microsoft Graph...", 'Warning')
@@ -204,7 +261,7 @@ Function EstablishGraphConnection
                 {
                     $errorText=$_
                     out-logfile -string $errorText
-                    $errorText = ($errorText -split 'Status: 400')[0]
+                    $errorText = CalculateError $errorText
                     $global:errorMessages+=$errorText
                     out-logfile -string "Unable to connect to Microsoft Graph.."
                     [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
@@ -212,17 +269,43 @@ Function EstablishGraphConnection
                 }
             }
         }
-        elseif ($radioButton2.checked)
+        elseif (($RadioButton2.checked) -and ($tenantIDError -eq $FALSE))
         {
             out-logfile -string "Interactive authentication radio box selected..."
+
+            out-logfile -string "Validate that the minimum scopes for required functions are selected."
 
             if ($global:userPermissions -ne "None")
             {
                 out-logfile -string "User permissions are requested."
 
-                $global:CalculatedScopesArray = @()
                 $global:CalculatedScopesArray += $global:userPermissions
-                $global:CalculatedScopesArray += $global:directoryPermissions
+                $global:CalculatedScopesArray += $global:groupPermissions
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
+
+                out-logfile -string "Unique scopes in case there is an overlap"
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                out-logfile -string "Calculate Scopes Array."
+
+                $global:calculatedScopes = $global:CalculatedScopesArray -join ","
+
+                out-logfile -string $global:calculatedScopes
+            }
+            else 
+            {
+                out-logfile -string "User permissions are note requested."
+
                 $global:CalculatedScopesArray += $global:groupPermissions
 
                 foreach ($member in $global:CalculatedScopesArray)
@@ -254,7 +337,7 @@ Function EstablishGraphConnection
             catch {
                 $errorText=$_
                 out-logfile -string $errorText
-                $errorText = ($errorText -split 'Status: 400')[0]
+                $errorText = CalculateError $errorText
                 $global:errorMessages+=$errorText
                 out-logfile -string "Unable to connect to Microsoft Graph.."
                 $LoginStatusLabel.text = ("ERROR:  Unable to connect to Microsoft Graph")
@@ -271,37 +354,123 @@ Function EstablishGraphConnection
             $OrgName = (Get-MgOrganization).DisplayName
     
             out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
-    
-            foreach ($permission in $groupPermissionsArray)
+
+            if ($global:selectedOperation -eq "Group License Manager")
             {
-                if ($scopes.contains($permission))
+                foreach ($permission in $groupPermissionsArray)
                 {
-                    $groupPermissionOK = $true
-                    break
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Group Permission Found"
+                        $groupPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "Group Permission NOT Found"  
+                        $groupPermissionOK = $false                  
+                    }
                 }
-            }
-    
-            foreach ($permission in $directoryPermissionsArray)
-            {
-                out-logfile -string $permission
-    
-                if ($scopes.contains($permission))
+        
+                foreach ($permission in $directoryPermissionsArray)
                 {
-                    out-logfile -string "Permission Found"
-                    $directoryPermissionOK = $true
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Directory Permission Found"
+                        $directoryPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "Directory Permission NOT Found"
+                        $directoryPermissionOK = $false
+                    }
                 }
-            }
-    
-            foreach ($permission in $userPermissionsArray)
-            {
-                out-logfile -string $permission
-    
-                if (($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
+        
+                foreach ($permission in $userPermissionsArray)
                 {
-                    out-logfile -string "Permission Found - setting random user permission to show all options."
-                    $global:userPermissions = $permission
+                    out-logfile -string $permission
+
+                    if(($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
+                    {
+                        out-logfile -string "User Permission Found and was none - resetting."
+                        $global:userPermissions = $permission
+                        $userPermissionOK = $TRUE
+                        break
+                    }
+                    elseif ($scopes.contains($permission)) 
+                    {
+                        out-logfile -string "User permission was specified and was found in scopes."
+                        $userPermissionOK = $TRUE
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "User Permission NOT Found"
+                        $userPermissionOK = $false
+                    }
                 }
+
+                <#
+
+                if (($global:userPermissions -eq "None") -and ($userPermissionOK -eq $FALSE))
+                {
+                    out-logfile -string "A user permission was not specified - see if it overlaps with another permission."
+
+                    foreach ($permission in $userPermissionsArray)
+                    {
+                        if ($scopes.contains($permission))
+                        {
+                            out-logfile -string "Permission Found - setting random user permission to show all options."
+                            $global:userPermissions = $permission
+                            $userPermissionOK = $true
+                        }
+                    }
+                }
+
+                #>
             }
+            elseif ($global:selectedOperation -eq "License Assignment Report")
+            {    
+                $groupPermissionOK = $true
+
+                foreach ($permission in $directoryPermissionsArray)
+                {
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Directory Permission Found"
+                        $directoryPermissionOK = $true
+                        break
+                    }
+                    else
+                    {
+                        out-logfile -string "Directory Permission NOT Found"
+                        $directoryPermissionOK = $false
+                    }
+                }
+        
+                foreach ($permission in $userPermissionsArray)
+                {
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "User Permission Found"
+                        $global:userPermissions = $permission
+                        $userPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "User Permission NOT Found"
+                        $userPermissionOK = $FALSE
+                    }
+                }
+            }           
     
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
             out-logfile "Microsoft Graph Connection Information"
@@ -313,7 +482,7 @@ Function EstablishGraphConnection
             out-logfile ""
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
     
-            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE))
+            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE) -or ($userPermissionOK -ne $true))
             {
                 [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
                 $global:exitSelected = $true

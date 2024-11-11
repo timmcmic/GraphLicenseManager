@@ -54,7 +54,7 @@ function Start-GraphLicenseManager
 
     $ErrorActionPreference = 'Stop'
     $global:logFile=$NULL
-    $logFileName = "LicenseChangeOperation_"+(Get-Date -Format FileDateTime)
+    $logFileName = "GraphLicenseManager_"+(Get-Date -Format FileDateTime)
 
     $global:exitSelected = $false
 
@@ -94,7 +94,14 @@ function Start-GraphLicenseManager
 
     if ($global:exitSelected -eq $false)
     {
-        manageGroupLicense
+        if ($global:selectedOperation -eq "Group License Manager")
+        {
+            manageGroupLicense
+        }
+        elseif ($global:selectedOperation -eq "License Assignment Report")
+        {
+            LicenseAssignmentReport
+        }
     }
 
     $telemetryLicenseManagementEndTime = get-universalDateTime
