@@ -16,7 +16,8 @@ function Start-GraphLicenseManager
 
     #Initialize telemetry collection.
 
-    $appInsightAPIKey = "63d673af-33f4-401c-931e-f0b64a218d89"
+    #$appInsightAPIKey = "63d673af-33f4-401c-931e-f0b64a218d89"
+    $appInsightAPIKey = "ebaef937-84c8-4e48-a29a-4a66ba482a32"
     $traceModuleName = "GraphLicenseManager"
 
     if ($allowTelemetryCollection -eq $TRUE)
