@@ -46,6 +46,7 @@ function CheckAllChildNodes($treeNode, $nodeChecked){
 
 function ManageGroupLicense
 {
+    $global:telemetryOperationName = "Group License Manager"
     $planArray = @()
     $global:fakePlanID = "00000000-0000-0000-0000-000000000000"
     out-logfile -string "Entered manage group license..."

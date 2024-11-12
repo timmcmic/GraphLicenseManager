@@ -7,6 +7,8 @@ $ReportExitButton_Click = {
 }
 
 $ExportCSV_Click = {
+    $global:telemetryCSVExport++
+
     $ToolStripStatusLabel1.Text = "Attempting export to csv."
 
     out-logfile -string "Export to CSV Selected."
@@ -31,12 +33,16 @@ $ExportCSV_Click = {
         $ToolStripStatusLabel1.Text = "Export to CSV was successful."
     }
     catch {
+        $errorText = $_
+        $global:ErrorMessages += $errorText
         out-logfile -string $_
         [System.Windows.Forms.MessageBox]::Show("Unable to create CSV file"+$_, 'Warning')
     }
 }
 
 $RefreshButton_Click = {
+    $global:telemetryRefresh++
+
     $ToolStripStatusLabel1.Text = "Attempting to refresh the users license view with new fields."
 
     out-logfile -string "The administrator has selected the refresh button."
@@ -50,6 +56,9 @@ $RefreshButton_Click = {
     if ($propertyBox.checkedItems.count -gt 0)
     {
         $global:selectedAttributes = $propertyBox.checkedItems
+        $global:telemetryattributesSelected += $global:selectedAttributes
+        $global:telemetryattributesSelected = $global:telemetryattributesSelected | Select-Object -Unique
+
         out-logfile -string $global:selectedAttributes.count
 
         foreach ($item in $global:selectedAttributes)
@@ -260,6 +269,8 @@ $SkuBox_SelectedIndexChanged = {
 
 function LicenseAssignmentReport
 {
+    $global:telemetryOperationName = "License Assignment Report"
+
     out-logfile -string "Entering license assignment report."
 
     out-logfile -string "Establishing global properties for getting users."

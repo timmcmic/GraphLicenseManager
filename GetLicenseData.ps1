@@ -29,6 +29,8 @@ function GetLicenseData
     catch {
         out-logfile -string "Unable to obtain the license CSV data."
         out-logfile -string $_ -isError:$TRUE
+        $errorText = $_
+        $global:ErrorMessages += $errorText
     }
 
     out-logfile -string "Converting the raw data downloaded to CSV format."
@@ -38,6 +40,8 @@ function GetLicenseData
     }
     catch {
         out-logfile -string "Unable to convert the data to CSV."
+        $errorText = $_
+        $global:ErrorMessages += $errorText
         out-logfile -string $_ -errorAction:STOP
     }
 
@@ -50,6 +54,8 @@ function GetLicenseData
     catch 
     {
         out-logfile -string "Unable to export the csv license data."
+        $errorText = $_
+        $global:ErrorMessages += $errorText
         out-logfile -string $_ -isError:$TRUE
     }
 

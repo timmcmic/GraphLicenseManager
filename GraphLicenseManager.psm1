@@ -30,6 +30,7 @@ function Start-GraphLicenseManager
     #Define telemetry items.
 
     $telemetryEventName = "GraphLicenseManager"
+    $global:telemetryOperationName = ""
     $telemetryGraphLicenseManagerVersion = $NULL
     $telemetryMSGraphAuthentication = $NULL
     $telemetryMSGraphDirectory = $NULL
@@ -49,6 +50,9 @@ function Start-GraphLicenseManager
     [double]$global:telemetryCommits=0
     [double]$global:telemetrySearcheErrors=0
     [double]$global:telemetryCommitErrors=0
+    [double]$global:telemetryRefresh=0
+    [double]$global:telemetryCSVExport=0
+    $global:telemetryattributesSelected = @()
     $global:ErrorMessages=@()
 
 
@@ -112,6 +116,7 @@ function Start-GraphLicenseManager
 
     $telemetryEventProperties = @{
         GraphLicenseManagerCommand = $telemetryEventName
+        OperationName = $global:telemetryOperationName
         GraphLicenseManagerVersion = $telemetryGraphLicenseManagerVersion
         GraphAuthenticationVersion = $telemetryMSGraphAuthentication
         GraphIdentityDirectoryManagementVersion = $telemetryMSGraphDirectory
@@ -126,6 +131,7 @@ function Start-GraphLicenseManager
         LicenseManagementStartTime = $telemetryLicenseManagementStartTime
         LicenseManagementEndTime = $telemetryLicenseManagementEndTime
         LicenseManagementElapsedTime = $telemetryLicenseManagementTime
+        TelemetryAttributesSelected = $global:telemetryattributesSelected
         ErrorText = $global:errorMessages
     }
 
@@ -135,6 +141,8 @@ function Start-GraphLicenseManager
         TotalCommits = $global:telemetryCommits
         TotalCommitErrors = $global:telemetryCommitErrors
         TotalSearchErrors = $global:telemetrySearcheErrors
+        TotalRefreshOperations = $global:telemetryRefresh
+        TotalCSVExports = $global:telemetryCSVExport
     }
 
     out-logfile -string "Sending telemetry event."

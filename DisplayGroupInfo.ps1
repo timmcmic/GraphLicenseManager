@@ -91,6 +91,7 @@ function DisplayGroupInfo
         out-logfile -string "Unable to obtain graph group membership..."
         out-logfile -string $_
         [System.Windows.Forms.MessageBox]::Show("Unable to obtain graph group membership..."+$errorText, 'Warning')
+        $global:ErrorMessages += $errorText
     }
 
     out-logfile -string "Parse all members for information to add to the table."
@@ -139,6 +140,7 @@ function DisplayGroupInfo
         out-logfile -string "Unable to obtain the members in error..."
         out-logfile -string $_
         [System.Windows.Forms.MessageBox]::Show("Unable to obtain the members in error..."+$errorText, 'Warning')
+        $global:ErrorMessages += $errorText
     }
 
     out-logfile -string "Parse the error members to obtain the error reason."
