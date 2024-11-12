@@ -16,13 +16,13 @@ function Start-GraphLicenseManager
 
     #Initialize telemetry collection.
 
-    #$appInsightAPIKey = "63d673af-33f4-401c-931e-f0b64a218d89"
-    $appInsightAPIKey = "ebaef937-84c8-4e48-a29a-4a66ba482a32"
+    $appInsightAPIKey = "63d673af-33f4-401c-931e-f0b64a218d89"
+    #$appInsightAPIKey = "ebaef937-84c8-4e48-a29a-4a66ba482a32"
     $traceModuleName = "GraphLicenseManager"
 
     if ($allowTelemetryCollection -eq $TRUE)
     {
-        start-telemetryConfiguration -allowTelemetryCollection $allowTelemetryCollection -appInsightAPIKey $appInsightAPIKey -traceModuleName $traceModuleName
+        start-telemetryConfiguration -allowTelemetryCollection $allowTelemetryCollection -appInsightAPIKey $appInsightAPIKey -traceModuleName $traceModuleName -errorAction STOP
     }
 
     Set-Variable -Name "EntraTenantID" -Value $EntraTenantID -Scope Global
@@ -152,6 +152,6 @@ function Start-GraphLicenseManager
 
     if ($allowTelemetryCollection -eq $TRUE)
     {
-        send-TelemetryEvent -traceModuleName $traceModuleName -eventName $telemetryEventName -eventMetrics $telemetryEventMetrics -eventProperties $telemetryEventProperties
+        send-TelemetryEvent -traceModuleName $traceModuleName -eventName $telemetryEventName -eventMetrics $telemetryEventMetrics -eventProperties $telemetryEventProperties -errorAction STOP
     }
 }
