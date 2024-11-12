@@ -53,6 +53,7 @@ function Start-GraphLicenseManager
     [double]$global:telemetryRefresh=0
     [double]$global:telemetryCSVExport=0
     $global:telemetryattributesSelected = @()
+    [double]$global:telemetryLicensesViewed = 0
     $global:ErrorMessages=@()
 
 
@@ -143,6 +144,7 @@ function Start-GraphLicenseManager
         TotalSearchErrors = $global:telemetrySearcheErrors
         TotalRefreshOperations = $global:telemetryRefresh
         TotalCSVExports = $global:telemetryCSVExport
+        TotalLicensesViewed = $global:telemetryLicensesViewed
     }
 
     out-logfile -string "Sending telemetry event."

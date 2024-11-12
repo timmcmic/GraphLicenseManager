@@ -241,6 +241,8 @@ function CleanDataView
 
 $SkuBox_SelectedIndexChanged = {
 
+    $global:telemetryLicensesViewed++
+
     out-logfile -string "SKU Selection has changed."
 
     out-logfile -string "Clearing all columns and rows."
