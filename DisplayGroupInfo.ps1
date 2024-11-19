@@ -129,6 +129,7 @@ function DrawDataGrid
         $errorCountBox.appendtext("0")
     }
 
+    $LicenseTextBox.clear()
     $LicenseTextBox.appendText($global:graphGroup.LicenseProcessingState.State)
 }
 
