@@ -1,12 +1,58 @@
 $RefreshErrors_Click = {
+    out-logfile -string "Refreshing user license errors selected."
     $errorsView.columns.clear()
     GetGroupErrors
     DrawDataGrid  -initialLoad $false
 }
 
 $ReprocessUsers_Click = {
+    out-logfile -string "Reprocessing user licenses selected."
+
+    $checkedRows = $errorsView.rows | where {$_.cells["CheckboxColumn"].value -eq $true}
+
+    out-logfile -string ("Number of users for reprocessing: "+$checkedRows.count)
+
+    if ($checkedRows.count -gt 0)
+    {
+        $successCount = 0
+        $errorCount = 0
+        out-logfile -string "There are users for reprocessing."
+
+        foreach ($row in $checkedRows)
+        {
+            out-logfile -string ("Reprocessing user: "+$row.cells["ID"].value)
+
+            try {
+                Invoke-MGLicenseUser -userID $row.cells["ID"].value -errorAction STOP
+                out-logfile -string "User reprocessed successfully."
+                $successCount++
+            }
+            catch {
+                out-logfile -string ("Unable to process a license reprocessing: "+$row.cells["ID"].value)
+                $errorText = CalculateError $_
+                [System.Windows.Forms.MessageBox]::Show("Unable to reprocess: "+$row.cells["ID"].value+" Error: "+$errorText, 'Warning')
+                $errorCount++
+            }
+        }
+
+        if ($errorCount -eq 0)
+        {
+            [System.Windows.Forms.MessageBox]::Show("All users reprocessed successfully.  View Entra audit logs for details or refresh error view.", 'Info')
+        }
+    }
+    else 
+    {
+        out-logfile -string "No users for reprocessing."
+    }
 }
 $GroupInfo_Load = {
+
+    if ($global:allowReprocessing -eq $TRUE)
+    {
+        $RefreshErrors.show()
+        $ReprocessUsers.show()
+    }
+
     DrawDataGrid
 }
 

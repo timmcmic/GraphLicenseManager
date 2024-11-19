@@ -1,6 +1,7 @@
 & { $BinaryFormatter = New-Object -TypeName System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
  @{ 
 'GroupCountBox.Name' = 'GroupCountBox'
+'ReprocessUsers.Name' = 'ReprocessUsers'
 'PoplateMembers.Name' = 'PoplateMembers'
 'MembersView.Name' = 'MembersView'
 'LicenseTextBox.Name' = 'LicenseTextBox'
@@ -8,12 +9,11 @@
 'ErrorLabel.Name' = 'ErrorLabel'
 'LicenseProcessingState.Name' = 'LicenseProcessingState'
 'ErrorCountBox.Name' = 'ErrorCountBox'
-'CloseDisplay.Name' = 'CloseDisplay'
-'$this.Name' = 'GroupInfo'
 'ErrorsView.Name' = 'ErrorsView'
+'$this.Name' = 'GroupInfo'
+'CloseDisplay.Name' = 'CloseDisplay'
 'Label2.Name' = 'Label2'
-'MemberLabel.Name' = 'MemberLabel'
-'ReprocessUsers.Name' = 'ReprocessUsers'
 'RefreshErrors.Name' = 'RefreshErrors'
+'MemberLabel.Name' = 'MemberLabel'
 }
 }

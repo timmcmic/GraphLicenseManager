@@ -143,6 +143,7 @@ $ReprocessUsers.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @
 $ReprocessUsers.TabIndex = [System.Int32]11
 $ReprocessUsers.Text = [System.String]'Reprocess Selected Users'
 $ReprocessUsers.UseVisualStyleBackColor = $true
+$ReprocessUsers.Visible = $false
 $ReprocessUsers.add_Click($ReprocessUsers_Click)
 #
 #RefreshErrors
@@ -153,6 +154,7 @@ $RefreshErrors.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @(
 $RefreshErrors.TabIndex = [System.Int32]12
 $RefreshErrors.Text = [System.String]'Refresh License Errors'
 $RefreshErrors.UseVisualStyleBackColor = $true
+$RefreshErrors.Visible = $false
 $RefreshErrors.add_Click($RefreshErrors_Click)
 #
 #GroupInfo
