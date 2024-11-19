@@ -1,6 +1,7 @@
 $RefreshErrors_Click = {
     $errorsView.columns.clear()
     GetGroupErrors
+    DrawDataGrid  -initialLoad $false
 }
 
 $ReprocessUsers_Click = {
