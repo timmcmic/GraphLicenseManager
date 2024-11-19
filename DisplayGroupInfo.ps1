@@ -36,7 +36,7 @@ $GroupInfo_Load = {
     #$errorsView.columnCount = 5
 
     $errorsViewColumns = @()
-    $errorsViewColumns = @("ID","Error","DisplayName","UserPrincipalName","ObjectType")
+    $errorsViewColumns = @("ID","DisplayName","UserPrincipalName","Error","ObjectType")
 
     foreach ($entry in $errorsViewColumns )
     {
@@ -68,7 +68,7 @@ $GroupInfo_Load = {
     
     foreach ($member in $global:graphMembersErrorArray)
     {
-        $errorsView.rows.add($false,$member.ID,$member.error,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
+        $errorsView.rows.add($false,$member.ID,$member.DisplayName,$member.UserPrincipalName,$member.error,$member.ObjectType)
     }
 
     $errorsView.Columns | Foreach-Object{
@@ -190,23 +190,20 @@ function DisplayGroupInfo
                     $functionError = @()
                     out-logfile -string "The error count is gt 0"
 
-                    foreach ($member in $functionUser)
+                    foreach ($error in $functionUser)
                     {
-                        $functionString = $member.error +"," + $member.SkuID + "," + $member.State
-                        out-logfile -string $functionString
+                        $functionString = $error.error +"," + $error.SkuID + "," + $error.State
                         $functionError += $functionString
                     }
 
                     $functionError = $functionError -join "||"
-                    out-logfile -string $functionError
                 }
                 else 
                 {
                     $functionString = $functionUser.error +"," + $functionUser.SkuID + "," + $functionUser.State
-                    out-logfile -string $functionString
                     $functionError = $functionString
-                    out-logfile -string $functionError
                 }
+
                 <#
 
                 $functionError = $functionUser.Error
