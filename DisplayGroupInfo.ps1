@@ -17,7 +17,7 @@ $GroupInfo_Load = {
     for ($i = 0 ; $i -lt $membersViewColumns.count ; $i++)
     {
         $membersView.columns[$i].name = $membersViewColumns[$i]
-        $membersView.Columns[$errorsViewColumns[$i]].ReadOnly = "true"
+        $membersView.Columns[$i].ReadOnly = "true"
     }
 
     out-logfile -string "Adding all members information to the table..."
@@ -45,6 +45,7 @@ $GroupInfo_Load = {
 
     out-logfile -string "Creating checkbox column..."
     
+    $checkboxColumn = New-Object System.Windows.Forms.DataGridViewCheckBoxColumn
     $checkboxColumn.HeaderText = "Select User"
     $checkboxColumn.Name = "CheckboxColumn"
 
@@ -56,7 +57,11 @@ $GroupInfo_Load = {
     {
         #$errorsView.columns[$i].name = $errorsViewColumns[$i]
         $errorsView.columns.add($errorsViewColumns[$i],$errorsViewColumns[$i])
-        $errorsView.Columns[$errorsViewColumns[$i]].ReadOnly = "true"
+    }
+
+    for ($i = 1 ; $i -lt $errorsViewColumns.count ; $i++)
+    {
+        $errorsView.Columns[$i].ReadOnly = "true"
     }
 
     out-logfile -string "Adding error information to the table..."
