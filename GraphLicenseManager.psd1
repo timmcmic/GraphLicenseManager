@@ -56,6 +56,7 @@ RequiredModules = @(
     @{ModuleName = 'Microsoft.Graph.Users' ; ModuleVersion = '2.24.0'}
     @{ModuleName = 'Microsoft.Graph.Groups' ; ModuleVersion = '2.24.0'}
     @{ModuleName = 'Microsoft.Graph.Identity.DirectoryManagement' ; ModuleVersion = '2.24.0'}
+    @{ModuleName = 'Microsoft.Graph.Users.Actions' ; ModuleVersion = '2.24.0'}
     @{ModuleName = 'PowerShellGet'; ModuleVersion = '2.2.5'}
     @{ModuleName = 'TelemetryHelper'; ModuleVersion = '2.1.2'}
 )

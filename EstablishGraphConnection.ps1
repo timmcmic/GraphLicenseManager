@@ -357,6 +357,15 @@ Function EstablishGraphConnection
 
             if ($global:selectedOperation -eq "Group License Manager")
             {
+                if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
+                {
+                    $global:allowReprocessing = $true
+                }
+                else 
+                {
+                    $global:allowReprocessing = $false                
+                }
+
                 foreach ($permission in $groupPermissionsArray)
                 {
                     if ($scopes.contains($permission))
