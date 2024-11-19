@@ -185,12 +185,12 @@ function DisplayGroupInfo
 
                 $functionUser = $functionUser | where {$_.AssignedByGroup -eq $global:graphGroup.Id}
 
-                if ($functionUser.Error.count -gt 0)
+                if ($functionUser.count -gt 0)
                 {
                     $functionError = @()
                     out-logfile -string "The error count is gt 0"
 
-                    foreach ($member in $functionUser.Error)
+                    foreach ($member in $functionUser)
                     {
                         $functionString = $member.error +"," + $member.SkuID + "," + $member.State
                         out-logfile -string $functionString
