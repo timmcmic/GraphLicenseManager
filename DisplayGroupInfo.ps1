@@ -185,6 +185,30 @@ function DisplayGroupInfo
 
                 $functionUser = $functionUser | where {$_.AssignedByGroup -eq $global:graphGroup.Id}
 
+                if ($functionUser.Error.count -gt 0)
+                {
+                    $functionError = @()
+                    out-logfile -string "The error count is gt 0"
+
+                    foreach ($member in $functionUser.Error)
+                    {
+                        $functionString = $member.error +"," + $member.SkuID + "," + $member.State
+                        out-logfile -string $functionString
+                        $functionError += $functionString
+                    }
+
+                    $functionError = $functionError -join "||"
+                    out-logfile -string $functionError
+                }
+                else 
+                {
+                    $functionString = $functionUser.error +"," + $functionUser.SkuID + "," + $functionUser.State
+                    out-logfile -string $functionString
+                    $functionError = $functionString
+                    out-logfile -string $functionError
+                }
+                <#
+
                 $functionError = $functionUser.Error
 
                 if ($functionError.count -gt 0)
@@ -196,6 +220,8 @@ function DisplayGroupInfo
                 {
                     out-logfile -string "Single error leave it alone."
                 }
+
+                #>
 
                 out-logfile -string ("The user error type is:")
                 out-logfile -string $functionError
