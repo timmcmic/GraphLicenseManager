@@ -12,6 +12,7 @@ $GroupInfo_Load = {
     for ($i = 0 ; $i -lt $membersViewColumns.count ; $i++)
     {
         $membersView.columns[$i].name = $membersViewColumns[$i]
+        $membersView.Columns[$errorsViewColumns[$i]].ReadOnly = "true"
     }
     
     foreach ($member in $global:graphMembersArray)
