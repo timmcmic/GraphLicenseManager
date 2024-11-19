@@ -64,6 +64,10 @@ $GroupInfo_Load = {
         $errorsView.Columns[$i].ReadOnly = "true"
     }
 
+    $wrapCellStyle = New-Object System.Windows.Forms.DataGridViewCellStyle
+    $wrapCellStyle.WrapMode = [System.Windows.Forms.DataGridViewTriState]::True
+    $errorsView.columns[4].defaultCellStyle = $wrapCellStyle
+
     out-logfile -string "Adding error information to the table..."
     
     foreach ($member in $global:graphMembersErrorArray)
@@ -75,13 +79,7 @@ $GroupInfo_Load = {
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
 
-    $wrapCellStyle = New-Object System.Windows.Forms.DataGridViewCellStyle
-    $wrapCellStyle.WrapMode = [System.Windows.Forms.DataGridViewTriState]::True
-    $errorsView.columns[4].defaultCellStyle = $wrapCellStyle
-
-    $errorView.Rows | foreach-object{
-        $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeRowMode]::AllCells
-    }
+    #$errorsView.autosizerowsmode = "AllCells"
 
     if ($global:graphMembersArray.count -gt 0)
     {
@@ -110,6 +108,7 @@ $CloseDisplay_Click = {
 
 function DisplayGroupInfo
 {
+    $global:graphErrorGroupMembers = $null
     $global:graphMembersErrorArray = @()
     $global:graphMembersArray = @()
     out-logfile -string "Obtaining group membership..."
@@ -204,7 +203,7 @@ function DisplayGroupInfo
                         $functionError += $functionString
                     }
 
-                    $functionError = $functionError -join "||"
+                    $functionError = $functionError -join "`r`n"
                 }
                 else 
                 {
