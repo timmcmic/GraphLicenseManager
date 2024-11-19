@@ -187,6 +187,16 @@ function DisplayGroupInfo
 
                 $functionError = $functionUser.Error
 
+                if ($functionError.count -gt 0)
+                {
+                    out-logfile -string "There are more than one errors."
+                    $functionError = $functionError -join ","
+                }
+                else 
+                {
+                    out-logfile -string "Single error leave it alone."
+                }
+
                 out-logfile -string ("The user error type is:")
                 out-logfile -string $functionError
 
