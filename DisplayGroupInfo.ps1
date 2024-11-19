@@ -1,4 +1,7 @@
 $GroupInfo_Load = {
+
+    out-logfile -string "Setting up the members columns.."
+
     $membersView.columnCount = 4
 
     $membersViewColumns = @()
@@ -9,11 +12,15 @@ $GroupInfo_Load = {
         out-logfile -string $entry
     }
 
+    out-logfile -string "Adding member columns to table..."
+
     for ($i = 0 ; $i -lt $membersViewColumns.count ; $i++)
     {
         $membersView.columns[$i].name = $membersViewColumns[$i]
         $membersView.Columns[$errorsViewColumns[$i]].ReadOnly = "true"
     }
+
+    out-logfile -string "Adding all members information to the table..."
     
     foreach ($member in $global:graphMembersArray)
     {
@@ -24,6 +31,8 @@ $GroupInfo_Load = {
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
 
+    out-logfile -string "Setting up errors columns..."
+
     #$errorsView.columnCount = 5
 
     $errorsViewColumns = @()
@@ -33,18 +42,24 @@ $GroupInfo_Load = {
     {
         out-logfile -string $entry
     }
+
+    out-logfile -string "Creating checkbox column..."
     
     $checkboxColumn.HeaderText = "Select User"
     $checkboxColumn.Name = "CheckboxColumn"
 
     $errorsView.columns.add($checkboxColumn)
 
+    out-logfile -string "Adding additional columns to the table..."
+
     for ($i = 0 ; $i -lt $errorsViewColumns.count ; $i++)
     {
         #$errorsView.columns[$i].name = $errorsViewColumns[$i]
         $errorsView.columns.add($errorsViewColumns[$i],$errorsViewColumns[$i])
-        $errorsView.Columns[$errorsViewColumns[$i]].ReadOnly = "true";
+        $errorsView.Columns[$errorsViewColumns[$i]].ReadOnly = "true"
     }
+
+    out-logfile -string "Adding error information to the table..."
     
     foreach ($member in $global:graphMembersErrorArray)
     {
