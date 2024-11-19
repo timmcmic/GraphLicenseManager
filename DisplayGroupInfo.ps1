@@ -221,7 +221,9 @@ function GetGroupErrors
 
                     foreach ($errorString in $functionUser)
                     {
-                        $functionString = $errorString.error +"," + $errorString.SkuID + "," + $errorString.State
+                        $commonName = $global:skuGuidHash[$errorString.SkuID].'???Product_Display_Name'
+
+                        $functionString = $errorString.error +"---"+ $commonName + "---" + $errorString.State
                         $functionError += $functionString
                     }
 

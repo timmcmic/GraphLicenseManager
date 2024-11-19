@@ -62,10 +62,12 @@ function GetLicenseData
     out-logfile -string "Convert the CSV file to indexed hash tables."
 
     $skuCSV = $functionCSVData | Group-Object String_ID | ForEach-Object {$_.Group[0] }
+    $skuGuidCSV = $functionCSVData | Group-Object GUID | ForEach-Object {$_.Group[0] }
     $servicePlanCSV = $functionCSVData | Group-Object Service_Plan_Name | ForEach-Object {$_.Group[0] }
 
     $global:skuHash = @{}
     $global:servicePlanHash = @{}
+    $global:skuGuidHash = @{}
 
     foreach ($member in $skuCSV)
     {
@@ -77,5 +79,11 @@ function GetLicenseData
     {
         $key = $member.Service_Plan_Name
         $global:servicePlanhash[$key] = $member
+    }
+
+    foreach ($member in $skuGuidCSV)
+    {
+        $key = $member.GUID
+        $global:skuGuidHash[$key] = $member
     }
 }
