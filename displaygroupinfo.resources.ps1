@@ -1,17 +1,19 @@
 & { $BinaryFormatter = New-Object -TypeName System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
  @{ 
 'GroupCountBox.Name' = 'GroupCountBox'
-'MembersView.Name' = 'MembersView'
-'MemberLabel.Name' = 'MemberLabel'
 'PoplateMembers.Name' = 'PoplateMembers'
+'MembersView.Name' = 'MembersView'
 'LicenseTextBox.Name' = 'LicenseTextBox'
+'Label1.Name' = 'Label1'
 'ErrorLabel.Name' = 'ErrorLabel'
 'LicenseProcessingState.Name' = 'LicenseProcessingState'
-'Label1.Name' = 'Label1'
 'ErrorCountBox.Name' = 'ErrorCountBox'
-'ErrorsView.Name' = 'ErrorsView'
-'$this.Name' = 'GroupInfo'
 'CloseDisplay.Name' = 'CloseDisplay'
+'$this.Name' = 'GroupInfo'
+'ErrorsView.Name' = 'ErrorsView'
 'Label2.Name' = 'Label2'
+'MemberLabel.Name' = 'MemberLabel'
+'ReprocessUsers.Name' = 'ReprocessUsers'
+'RefreshErrors.Name' = 'RefreshErrors'
 }
 }

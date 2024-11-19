@@ -10,6 +10,8 @@ $GroupInfo = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.TextBox]$GroupCountBox = $null
 [System.Windows.Forms.TextBox]$ErrorCountBox = $null
 [System.Windows.Forms.Label]$Label2 = $null
+[System.Windows.Forms.Button]$ReprocessUsers = $null
+[System.Windows.Forms.Button]$RefreshErrors = $null
 function InitializeComponent
 {
 $MembersView = (New-Object -TypeName System.Windows.Forms.DataGridView)
@@ -23,6 +25,8 @@ $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
 $GroupCountBox = (New-Object -TypeName System.Windows.Forms.TextBox)
 $ErrorCountBox = (New-Object -TypeName System.Windows.Forms.TextBox)
 $Label2 = (New-Object -TypeName System.Windows.Forms.Label)
+$ReprocessUsers = (New-Object -TypeName System.Windows.Forms.Button)
+$RefreshErrors = (New-Object -TypeName System.Windows.Forms.Button)
 ([System.ComponentModel.ISupportInitialize]$MembersView).BeginInit()
 ([System.ComponentModel.ISupportInitialize]$ErrorsView).BeginInit()
 $GroupInfo.SuspendLayout()
@@ -52,7 +56,7 @@ $ErrorsView.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList 
 $ErrorsView.Name = [System.String]'ErrorsView'
 $ErrorsView.RowHeadersWidthSizeMode = [System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode]::AutoSizeToAllHeaders
 $ErrorsView.SelectionMode = [System.Windows.Forms.DataGridViewSelectionMode]::FullRowSelect
-$ErrorsView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]980,[System.Int32]240))
+$ErrorsView.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]980,[System.Int32]211))
 $ErrorsView.TabIndex = [System.Int32]1
 #
 #CloseDisplay
@@ -85,7 +89,7 @@ $MemberLabel.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
 #
 #LicenseProcessingState
 #
-$LicenseProcessingState.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]547))
+$LicenseProcessingState.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]559))
 $LicenseProcessingState.Name = [System.String]'LicenseProcessingState'
 $LicenseProcessingState.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]155,[System.Int32]25))
 $LicenseProcessingState.TabIndex = [System.Int32]5
@@ -94,14 +98,14 @@ $LicenseProcessingState.TextAlign = [System.Drawing.ContentAlignment]::MiddleRig
 #
 #LicenseTextBox
 #
-$LicenseTextBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]173,[System.Int32]549))
+$LicenseTextBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]173,[System.Int32]561))
 $LicenseTextBox.Name = [System.String]'LicenseTextBox'
 $LicenseTextBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]21))
 $LicenseTextBox.TabIndex = [System.Int32]6
 #
 #Label1
 #
-$Label1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]334,[System.Int32]547))
+$Label1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]334,[System.Int32]559))
 $Label1.Name = [System.String]'Label1'
 $Label1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]155,[System.Int32]25))
 $Label1.TabIndex = [System.Int32]7
@@ -110,30 +114,52 @@ $Label1.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #GroupCountBox
 #
-$GroupCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]495,[System.Int32]550))
+$GroupCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]495,[System.Int32]562))
 $GroupCountBox.Name = [System.String]'GroupCountBox'
 $GroupCountBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]21))
 $GroupCountBox.TabIndex = [System.Int32]8
 #
 #ErrorCountBox
 #
-$ErrorCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]837,[System.Int32]549))
+$ErrorCountBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]837,[System.Int32]561))
 $ErrorCountBox.Name = [System.String]'ErrorCountBox'
 $ErrorCountBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]130,[System.Int32]21))
 $ErrorCountBox.TabIndex = [System.Int32]9
 #
 #Label2
 #
-$Label2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]676,[System.Int32]547))
+$Label2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]676,[System.Int32]559))
 $Label2.Name = [System.String]'Label2'
 $Label2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]155,[System.Int32]25))
 $Label2.TabIndex = [System.Int32]10
 $Label2.Text = [System.String]'Group Error Count'
 $Label2.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
+#ReprocessUsers
+#
+$ReprocessUsers.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]521))
+$ReprocessUsers.Name = [System.String]'ReprocessUsers'
+$ReprocessUsers.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]477,[System.Int32]23))
+$ReprocessUsers.TabIndex = [System.Int32]11
+$ReprocessUsers.Text = [System.String]'Reprocess Selected Users'
+$ReprocessUsers.UseVisualStyleBackColor = $true
+$ReprocessUsers.add_Click($ReprocessUsers_Click)
+#
+#RefreshErrors
+#
+$RefreshErrors.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]517,[System.Int32]521))
+$RefreshErrors.Name = [System.String]'RefreshErrors'
+$RefreshErrors.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]477,[System.Int32]23))
+$RefreshErrors.TabIndex = [System.Int32]12
+$RefreshErrors.Text = [System.String]'Refresh License Errors'
+$RefreshErrors.UseVisualStyleBackColor = $true
+$RefreshErrors.add_Click($RefreshErrors_Click)
+#
 #GroupInfo
 #
 $GroupInfo.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
+$GroupInfo.Controls.Add($RefreshErrors)
+$GroupInfo.Controls.Add($ReprocessUsers)
 $GroupInfo.Controls.Add($Label2)
 $GroupInfo.Controls.Add($ErrorCountBox)
 $GroupInfo.Controls.Add($GroupCountBox)
@@ -162,5 +188,7 @@ Add-Member -InputObject $GroupInfo -Name Label1 -Value $Label1 -MemberType NoteP
 Add-Member -InputObject $GroupInfo -Name GroupCountBox -Value $GroupCountBox -MemberType NoteProperty
 Add-Member -InputObject $GroupInfo -Name ErrorCountBox -Value $ErrorCountBox -MemberType NoteProperty
 Add-Member -InputObject $GroupInfo -Name Label2 -Value $Label2 -MemberType NoteProperty
+Add-Member -InputObject $GroupInfo -Name ReprocessUsers -Value $ReprocessUsers -MemberType NoteProperty
+Add-Member -InputObject $GroupInfo -Name RefreshErrors -Value $RefreshErrors -MemberType NoteProperty
 }
 . InitializeComponent
