@@ -196,7 +196,7 @@ function DisplayGroupInfo
                         $functionError += $functionString
                     }
 
-                    $functionError = $functionError -join "||"
+                    $functionError = $functionError -join "`n"
                 }
                 else 
                 {
