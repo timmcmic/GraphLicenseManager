@@ -134,8 +134,7 @@ function DrawDataGrid
 
 function GetGroupErrors
 {
-    $global:graphErrorGroupMembers = $null
-
+    $global:graphMembersErrorArray = @()
     $operationSuccessful = $false
 
     out-logfile -string "Determine if any group license errors exist."
