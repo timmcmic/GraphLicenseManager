@@ -24,7 +24,7 @@ $GroupInfo_Load = {
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
 
-    $errorsView.columnCount = 5
+    #$errorsView.columnCount = 5
 
     $errorsViewColumns = @()
     $errorsViewColumns = @("ID","Error","DisplayName","UserPrincipalName","ObjectType")
@@ -33,15 +33,22 @@ $GroupInfo_Load = {
     {
         out-logfile -string $entry
     }
+    
+    $checkboxColumn.HeaderText = "Select User"
+    $checkboxColumn.Name = "CheckboxColumn"
+
+    $errorsView.columns.add($checkboxColumn)
 
     for ($i = 0 ; $i -lt $errorsViewColumns.count ; $i++)
     {
-        $errorsView.columns[$i].name = $errorsViewColumns[$i]
+        #$errorsView.columns[$i].name = $errorsViewColumns[$i]
+        $errorsView.columns.add($errorsViewColumns[$i],$errorsViewColumns[$i])
+        $errorsView.Columns[$errorsViewColumns[$i]].ReadOnly = "true";
     }
     
     foreach ($member in $global:graphMembersErrorArray)
     {
-        $errorsView.rows.add($member.ID,$member.error,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
+        $errorsView.rows.add($false,$member.ID,$member.error,$member.DisplayName,$member.UserPrincipalName,$member.ObjectType)
     }
 
     $errorsView.Columns | Foreach-Object{
