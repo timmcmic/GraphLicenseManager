@@ -75,6 +75,14 @@ $GroupInfo_Load = {
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
 
+    $wrapCellStyle = New-Object System.Windows.Forms.DataGridViewCellStyle
+    $wrapCellStyle.WrapMode = [System.Windows.Forms.DataGridViewTriState]::True
+    $errorsView.columns[4].defaultCellStyle = $wrapCellStyle
+
+    $errorView.Rows | foreach-object{
+        $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeRowMode]::AllCells
+    }
+
     if ($global:graphMembersArray.count -gt 0)
     {
         $groupCountBox.appendtext($global:graphMembersArray.count.tostring())
@@ -196,7 +204,7 @@ function DisplayGroupInfo
                         $functionError += $functionString
                     }
 
-                    $functionError = $functionError -join "`n"
+                    $functionError = $functionError -join "||"
                 }
                 else 
                 {
