@@ -5,6 +5,7 @@ $GroupInfo_Load = {
 
 function DrawDataGrid
 {
+    <#
     out-logfile -string "Setting up group assignment view..."
 
     #$errorsView.columnCount = 5
@@ -82,6 +83,8 @@ function DrawDataGrid
 
     $LicenseTextBox.clear()
     $LicenseTextBox.appendText($global:graphGroup.LicenseProcessingState.State)
+
+    #>
 
     #>
 }
