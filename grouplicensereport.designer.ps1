@@ -1,14 +1,14 @@
 $GroupLicenseReport = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.ListView]$GroupView = $null
 [System.Windows.Forms.Button]$InvokeProperties = $null
-[System.Windows.Forms.Button]$ManageLicenses = $null
 [System.Windows.Forms.Button]$CloseLicenseReport = $null
+[System.Windows.Forms.Button]$InvokeManageLicense = $null
 function InitializeComponent
 {
 $GroupView = (New-Object -TypeName System.Windows.Forms.ListView)
 $InvokeProperties = (New-Object -TypeName System.Windows.Forms.Button)
-$ManageLicenses = (New-Object -TypeName System.Windows.Forms.Button)
 $CloseLicenseReport = (New-Object -TypeName System.Windows.Forms.Button)
+$InvokeManageLicense = (New-Object -TypeName System.Windows.Forms.Button)
 $GroupLicenseReport.SuspendLayout()
 #
 #GroupView
@@ -31,16 +31,6 @@ $InvokeProperties.Text = [System.String]'Display Group Properties'
 $InvokeProperties.UseVisualStyleBackColor = $true
 $InvokeProperties.add_Click($InvokeProperties_Click)
 #
-#ManageLicenses
-#
-$ManageLicenses.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]658,[System.Int32]574))
-$ManageLicenses.Name = [System.String]'ManageLicenses'
-$ManageLicenses.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]336,[System.Int32]23))
-$ManageLicenses.TabIndex = [System.Int32]2
-$ManageLicenses.Text = [System.String]'Manage Licenses'
-$ManageLicenses.UseVisualStyleBackColor = $true
-$ManageLicenses.add_Click($Button1_Click)
-#
 #CloseLicenseReport
 #
 $CloseLicenseReport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]436,[System.Int32]574))
@@ -51,19 +41,29 @@ $CloseLicenseReport.Text = [System.String]'Exit'
 $CloseLicenseReport.UseVisualStyleBackColor = $true
 $CloseLicenseReport.add_Click($CloseLicenseReport_Click)
 #
+#InvokeManageLicense
+#
+$InvokeManageLicense.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]658,[System.Int32]574))
+$InvokeManageLicense.Name = [System.String]'InvokeManageLicense'
+$InvokeManageLicense.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]336,[System.Int32]23))
+$InvokeManageLicense.TabIndex = [System.Int32]4
+$InvokeManageLicense.Text = [System.String]'Manage Licenses'
+$InvokeManageLicense.UseVisualStyleBackColor = $true
+$InvokeManageLicense.add_Click($InvokeManageLicense_Click)
+#
 #GroupLicenseReport
 #
 $GroupLicenseReport.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
+$GroupLicenseReport.Controls.Add($InvokeManageLicense)
 $GroupLicenseReport.Controls.Add($CloseLicenseReport)
-$GroupLicenseReport.Controls.Add($ManageLicenses)
 $GroupLicenseReport.Controls.Add($InvokeProperties)
 $GroupLicenseReport.Controls.Add($GroupView)
 $GroupLicenseReport.Text = [System.String]'Group License Report'
 $GroupLicenseReport.ResumeLayout($false)
 Add-Member -InputObject $GroupLicenseReport -Name GroupView -Value $GroupView -MemberType NoteProperty
 Add-Member -InputObject $GroupLicenseReport -Name InvokeProperties -Value $InvokeProperties -MemberType NoteProperty
-Add-Member -InputObject $GroupLicenseReport -Name ManageLicenses -Value $ManageLicenses -MemberType NoteProperty
 Add-Member -InputObject $GroupLicenseReport -Name CloseLicenseReport -Value $CloseLicenseReport -MemberType NoteProperty
+Add-Member -InputObject $GroupLicenseReport -Name InvokeManageLicense -Value $InvokeManageLicense -MemberType NoteProperty
 }
 
 $GroupLicenseReport.add_Load($GroupReport_Load)

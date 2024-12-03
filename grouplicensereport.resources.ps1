@@ -1,10 +1,11 @@
 & { $BinaryFormatter = New-Object -TypeName System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
  @{ 
-'$this.Name' = 'GroupLicenseReport'
-'GroupReport.Name' = 'GroupReport'
-'InvokeProperties.Name' = 'InvokeProperties'
 'GroupView.Name' = 'GroupView'
+'$this.Name' = 'GroupLicenseReport'
+'InvokeProperties.Name' = 'InvokeProperties'
 'ManageLicenses.Name' = 'ManageLicenses'
+'GroupReport.Name' = 'GroupReport'
 'CloseLicenseReport.Name' = 'CloseLicenseReport'
+'InvokeManageLicense.Name' = 'InvokeManageLicense'
 }
 }

@@ -1,10 +1,21 @@
+$InvokeManageLicense_Click = {
+}
+
+
+
 $CloseLicenseReport_Click = {
 }
-$Button1_Click = {
-}
+
+
+
 $InvokeProperties_Click = {
-    out-logfile -string "CLick"
+
+    $global:graphGroup = get-mgGroup -GroupId $selectedGroupID -errorAction Stop
+    $GroupLicenseReport.hide()
+    DisplayGroupInfo
+    $GroupLicenseReport.show()
 }
+
 
 <#
 
