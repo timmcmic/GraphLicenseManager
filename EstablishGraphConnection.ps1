@@ -470,6 +470,10 @@ Function EstablishGraphConnection
                         $userPermissionOK = $FALSE
                     }
                 }
+            }
+            else 
+            {
+                out-logfile -string "Something went wrong...you should not have ended up here."
             }           
     
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
