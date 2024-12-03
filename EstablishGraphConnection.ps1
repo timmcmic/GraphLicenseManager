@@ -11,7 +11,7 @@ $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
 $EnvironmentBox.selectedIndex=0
 
-$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$directoryItems = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
 $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
@@ -26,7 +26,7 @@ $userPermissionsBox.items.AddRange($items2)
 $userPermissionsBox.selectedIndex = 7
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
 
-$operations = "Group License Manager","License Assignment Report"
+$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
 $selectedOperationBox.items.addRange($operations)
 $selectedOperationBox.selectedIndex = 0
 $selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
@@ -75,7 +75,7 @@ Function EstablishGraphConnection
     $global:selectedOperation = "Group License Manager"
 
     $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
-    $directoryPermissionsArray = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+    $directoryPermissionsArray = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
     $groupPermissionsArray = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
     $groupPermissionOK = $false
     $directoryPermissionOK = $false
@@ -101,7 +101,7 @@ Function EstablishGraphConnection
                 $userPermissions.text = "User Permissions"
                 $userPermissionsBox.items.remove("None")
             }
-            elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+            elseif (($selectedOperationBox.selectedItem -eq "Group License Manager") -or ($selectedOperationBox.selectedItem -eq "Group License Report"))
             {
                 out-logfile -string "Group permissions are required."
                 $groupPermissions.show()
@@ -346,7 +346,7 @@ Function EstablishGraphConnection
     
             out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
 
-            if ($global:selectedOperation -eq "Group License Manager")
+            if (($global:selectedOperation -eq "Group License Manager") -or ($global:selectedOperation -eq "Group License Report"))
             {
                 if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
                 {
