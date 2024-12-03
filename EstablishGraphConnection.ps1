@@ -108,6 +108,7 @@ Function EstablishGraphConnection
                 $groupPermissionsBox.show()
                 $global:GroupPermissions = $groupPermissionsbox.selectedItem
                 $userPermissions.text = "User Permissions (Optional)"
+                $userPermissionsBox.items.remove("None")
                 $userPermissionsBox.items.Add("None")
                 $userPermissionsBox.selectedIndex = 7
                 $global:userPermissions = $userPermissionsBox.selectedItem
