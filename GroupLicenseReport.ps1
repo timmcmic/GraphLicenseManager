@@ -1,4 +1,4 @@
-$GroupInfo_Load = {
+$GroupReport_Load = {
     out-logfile -string "Starting load."
        DrawDataGrid
 }

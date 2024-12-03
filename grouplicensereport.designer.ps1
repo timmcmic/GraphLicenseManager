@@ -25,5 +25,5 @@ $GroupLicenseReport.Text = [System.String]'Group License Report'
 $GroupLicenseReport.ResumeLayout($false)
 Add-Member -InputObject $GroupLicenseReport -Name GroupReport -Value $GroupReport -MemberType NoteProperty
 }
-$GroupLicenseReport.add_Load($GroupInfo_Load)
+$GroupLicenseReport.add_Load($GroupReport_Load)
 . InitializeComponent
