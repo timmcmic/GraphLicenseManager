@@ -101,7 +101,7 @@ Function EstablishGraphConnection
                 $userPermissions.text = "User Permissions"
                 $userPermissionsBox.items.remove("None")
             }
-            elseif (($selectedOperationBox.selectedItem -eq "Group License Manager") -or ($selectedOperationBox.selectedItem -eq "Group License Report"))
+            elseif (($selectedOperationBox.selectedItem -eq "Group License Manager") -or ($selectedOperationBox.selectedItem -eq "Group Assignment Report"))
             {
                 out-logfile -string "Group permissions are required."
                 $groupPermissions.show()
@@ -346,7 +346,7 @@ Function EstablishGraphConnection
     
             out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
 
-            if (($global:selectedOperation -eq "Group License Manager") -or ($global:selectedOperation -eq "Group License Report"))
+            if (($global:selectedOperation -eq "Group License Manager") -or ($global:selectedOperation -eq "Group Assignment Report"))
             {
                 if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
                 {
