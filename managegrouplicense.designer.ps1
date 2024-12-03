@@ -367,4 +367,7 @@ Add-Member -InputObject $Form2 -Name LicenseProcessingLabel -Value $LicenseProce
 Add-Member -InputObject $Form2 -Name LicenseProcessingText -Value $LicenseProcessingText -MemberType NoteProperty
 Add-Member -InputObject $Form2 -Name GroupInfo -Value $GroupInfo -MemberType NoteProperty
 }
+
+$GroupLicenseReport.add_Load($GroupLicenseReport_Load)
+
 . InitializeComponent

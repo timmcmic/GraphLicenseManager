@@ -67,4 +67,7 @@ Add-Member -InputObject $GroupLicenseReport -Name InvokeProperties -Value $Invok
 Add-Member -InputObject $GroupLicenseReport -Name CloseLicenseReport -Value $CloseLicenseReport -MemberType NoteProperty
 Add-Member -InputObject $GroupLicenseReport -Name InvokeManageLicense -Value $InvokeManageLicense -MemberType NoteProperty
 }
+
+$GroupLicenseReport.add_Load($GroupReport_Load)
+
 . InitializeComponent

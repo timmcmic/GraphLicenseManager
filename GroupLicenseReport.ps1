@@ -1,4 +1,8 @@
 $InvokeManageLicense_Click = {
+    $global:referredObjectID = $global:selectedGroupID
+    $GroupLicenseReport.hide()
+    ManageGroupLicense
+    $GroupLicenseReport.show()
 }
 
 
@@ -10,7 +14,7 @@ $CloseLicenseReport_Click = {
 
 $InvokeProperties_Click = {
 
-    $global:graphGroup = get-mgGroup -GroupId $global:selectedGroupID -errorAction Stop
+    $global:graphGroup = get-mgGroup -GroupId $global:selectedGroupID -Property Id, MailNickname, DisplayName, GroupTypes, Description, AssignedLicenses , LicenseProcessingState -errorAction Stop
     $GroupLicenseReport.hide()
     DisplayGroupInfo
     $GroupLicenseReport.show()
@@ -133,6 +137,8 @@ function DrawDataGridReport
 
 function GroupLicenseReport
 {
+    $global:referredObjectID=""
+
     $functionGroupInfo = @()
 
     out-logfile -string "GroupLicenseReport"

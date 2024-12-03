@@ -5,6 +5,24 @@ $GroupInfo_Click = {
     $form2.show()
 }
 
+$GroupLicenseReport_Load = {
+    out-logfile -string "Evaluating if this was a referred transaction."
+
+    if ($global:referredObjectID -ne "")
+    {
+        out-logfile -string "This function was referred from another function call."
+
+        $groupObjectIDText.clear()
+        $groupObjectIDText.appendtext($global:referredObjectID)
+
+        $Button1_Click
+    }
+    else
+    {
+        out-logfile -string "Not a referred transactions."
+    }
+}
+
 function PrintTree($printNode,$rootNodeName)
 {
     $returnArray=@()
