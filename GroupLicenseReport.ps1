@@ -1,8 +1,8 @@
-function GraphLicenseReport
+function GroupLicenseReport
 {
     $functionGroupInfo = @()
 
-    out-logfile string "Entering GraphLicenseReport"
+    out-logfile -AssemblyNamestring "GroupLicenseReport"
 
     out-logfile -string "Get all groups where licenses are assigned."
 
