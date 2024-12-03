@@ -13,7 +13,7 @@ $GroupReport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList
 $GroupReport.Name = [System.String]'GroupReport'
 $GroupReport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]982,[System.Int32]521))
 $GroupReport.TabIndex = [System.Int32]0
-$GroupReport.add_Load($GroupInfo_Load)
+$GroupLicenseReport.add_Load($GroupInfo_Load)
 
 #
 #GroupLicenseReport
