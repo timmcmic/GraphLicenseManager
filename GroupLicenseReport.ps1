@@ -1,11 +1,10 @@
 $GroupReport_Load = {
     out-logfile -string "Starting load."
-       DrawDataGrid
+       DrawDataGridReport
 }
 
-function DrawDataGrid
+function DrawDataGridReport
 {
-    <#
     out-logfile -string "Setting up group assignment view..."
 
     #$errorsView.columnCount = 5
@@ -83,8 +82,6 @@ function DrawDataGrid
 
     $LicenseTextBox.clear()
     $LicenseTextBox.appendText($global:graphGroup.LicenseProcessingState.State)
-
-    #>
 
     #>
 }
