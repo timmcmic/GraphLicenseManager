@@ -85,28 +85,37 @@ Function EstablishGraphConnection
         $global:selectedOperation = $selectedOperationBox.selectedItem
         $LoginStatusLabel.text = ("Operation Changed: "+$selectedOperationBox.selectedItem)
 
-        if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+        if ($global:interactiveAuth -eq $TRUE)
         {
-            out-logfile -string "Group permissions are not required."
-            $groupPermissions.hide()
-            $groupPermissionsBox.hide()
-            $userPermissionsBox.selectedIndex = 0
-            $global:userPermissions = $userPermissionsBox.selectedItem
-            $global:groupPermissions = $global:userPermissions
-            out-logfile -string "User permissions are required."
-            $userPermissions.text = "User Permissions"
-            $userPermissionsBox.items.remove("None")
+            out-logfile -string "Interactive authentication is enabled -> adjust permissions dialog."
+
+            if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+            {
+                out-logfile -string "Group permissions are not required."
+                $groupPermissions.hide()
+                $groupPermissionsBox.hide()
+                $userPermissionsBox.selectedIndex = 0
+                $global:userPermissions = $userPermissionsBox.selectedItem
+                $global:groupPermissions = $global:userPermissions
+                out-logfile -string "User permissions are required."
+                $userPermissions.text = "User Permissions"
+                $userPermissionsBox.items.remove("None")
+            }
+            elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+            {
+                out-logfile -string "Group permissions are required."
+                $groupPermissions.show()
+                $groupPermissionsBox.show()
+                $global:GroupPermissions = $groupPermissionsbox.selectedItem
+                $userPermissions.text = "User Permissions (Optional)"
+                $userPermissionsBox.items.Add("None")
+                $userPermissionsBox.selectedIndex = 7
+                $global:userPermissions = $userPermissionsBox.selectedItem
+            }
         }
-        elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+        else 
         {
-            out-logfile -string "Group permissions are required."
-            $groupPermissions.show()
-            $groupPermissionsBox.show()
-            $global:GroupPermissions = $groupPermissionsbox.selectedItem
-            $userPermissions.text = "User Permissions (Optional)"
-            $userPermissionsBox.items.Add("None")
-            $userPermissionsBox.selectedIndex = 7
-            $global:userPermissions = $userPermissionsBox.selectedItem
+            out-logfile -string "Interactive authentication disabled -> no adjustment dialogs necessary."
         }
     }
     
