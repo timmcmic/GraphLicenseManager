@@ -2,7 +2,7 @@ function GroupLicenseReport
 {
     $functionGroupInfo = @()
 
-    out-logfile -AssemblyNamestring "GroupLicenseReport"
+    out-logfile -string "GroupLicenseReport"
 
     out-logfile -string "Get all groups where licenses are assigned."
 
@@ -25,7 +25,11 @@ function GroupLicenseReport
 
         foreach ($group in $groupsWithLicense)
         {
-            $group.Id
+            $errorMembers = (Get-MgGroupMemberWithLicenseError -GroupId $group.id).count
+            out-logfile -string ("Error count on group: "+$errorMembers.toString())
+
+            $memberCount = (Get-MgGroupMember -GroupId $group.id).count
+            out-logfile -string ("Member count on group: "+$memberCount.tostring())
         }
     }
 }
