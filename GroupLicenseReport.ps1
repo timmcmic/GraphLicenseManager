@@ -1,9 +1,23 @@
+$CloseLicenseReport_Click = {
+}
+$Button1_Click = {
+}
+$InvokeProperties_Click = {
+    out-logfile -string "CLick"
+}
+
 <#
 
-$GroupReport.add_Load($GroupReport_Load)
+$GroupLicenseReport.add_Load($GroupReport_Load)
+$GroupView.add_ItemSelectionChanged($GroupView_ItemSelectionChanged)
 
 #>
 
+$GroupView_ItemSelectionChanged = {
+    out-logfile -string "Item selection changed."
+    $selectedGroupID = $_.item.text
+    out-logfile -string $selectedGroupID
+}
 
 $GroupReport_Load = {
     out-logfile -string "Starting load."
@@ -12,6 +26,47 @@ $GroupReport_Load = {
 
 function DrawDataGridReport
 {
+    #$GroupView.Dock = 'Fill'
+    $GroupView.View = 'Details'
+    $GroupView.FullRowSelect = $true
+
+    $groupReportColumns = @("Group Name","Group ID","Member Count","Error Count","Licenses","License Processing State")
+
+    foreach ($entry in $groupReportColumns )
+    {
+        out-logfile -string $entry
+    }
+
+    foreach ($member in $groupReportColumns)
+    {
+        $groupView.columns.add($member)
+    }
+
+    foreach ($member in $functionGroupInfo)
+    {
+        $ListViewItem = New-Object System.Windows.Forms.ListViewItem($member.'Group ID')
+        $ListViewItem.Subitems.Add($member.'Group Name')
+        $ListViewItem.Subitems.Add($member.'Member Count')
+        $ListViewItem.Subitems.Add($member.'Error Count')
+        $ListViewItem.Subitems.Add($member.'Licenses')
+        $ListViewItem.Subitems.Add($member.'License Processing State')
+
+        $groupView.items.add($ListViewItem)
+    }
+
+    for ($i = 0 ; $i -lt $groupView.columns.count ; $i++)
+    {
+        if (($groupView.columns[$i].text -ne "Member Count") -and ($groupView.columns[$i].text -ne "Error Count"))
+        {
+            $groupView.autoResizeColumn($i,'ColumnContent')
+        }
+        else 
+        {
+            $groupView.autoResizeColumn($i,'HeaderSize')
+        }
+    }
+
+    <#
     out-logfile -string "Setting up group assignment view..."
 
     $groupReportColumns = @()
@@ -59,6 +114,8 @@ function DrawDataGridReport
     }
 
     $groupReport.autosizerowsmode = "AllCells"
+
+    #>
 }
 
 function GroupLicenseReport
