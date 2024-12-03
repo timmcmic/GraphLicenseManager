@@ -8,13 +8,15 @@ $GroupLicenseReport.SuspendLayout()
 #
 #GroupReport
 #
+$GroupReport.AllowUserToAddRows = $false
+$GroupReport.AllowUserToDeleteRows = $false
+$GroupReport.AllowUserToResizeColumns = $false
+$GroupReport.AllowUserToResizeRows = $false
 $GroupReport.ColumnHeadersHeightSizeMode = [System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode]::AutoSize
 $GroupReport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]12))
 $GroupReport.Name = [System.String]'GroupReport'
 $GroupReport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]982,[System.Int32]521))
 $GroupReport.TabIndex = [System.Int32]0
-
-
 #
 #GroupLicenseReport
 #
@@ -25,5 +27,8 @@ $GroupLicenseReport.Text = [System.String]'Group License Report'
 $GroupLicenseReport.ResumeLayout($false)
 Add-Member -InputObject $GroupLicenseReport -Name GroupReport -Value $GroupReport -MemberType NoteProperty
 }
-$GroupLicenseReport.add_Load($GroupReport_Load)
+
+$GroupReport.add_Load($GroupReport_Load)
+
+
 . InitializeComponent

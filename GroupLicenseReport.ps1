@@ -1,3 +1,10 @@
+<#
+
+$GroupReport.add_Load($GroupReport_Load)
+
+#>
+
+
 $GroupReport_Load = {
     out-logfile -string "Starting load."
        DrawDataGridReport
@@ -7,12 +14,10 @@ function DrawDataGridReport
 {
     out-logfile -string "Setting up group assignment view..."
 
-    #$errorsView.columnCount = 5
+    $groupReportColumns = @()
+    $groupReportColumns = @("Group Name","Group ID","Member Count","Error Count","Licenses","License Processing State")
 
-    $groupAssignmentColumns = @()
-    $groupAssignmentColumns = @("Group Name","Group ID","Member Count","Error Count","Licenses","License Processing State")
-
-    foreach ($entry in $groupAssignmentColumns )
+    foreach ($entry in $groupReportColumns )
     {
         out-logfile -string $entry
     }
@@ -23,67 +28,37 @@ function DrawDataGridReport
     $checkboxColumn.HeaderText = "Select Group"
     $checkboxColumn.Name = "CheckboxColumn"
 
-    $groupAssignmentColumns.columns.add($checkboxColumn)
+    $groupReport.columns.add($checkboxColumn)
 
     out-logfile -string "Adding additional columns to the table..."
 
-    for ($i = 0 ; $i -lt $groupAssignmentColumns.count ; $i++)
+    for ($i = 0 ; $i -lt $groupReportColumns.count ; $i++)
     {
-        #$errorsView.columns[$i].name = $errorsViewColumns[$i]
-        $groupAssignmentColumns.columns.add($groupAssignmentColumns[$i],$groupAssignmentColumns[$i])
+        #$groupReport.columns[$i].name = $groupReportColumns[$i]
+        $groupReport.columns.add($groupReportColumns[$i],$groupReportColumns[$i])
     }
 
-    for ($i = 1 ; $i -lt $groupAssignmentColumns.count ; $i++)
+    for ($i = 1 ; $i -lt $groupReportColumns.count ; $i++)
     {
-        $groupAssignmentColumns.Columns[$i].ReadOnly = "true"
+        $groupReport.Columns[$i].ReadOnly = "true"
     }
 
     $wrapCellStyle = New-Object System.Windows.Forms.DataGridViewCellStyle
     $wrapCellStyle.WrapMode = [System.Windows.Forms.DataGridViewTriState]::True
-    $groupAssignmentColumns.columns[4].defaultCellStyle = $wrapCellStyle
-
-    <#
+    $groupReport.columns[4].defaultCellStyle = $wrapCellStyle
 
     out-logfile -string "Adding error information to the table..."
     
-    foreach ($member in $global:graphMembersErrorArray)
+    foreach ($member in $functionGroupInfo)
     {
-        $errorsView.rows.add($false,$member.ID,$member.DisplayName,$member.UserPrincipalName,$member.error,$member.ObjectType)
+        $groupReport.rows.add($false,$member.'Group Name',$member.'Group ID',$member.'Member Count',$member.'Error Count',$member.'Licenses',$member.'License Processing State')
     }
 
-    $errorsView.Columns | Foreach-Object{
+    $groupReport.Columns | Foreach-Object{
         $_.AutoSizeMode = [System.Windows.Forms.DataGridViewAutoSizeColumnMode]::AllCells
     }
 
-    $errorsView.autosizerowsmode = "AllCells"
-
-    if ($initialLoad -eq $TRUE)
-    {
-        if ($global:graphMembersArray.count -gt 0)
-        {
-            $groupCountBox.appendtext($global:graphMembersArray.count.tostring())
-        }
-        else 
-        {
-            $groupCountBox.appendtext("0")
-        }
-    }
-
-    if ($global:graphMembersErrorArray.count -gt 0)
-    {
-        $errorCountBox.clear()
-        $errorCountBox.appendtext($global:graphMembersErrorArray.count.tostring())
-    }
-    else 
-    {
-        $errorCountBox.clear()
-        $errorCountBox.appendtext("0")
-    }
-
-    $LicenseTextBox.clear()
-    $LicenseTextBox.appendText($global:graphGroup.LicenseProcessingState.State)
-
-    #>
+    $groupReport.autosizerowsmode = "AllCells"
 }
 
 function GroupLicenseReport
