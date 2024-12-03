@@ -68,7 +68,7 @@ $Form1_Load = {
 Function EstablishGraphConnection
 {
     $global:GraphEnvironment = "Global"
-    $global:interactiveAuth = $true
+    $global:interactiveAuth = $false
     $global:directoryPermissions = "Organization.Read.All"
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
     $global:userPermissions = "None"
@@ -147,24 +147,15 @@ Function EstablishGraphConnection
         $textBox3.enabled = $TRUE
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
 
-        if ($global:interactiveAuth -eq $false)
-        {
-            out-logfile -string $global:interactiveAuth 
-            $global:interactiveAuth = $TRUE
-            out-logfile -string $global:interactiveAuth
-            $groupPermissions.hide()
-            $directoryPermissions.hide()
-            $directoryPermissionsBox.hide()
-            $groupPermissionsBox.hide()
-            $userPermissions.hide()
-            $userPermissionsBox.hide()
-        }
-        else
-        {
-            out-logfile -string $global:interactiveAuth
-            $global:interactiveAuth = $TRUE
-            out-logfile -string $global:interactiveAuth
-        }
+        out-logfile -string $global:interactiveAuth 
+        $global:interactiveAuth = $false
+        out-logfile -string $global:interactiveAuth
+        $groupPermissions.hide()
+        $directoryPermissions.hide()
+        $directoryPermissionsBox.hide()
+        $groupPermissionsBox.hide()
+        $userPermissions.hide()
+        $userPermissionsBox.hide()
     }
     
     $RadioButton2_CheckedChanged = {
@@ -173,28 +164,19 @@ Function EstablishGraphConnection
         $textBox3.enabled = $false 
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
 
-        if ($global:interactiveAuth -eq $TRUE)
+        if ($global:selectedOperation -eq "Group License Manager")
         {
-            if ($global:selectedOperation -eq "Group License Manager")
-            {
-                $groupPermissions.show()
-                $groupPermissionsBox.show()
-            }
+            $groupPermissions.show()
+            $groupPermissionsBox.show()
+        }
 
-            $directoryPermissions.show()
-            $directoryPermissionsBox.show()
-            $userPermissions.show()
-            $userPermissionsbox.show()
-            out-logfile -string $global:interactiveAuth
-            $global:interactiveAuth = $FALSE
-            out-logfile -string $global:interactiveAuth
-        }
-        else
-        {
-            out-logfile -string $global:interactiveAuth
-            $global:interactiveAuth = $false
-            out-logfile -string $global:interactiveAuth
-        }
+        $directoryPermissions.show()
+        $directoryPermissionsBox.show()
+        $userPermissions.show()
+        $userPermissionsbox.show()
+        out-logfile -string $global:interactiveAuth
+        $global:interactiveAuth = $true
+        out-logfile -string $global:interactiveAuth
     }
 
     $Button1_Click = {
