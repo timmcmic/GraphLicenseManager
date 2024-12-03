@@ -1,5 +1,5 @@
 $GroupInfo_Load = {
-
+    out-logfile -string "Starting load."
        DrawDataGrid
 }
 
@@ -20,7 +20,7 @@ function DrawDataGrid
     out-logfile -string "Creating checkbox column..."
     
     $checkboxColumn = New-Object System.Windows.Forms.DataGridViewCheckBoxColumn
-    $checkboxColumn.HeaderText = "Select User"
+    $checkboxColumn.HeaderText = "Select Group"
     $checkboxColumn.Name = "CheckboxColumn"
 
     $groupAssignmentColumns.columns.add($checkboxColumn)
