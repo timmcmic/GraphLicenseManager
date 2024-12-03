@@ -10,7 +10,7 @@ $CloseLicenseReport_Click = {
 
 $InvokeProperties_Click = {
 
-    $global:graphGroup = get-mgGroup -GroupId $selectedGroupID -errorAction Stop
+    $global:graphGroup = get-mgGroup -GroupId $global:selectedGroupID -errorAction Stop
     $GroupLicenseReport.hide()
     DisplayGroupInfo
     $GroupLicenseReport.show()
@@ -26,8 +26,10 @@ $GroupView.add_ItemSelectionChanged($GroupView_ItemSelectionChanged)
 
 $GroupView_ItemSelectionChanged = {
     out-logfile -string "Item selection changed."
-    $selectedGroupID = $_.item.text
+    $global:selectedGroupID = $_.item.text
     out-logfile -string $selectedGroupID
+    $InvokeManageLicense.show()
+    $InvokeProperties.show()
 }
 
 $GroupReport_Load = {

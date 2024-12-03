@@ -29,6 +29,7 @@ $InvokeProperties.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 $InvokeProperties.TabIndex = [System.Int32]1
 $InvokeProperties.Text = [System.String]'Display Group Properties'
 $InvokeProperties.UseVisualStyleBackColor = $true
+$InvokeProperties.Visible = $false
 $InvokeProperties.add_Click($InvokeProperties_Click)
 #
 #CloseLicenseReport
@@ -49,6 +50,7 @@ $InvokeManageLicense.Size = (New-Object -TypeName System.Drawing.Size -ArgumentL
 $InvokeManageLicense.TabIndex = [System.Int32]4
 $InvokeManageLicense.Text = [System.String]'Manage Licenses'
 $InvokeManageLicense.UseVisualStyleBackColor = $true
+$InvokeManageLicense.Visible = $false
 $InvokeManageLicense.add_Click($InvokeManageLicense_Click)
 #
 #GroupLicenseReport
@@ -65,7 +67,4 @@ Add-Member -InputObject $GroupLicenseReport -Name InvokeProperties -Value $Invok
 Add-Member -InputObject $GroupLicenseReport -Name CloseLicenseReport -Value $CloseLicenseReport -MemberType NoteProperty
 Add-Member -InputObject $GroupLicenseReport -Name InvokeManageLicense -Value $InvokeManageLicense -MemberType NoteProperty
 }
-
-$GroupLicenseReport.add_Load($GroupReport_Load)
-
 . InitializeComponent
