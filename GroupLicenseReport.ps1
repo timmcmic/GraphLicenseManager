@@ -25,11 +25,25 @@ function GroupLicenseReport
 
         foreach ($group in $groupsWithLicense)
         {
-            $errorMembers = (Get-MgGroupMemberWithLicenseError -GroupId $group.id).count
+            $errorMembers = (Get-MgGroupMemberWithLicenseError -all -GroupId $group.id).count
             out-logfile -string ("Error count on group: "+$errorMembers.toString())
 
-            $memberCount = (Get-MgGroupMember -GroupId $group.id).count
+            $memberCount = (Get-MgGroupMember -GroupId $group.id -all).count
             out-logfile -string ("Member count on group: "+$memberCount.tostring())
+
+            $skuOutput = @()
+
+            foreach ($sku in $group.AssignedLicenses.SkuId)
+            {
+                $commonName = $global:skuGuidHash[$sku.SkuID].'???Product_Display_Name'
+                out-logfile -string $commonName
+                $skuOutput += $commonName
+            }
+
+            $skuOutput = $skuOutput -join ","
+            out-logfile -string ("Skus on Group: "+ $skuOutput)
+
+            out-logfile -string ("License Processing State:" +$group.LicenseProcessingState)
         }
     }
 }
