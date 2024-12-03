@@ -1,12 +1,6 @@
 $GroupInfo_Load = {
 
-    if ($global:allowReprocessing -eq $TRUE)
-    {
-        $RefreshErrors.show()
-        $ReprocessUsers.show()
-    }
-
-    DrawDataGrid
+       DrawDataGrid
 }
 
 function DrawDataGrid
