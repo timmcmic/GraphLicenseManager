@@ -27,13 +27,13 @@ function DrawDataGrid
 
     out-logfile -string "Adding additional columns to the table..."
 
-    for ($i = 0 ; $i -lt $errorsViewColumns.count ; $i++)
+    for ($i = 0 ; $i -lt $groupAssignmentColumns.count ; $i++)
     {
         #$errorsView.columns[$i].name = $errorsViewColumns[$i]
         $groupAssignmentColumns.columns.add($groupAssignmentColumns[$i],$groupAssignmentColumns[$i])
     }
 
-    for ($i = 1 ; $i -lt $errorsViewColumns.count ; $i++)
+    for ($i = 1 ; $i -lt $groupAssignmentColumns.count ; $i++)
     {
         $groupAssignmentColumns.Columns[$i].ReadOnly = "true"
     }
