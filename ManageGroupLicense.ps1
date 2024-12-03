@@ -5,7 +5,7 @@ $GroupInfo_Click = {
     $form2.show()
 }
 
-$GroupLicenseReport_Load = {
+$ManageGroupLicense_Load = {
     out-logfile -string "Evaluating if this was a referred transaction."
 
     if ($global:referredObjectID -ne "")
@@ -15,7 +15,7 @@ $GroupLicenseReport_Load = {
         $groupObjectIDText.clear()
         $groupObjectIDText.appendtext($global:referredObjectID)
 
-        $Button1_Click
+        &$Button1_Click
     }
     else
     {

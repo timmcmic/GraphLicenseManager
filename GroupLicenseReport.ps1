@@ -1,13 +1,22 @@
+$RefreshLicenseReport_Click = {
+
+    $GroupLicenseReport.close()
+    $GroupLicenseReport.showDialog()
+
+}
 $InvokeManageLicense_Click = {
     $global:referredObjectID = $global:selectedGroupID
     $GroupLicenseReport.hide()
     ManageGroupLicense
-    $GroupLicenseReport.show()
+    $GroupLicenseReport.show()    
+    $InvokeManageLicense.hide()
+    $InvokeProperties.hide()
 }
 
 
 
 $CloseLicenseReport_Click = {
+    $GroupLicenseReport.close()
 }
 
 
@@ -18,6 +27,8 @@ $InvokeProperties_Click = {
     $GroupLicenseReport.hide()
     DisplayGroupInfo
     $GroupLicenseReport.show()
+    $InvokeManageLicense.hide()
+    $InvokeProperties.hide()
 }
 
 

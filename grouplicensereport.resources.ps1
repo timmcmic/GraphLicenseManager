@@ -3,9 +3,10 @@
 'GroupView.Name' = 'GroupView'
 '$this.Name' = 'GroupLicenseReport'
 'InvokeManageLicense.Name' = 'InvokeManageLicense'
-'CloseLicenseReport.Name' = 'CloseLicenseReport'
+'InvokeProperties.Name' = 'InvokeProperties'
 'ManageLicenses.Name' = 'ManageLicenses'
 'GroupReport.Name' = 'GroupReport'
-'InvokeProperties.Name' = 'InvokeProperties'
+'CloseLicenseReport.Name' = 'CloseLicenseReport'
+'RefreshLicenseReport.Name' = 'RefreshLicenseReport'
 }
 }
