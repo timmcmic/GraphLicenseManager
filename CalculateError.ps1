@@ -21,6 +21,15 @@ function CalculateError
         foreach ($entry in $result.Matches.Value)
         {
             out-logfile -string $entry
+
+            if ($global:skuServicePlanIDHash[$entry])
+            {
+                out-logfile -string $global:skuServicePlanIDHash[$entry].Service_Plans_Included_Friendly_Names
+            }
+            elseif ($global:skuGuidHash[$entry])
+            {
+                out-logfile -string $global:skuGuidHash[$entry].'???Product_Display_Name'
+            }
         }
     }
     else 
