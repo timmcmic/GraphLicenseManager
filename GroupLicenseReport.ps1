@@ -1,7 +1,8 @@
 $RefreshLicenseReport_Click = {
 
     $GroupLicenseReport.close()
-    $GroupLicenseReport.showDialog()
+    $GroupLicenseReport.dispose()
+    GroupLicenseReport
 
 }
 $InvokeManageLicense_Click = {
