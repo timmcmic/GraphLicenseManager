@@ -8,11 +8,14 @@ function CalculateError
 
     out-logfile -string "Entering Calculate Error Text"
 
-    $errorText = ($errorText -split 'Status: 400')[0]
+    $errorTextOutput = ($errorText -split 'Status: 400')[0]
+    $errorTextOutput = $errorTextOutput -replace '^\s*$', ''
+    $errorTextOutput = $errorTextOutput.tostring()
+
+    out-logfile -string $errorTextOutput
 
     $guidPattern = '[({]?[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}[)}]?'
-    $result = $errorText | Select-String -Pattern $guidPattern -AllMatches
-    $result.Matches.Value
+    $result = $errorTextOutput | Select-String -Pattern $guidPattern -AllMatches
 
     if ($result.count -gt 0)
     {
@@ -40,7 +43,11 @@ function CalculateError
 
                 $errorString = $entry + " (" + $tempString + ")"
 
-                $errorText.replace($entry,$errorString)
+                out-logfile -string $errorString
+
+                $errorTextOutput.replace($entry,$errorString)
+
+                out-logfile -string $errorTextOutput
             }
         }
     }
@@ -69,11 +76,15 @@ function CalculateError
 
             $errorString = $result.Matches.Value + " (" + $tempString + ")"
 
-            $errorText.replace($entry,$errorString)
+            out-logfile -string $errorString
+
+            $errorTextOutput.replace($entry,$errorString)
+
+            out-logfile -string $errorTextOutput
         }
     }
 
     out-logfile -string "Exiting Calculate Error Text"
 
-    return $errorText
+    return $errorTextOutput
 }
