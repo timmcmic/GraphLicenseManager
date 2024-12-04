@@ -59,7 +59,7 @@ function DrawDataGridReport
     $GroupView.View = 'Details'
     $GroupView.FullRowSelect = $true
 
-    $groupReportColumns = @("Group Name","Group ID","Member Count","Error Count","Licenses","License Processing State")
+    $groupReportColumns = @("Group ID","Group Name","Member Count","Error Count","Licenses","License Processing State")
 
     foreach ($entry in $groupReportColumns )
     {
