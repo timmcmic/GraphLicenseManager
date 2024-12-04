@@ -102,11 +102,18 @@ function Start-GraphLicenseManager
     {
         if ($global:selectedOperation -eq "Group License Manager")
         {
+            out-logfile -string "Connection successful -> manage group license"
             manageGroupLicense
         }
         elseif ($global:selectedOperation -eq "License Assignment Report")
         {
+            out-logfile -string "Connection successful -> license assignment report"
             LicenseAssignmentReport
+        }
+        elseif ($global:selectedOperation -eq "Group Assignment Report") 
+        {
+            out-logfile -string "Connection successful -> group assignment report"
+            GroupLicenseReport
         }
     }
 

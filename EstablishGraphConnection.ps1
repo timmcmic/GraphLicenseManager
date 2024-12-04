@@ -11,7 +11,7 @@ $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
 $EnvironmentBox.selectedIndex=0
 
-$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$directoryItems = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
 $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
@@ -26,7 +26,7 @@ $userPermissionsBox.items.AddRange($items2)
 $userPermissionsBox.selectedIndex = 7
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
 
-$operations = "Group License Manager","License Assignment Report"
+$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
 $selectedOperationBox.items.addRange($operations)
 $selectedOperationBox.selectedIndex = 0
 $selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
@@ -68,14 +68,14 @@ $Form1_Load = {
 Function EstablishGraphConnection
 {
     $global:GraphEnvironment = "Global"
-    $global:interactiveAuth = $true
+    $global:interactiveAuth = $false
     $global:directoryPermissions = "Organization.Read.All"
     $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
     $global:userPermissions = "None"
     $global:selectedOperation = "Group License Manager"
 
     $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
-    $directoryPermissionsArray = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+    $directoryPermissionsArray = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
     $groupPermissionsArray = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
     $groupPermissionOK = $false
     $directoryPermissionOK = $false
@@ -85,28 +85,38 @@ Function EstablishGraphConnection
         $global:selectedOperation = $selectedOperationBox.selectedItem
         $LoginStatusLabel.text = ("Operation Changed: "+$selectedOperationBox.selectedItem)
 
-        if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+        if ($global:interactiveAuth -eq $TRUE)
         {
-            out-logfile -string "Group permissions are not required."
-            $groupPermissions.hide()
-            $groupPermissionsBox.hide()
-            $userPermissionsBox.selectedIndex = 0
-            $global:userPermissions = $userPermissionsBox.selectedItem
-            $global:groupPermissions = $global:userPermissions
-            out-logfile -string "User permissions are required."
-            $userPermissions.text = "User Permissions"
-            $userPermissionsBox.items.remove("None")
+            out-logfile -string "Interactive authentication is enabled -> adjust permissions dialog."
+
+            if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+            {
+                out-logfile -string "Group permissions are not required."
+                $groupPermissions.hide()
+                $groupPermissionsBox.hide()
+                $userPermissionsBox.selectedIndex = 0
+                $global:userPermissions = $userPermissionsBox.selectedItem
+                $global:groupPermissions = $global:userPermissions
+                out-logfile -string "User permissions are required."
+                $userPermissions.text = "User Permissions"
+                $userPermissionsBox.items.remove("None")
+            }
+            elseif (($selectedOperationBox.selectedItem -eq "Group License Manager") -or ($selectedOperationBox.selectedItem -eq "Group Assignment Report"))
+            {
+                out-logfile -string "Group permissions are required."
+                $groupPermissions.show()
+                $groupPermissionsBox.show()
+                $global:GroupPermissions = $groupPermissionsbox.selectedItem
+                $userPermissions.text = "User Permissions (Optional)"
+                $userPermissionsBox.items.remove("None")
+                $userPermissionsBox.items.Add("None")
+                $userPermissionsBox.selectedIndex = 7
+                $global:userPermissions = $userPermissionsBox.selectedItem
+            }
         }
-        elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+        else 
         {
-            out-logfile -string "Group permissions are required."
-            $groupPermissions.show()
-            $groupPermissionsBox.show()
-            $global:GroupPermissions = $groupPermissionsbox.selectedItem
-            $userPermissions.text = "User Permissions (Optional)"
-            $userPermissionsBox.items.Add("None")
-            $userPermissionsBox.selectedIndex = 7
-            $global:userPermissions = $userPermissionsBox.selectedItem
+            out-logfile -string "Interactive authentication disabled -> no adjustment dialogs necessary."
         }
     }
     
@@ -147,24 +157,15 @@ Function EstablishGraphConnection
         $textBox3.enabled = $TRUE
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
 
-        if ($global:interactiveAuth -eq $false)
-        {
-            out-logfile -string $global:interactiveAuth 
-            $global:interactiveAuth = $TRUE
-            out-logfile -string $global:interactiveAuth
-            $groupPermissions.hide()
-            $directoryPermissions.hide()
-            $directoryPermissionsBox.hide()
-            $groupPermissionsBox.hide()
-            $userPermissions.hide()
-            $userPermissionsBox.hide()
-        }
-        else
-        {
-            out-logfile -string $global:interactiveAuth
-            $global:interactiveAuth = $TRUE
-            out-logfile -string $global:interactiveAuth
-        }
+        out-logfile -string $global:interactiveAuth 
+        $global:interactiveAuth = $false
+        out-logfile -string $global:interactiveAuth
+        $groupPermissions.hide()
+        $directoryPermissions.hide()
+        $directoryPermissionsBox.hide()
+        $groupPermissionsBox.hide()
+        $userPermissions.hide()
+        $userPermissionsBox.hide()
     }
     
     $RadioButton2_CheckedChanged = {
@@ -173,28 +174,19 @@ Function EstablishGraphConnection
         $textBox3.enabled = $false 
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
 
-        if ($global:interactiveAuth -eq $TRUE)
+        if ($global:selectedOperation -eq "Group License Manager")
         {
-            if ($global:selectedOperation -eq "Group License Manager")
-            {
-                $groupPermissions.show()
-                $groupPermissionsBox.show()
-            }
+            $groupPermissions.show()
+            $groupPermissionsBox.show()
+        }
 
-            $directoryPermissions.show()
-            $directoryPermissionsBox.show()
-            $userPermissions.show()
-            $userPermissionsbox.show()
-            out-logfile -string $global:interactiveAuth
-            $global:interactiveAuth = $FALSE
-            out-logfile -string $global:interactiveAuth
-        }
-        else
-        {
-            out-logfile -string $global:interactiveAuth
-            $global:interactiveAuth = $false
-            out-logfile -string $global:interactiveAuth
-        }
+        $directoryPermissions.show()
+        $directoryPermissionsBox.show()
+        $userPermissions.show()
+        $userPermissionsbox.show()
+        out-logfile -string $global:interactiveAuth
+        $global:interactiveAuth = $true
+        out-logfile -string $global:interactiveAuth
     }
 
     $Button1_Click = {
@@ -355,7 +347,7 @@ Function EstablishGraphConnection
     
             out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
 
-            if ($global:selectedOperation -eq "Group License Manager")
+            if (($global:selectedOperation -eq "Group License Manager") -or ($global:selectedOperation -eq "Group Assignment Report"))
             {
                 if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
                 {
@@ -479,6 +471,10 @@ Function EstablishGraphConnection
                         $userPermissionOK = $FALSE
                     }
                 }
+            }
+            else 
+            {
+                out-logfile -string "Something went wrong...you should not have ended up here."
             }           
     
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"

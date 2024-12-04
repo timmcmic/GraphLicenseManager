@@ -64,10 +64,13 @@ function GetLicenseData
     $skuCSV = $functionCSVData | Group-Object String_ID | ForEach-Object {$_.Group[0] }
     $skuGuidCSV = $functionCSVData | Group-Object GUID | ForEach-Object {$_.Group[0] }
     $servicePlanCSV = $functionCSVData | Group-Object Service_Plan_Name | ForEach-Object {$_.Group[0] }
+    $servicePlanIDCSV = $functionCSVData | Group-Object Service_Plan_ID | ForEach-Object {$_.Group[0] }
+
 
     $global:skuHash = @{}
     $global:servicePlanHash = @{}
     $global:skuGuidHash = @{}
+    $global:skuServicePlanIDHash = @{}
 
     foreach ($member in $skuCSV)
     {
@@ -85,5 +88,11 @@ function GetLicenseData
     {
         $key = $member.GUID
         $global:skuGuidHash[$key] = $member
+    }
+
+    foreach ($member in $servicePlanIDCSV)
+    {
+        $key = $member.Service_Plan_ID
+        $global:skuServicePlanIDHash[$key] = $member
     }
 }

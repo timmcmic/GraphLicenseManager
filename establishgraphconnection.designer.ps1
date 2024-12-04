@@ -257,7 +257,7 @@ $items = "Global", "USGov", "USGovDOD" , "China"
 $EnvironmentBox.Items.AddRange($items)
 $EnvironmentBox.selectedIndex=0
 
-$directoryItems = "Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$directoryItems = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
 $DirectoryPermissionsBox.Items.AddRange($directoryItems)
 $DirectoryPermissionsBox.selectedIndex = 0
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
@@ -273,12 +273,10 @@ $userPermissionsBox.selectedIndex = 7
 $userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
 
 
-$operations = "Group License Manager","License Assignment Report"
+$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
 $selectedOperationBox.items.addRange($operations)
 $selectedOperationBox.selectedIndex = 0
 $selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
-
-
 
 #
 #Form1
