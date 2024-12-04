@@ -14,9 +14,20 @@ function CalculateError
     $result = $errorText | Select-String -Pattern $guidPattern -AllMatches
     $result.Matches.Value
 
-    foreach ($item in $result)
+    if ($result.count -gt 0)
     {
-        out-logfile -string $item
+        out-logfile -string "More than one GUID pattern found in error string."
+
+        foreach ($entry in $result.Matches.Value)
+        {
+            out-logfile -string $entry
+        }
+    }
+    else 
+    {
+        out-logfile -string "Only a single GUID patter was found in the error string."
+
+        out-logfile -string $result.Matches.Value
     }
 
     out-logfile -string "Exiting Calculate Error Text"
