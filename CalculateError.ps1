@@ -45,7 +45,7 @@ function CalculateError
 
                 out-logfile -string $errorString
 
-                $errorTextOutput.replace($entry,$errorString)
+                $errorTextOutput = $errorTextOutput.replace($entry,$errorString)
 
                 out-logfile -string $errorTextOutput
             }
@@ -78,7 +78,7 @@ function CalculateError
 
             out-logfile -string $errorString
 
-            $errorTextOutput.replace($entry,$errorString)
+            $errorTextOutput = $errorTextOutput.replace($entry,$errorString)
 
             out-logfile -string $errorTextOutput
         }
