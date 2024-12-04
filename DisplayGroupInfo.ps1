@@ -28,6 +28,7 @@ $ReprocessUsers_Click = {
                 $successCount++
             }
             catch {
+                out-logfile -string $_
                 out-logfile -string ("Unable to process a license reprocessing: "+$row.cells["ID"].value)
                 $errorText = CalculateError $_
                 [System.Windows.Forms.MessageBox]::Show("Unable to reprocess: "+$row.cells["ID"].value+" Error: "+$errorText, 'Warning')
