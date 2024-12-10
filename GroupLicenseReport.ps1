@@ -176,6 +176,7 @@ function GroupLicenseReport
 
         foreach ($group in $groupsWithLicense)
         {
+            out-logfile -string ("Group display name: "+$group.DisplayName)
             $errorMembers = (Get-MgGroupMemberWithLicenseError -all -GroupId $group.id).count
             out-logfile -string ("Error count on group: "+$errorMembers.toString())
 
@@ -186,9 +187,17 @@ function GroupLicenseReport
 
             foreach ($sku in $group.AssignedLicenses.SkuId)
             {
-                $commonName = $global:skuGuidHash[$sku].'???Product_Display_Name'
-                out-logfile -string $commonName
-                $skuOutput += $commonName
+                if ($global:skuGuidHash[$sku].'???Product_Display_Name')
+                {
+                    $commonName = $global:skuGuidHash[$sku].'???Product_Display_Name'
+                    out-logfile -string $commonName
+                    $skuOutput += $commonName
+                }
+                else 
+                {
+                    out-logfile -string $sku
+                    $skuOutput += $sku
+                }
             }
 
             $skuOutput = $skuOutput -join ","
