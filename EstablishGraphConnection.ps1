@@ -67,6 +67,7 @@ $Form1_Load = {
 
 Function EstablishGraphConnection
 {
+    $global:referredObjectID = ""
     $global:GraphEnvironment = "Global"
     $global:interactiveAuth = $false
     $global:directoryPermissions = "Organization.Read.All"
