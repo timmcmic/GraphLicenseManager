@@ -245,7 +245,6 @@ Function EstablishGraphConnection
                 $msGraphClientSecret = $clientSecret.text
                 $msGraphApplicationID = $textBox3.Text
                 out-logfile -string $msGraphCertificateThumbPrint
-                out-logfile -string $msGraphClientSecret
                 out-logfile -string $msGraphApplicationID
                 out-logfile -string "We are ready to establish the certificate authentication graph request."
 
@@ -275,13 +274,27 @@ Function EstablishGraphConnection
                         [System.Windows.Forms.MessageBox]::Show("Client secret currently only supported in Global graph environment!", 'Warning')
                         out-logfile -string "Client secret currently only supported in Global graph environment!"
                         $LoginStatusLabel.text = ("ERROR:  Client secret currently only supported in Global graph environment!")
+                        $errorText=$_
+                        $global:errorMessages+=$errorText
                         $connectionSuccessful = $false
                     }
                     else 
                     {
                         out-logfile -string "Client secret authentication..."
 
-                        $msGraphAccessToken = getGraphToken -clientSecret $msGraphClientSecret -tenantID $tenantID -appID $msGraphApplicationID
+                        try {
+                            $msGraphAccessToken = getGraphToken -clientSecret $msGraphClientSecret -tenantID $tenantID -appID $msGraphApplicationID -errorAction STOP
+                            $errorText=$_
+                            out-logfile -string $errorText
+                            $global:errorMessages+=$errorText
+                            out-logfile -string "Unable to connect to Microsoft Graph.."
+                            [System.Windows.Forms.MessageBox]::Show("Unable to obtain access token.."+$errorText, 'Warning')
+                            $connectionSuccessful = $false
+                        }
+                        catch {
+                            <#Do this if a terminating exception happens#>
+                        }
+
                     }
                 }
             }
