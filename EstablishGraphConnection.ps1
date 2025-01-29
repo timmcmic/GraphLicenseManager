@@ -156,6 +156,7 @@ Function EstablishGraphConnection
         out-logfile -string "Certifcate radio button selected..."
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
+        $clientSecret.enabled = $true
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
 
         out-logfile -string $global:interactiveAuth 
