@@ -173,6 +173,7 @@ Function EstablishGraphConnection
         out-logfile -string "Interactive credentials radio button selected..."
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
+        $clientSecret.enabled = $FALSE
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
 
         if ($global:selectedOperation -eq "Group License Manager")
