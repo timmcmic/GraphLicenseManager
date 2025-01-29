@@ -67,7 +67,7 @@ function PrintTree($printNode,$rootNodeName)
 
         out-logfile -string $functionObject
 
-        [array]$returnArray += $functionObject
+        $returnArray += $functionObject
     }
 
     return $returnArray
