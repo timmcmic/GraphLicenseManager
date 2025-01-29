@@ -21,6 +21,8 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$UserPermissions = $null
 [System.Windows.Forms.ComboBox]$SelectedOperationBox = $null
 [System.Windows.Forms.Label]$Label5 = $null
+[System.Windows.Forms.TextBox]$ClientSecret = $null
+[System.Windows.Forms.Label]$Label6 = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -45,6 +47,8 @@ $UserPermissionsBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $UserPermissions = (New-Object -TypeName System.Windows.Forms.Label)
 $SelectedOperationBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $Label5 = (New-Object -TypeName System.Windows.Forms.Label)
+$ClientSecret = (New-Object -TypeName System.Windows.Forms.TextBox)
+$Label6 = (New-Object -TypeName System.Windows.Forms.Label)
 $StatusStrip1.SuspendLayout()
 $Form1.SuspendLayout()
 #
@@ -70,10 +74,10 @@ $TextBox1.TabIndex = [System.Int32]1
 $RadioButton1.Checked = $true
 $RadioButton1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]55))
 $RadioButton1.Name = [System.String]'RadioButton1'
-$RadioButton1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]152,[System.Int32]24))
+$RadioButton1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]221,[System.Int32]24))
 $RadioButton1.TabIndex = [System.Int32]2
 $RadioButton1.TabStop = $true
-$RadioButton1.Text = [System.String]'Certificate Authentication'
+$RadioButton1.Text = [System.String]'Certificate Authentication / Client Secret'
 $RadioButton1.UseVisualStyleBackColor = $true
 $RadioButton1.add_CheckedChanged($RadioButton1_CheckedChanged)
 #
@@ -97,7 +101,7 @@ $Label2.add_Click($Label2_Click)
 #
 #TextBox3
 #
-$TextBox3.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]177,[System.Int32]133))
+$TextBox3.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]177,[System.Int32]146))
 $TextBox3.Name = [System.String]'TextBox3'
 $TextBox3.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]630,[System.Int32]21))
 $TextBox3.TabIndex = [System.Int32]5
@@ -105,7 +109,7 @@ $TextBox3.add_TextChanged($TextBox3_TextChanged)
 #
 #Label3
 #
-$Label3.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]12,[System.Int32]130))
+$Label3.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]13,[System.Int32]143))
 $Label3.Name = [System.String]'Label3'
 $Label3.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]165,[System.Int32]23))
 $Label3.TabIndex = [System.Int32]6
@@ -114,7 +118,7 @@ $Label3.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #RadioButton2
 #
-$RadioButton2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]13,[System.Int32]185))
+$RadioButton2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]19,[System.Int32]196))
 $RadioButton2.Name = [System.String]'RadioButton2'
 $RadioButton2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]152,[System.Int32]24))
 $RadioButton2.TabIndex = [System.Int32]7
@@ -250,39 +254,29 @@ $Label5.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $Label5.TabIndex = [System.Int32]20
 $Label5.Text = [System.String]'Selected Operation'
 $Label5.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
-
-
-
-$items = "Global", "USGov", "USGovDOD" , "China"
-$EnvironmentBox.Items.AddRange($items)
-$EnvironmentBox.selectedIndex=0
-
-$directoryItems = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-$DirectoryPermissionsBox.Items.AddRange($directoryItems)
-$DirectoryPermissionsBox.selectedIndex = 0
-$DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
-
-$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$GroupPermissionsBox.Items.AddRange($groupItems)
-$GroupPermissionsBox.selectedIndex = 0
-$GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
-
-$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All","None"
-$userPermissionsBox.items.AddRange($items2)
-$userPermissionsBox.selectedIndex = 7
-$userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
-
-
-$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
-$selectedOperationBox.items.addRange($operations)
-$selectedOperationBox.selectedIndex = 0
-$selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
-
+#
+#ClientSecret
+#
+$ClientSecret.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]177,[System.Int32]119))
+$ClientSecret.Name = [System.String]'ClientSecret'
+$ClientSecret.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]630,[System.Int32]21))
+$ClientSecret.TabIndex = [System.Int32]21
+#
+#Label6
+#
+$Label6.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]71,[System.Int32]117))
+$Label6.Name = [System.String]'Label6'
+$Label6.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]23))
+$Label6.TabIndex = [System.Int32]22
+$Label6.Text = [System.String]'Client Secret'
+$Label6.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
 #
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]365))
 $Form1.ControlBox = $false
+$Form1.Controls.Add($Label6)
+$Form1.Controls.Add($ClientSecret)
 $Form1.Controls.Add($Label5)
 $Form1.Controls.Add($SelectedOperationBox)
 $Form1.Controls.Add($UserPermissions)
@@ -334,5 +328,7 @@ Add-Member -InputObject $Form1 -Name UserPermissionsBox -Value $UserPermissionsB
 Add-Member -InputObject $Form1 -Name UserPermissions -Value $UserPermissions -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name SelectedOperationBox -Value $SelectedOperationBox -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name Label5 -Value $Label5 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name ClientSecret -Value $ClientSecret -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name Label6 -Value $Label6 -MemberType NoteProperty
 }
 . InitializeComponent

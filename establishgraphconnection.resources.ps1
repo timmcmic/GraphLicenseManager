@@ -34,5 +34,7 @@
 'Label4.Name' = 'Label4'
 'StatusStrip1.Name' = 'StatusStrip1'
 'GroupPermissions.Name' = 'GroupPermissions'
+'ClientSecret.Name' = 'ClientSecret'
+'Label6.Name' = 'Label6'
 }
 }
