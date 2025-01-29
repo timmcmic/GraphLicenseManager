@@ -270,6 +270,33 @@ $Label6.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $Label6.TabIndex = [System.Int32]22
 $Label6.Text = [System.String]'Client Secret'
 $Label6.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+
+
+$items = "Global", "USGov", "USGovDOD" , "China"
+$EnvironmentBox.Items.AddRange($items)
+$EnvironmentBox.selectedIndex=0
+
+$directoryItems = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
+$DirectoryPermissionsBox.Items.AddRange($directoryItems)
+$DirectoryPermissionsBox.selectedIndex = 0
+$DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
+
+$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
+$GroupPermissionsBox.Items.AddRange($groupItems)
+$GroupPermissionsBox.selectedIndex = 0
+$GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
+
+$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All","None"
+$userPermissionsBox.items.AddRange($items2)
+$userPermissionsBox.selectedIndex = 7
+$userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
+
+$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
+$selectedOperationBox.items.addRange($operations)
+$selectedOperationBox.selectedIndex = 0
+$selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
+
+
 #
 #Form1
 #
