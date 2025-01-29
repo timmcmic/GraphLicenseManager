@@ -29,7 +29,7 @@ function PrintTree($printNode,$rootNodeName)
 
     foreach ($node in $printNode)
     {
-        if ($rootNodeName -eq "" -or $rootNodeName -eq $NULL)
+        if (($rootNodeName -eq "") -or ($rootNodeName -eq $NULL))
         {
             out-logfile -string "Root node name missing."
         }
@@ -38,7 +38,7 @@ function PrintTree($printNode,$rootNodeName)
             out-logfile -string $rootNodeName
         }
 
-        if ($node.name -eq "" or $node.name -eq $NULL)
+        if (($node.name -eq "") -or ($node.name -eq $NULL))
         {
             out-logfile -string 'Node name missing'
         }
