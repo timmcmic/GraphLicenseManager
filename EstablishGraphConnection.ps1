@@ -269,32 +269,25 @@ Function EstablishGraphConnection
                 }
                 else 
                 {
-                    if ($global:GraphEnvironment -ne "Global")
+                    out-logfile -string "ClientSecret authentication..."
+                    try
                     {
-                        [System.Windows.Forms.MessageBox]::Show("Client secret currently only supported in Global graph environment!", 'Warning')
-                        out-logfile -string "Client secret currently only supported in Global graph environment!"
-                        $LoginStatusLabel.text = ("ERROR:  Client secret currently only supported in Global graph environment!")
-                        $errorText=$_
-                        $global:errorMessages+=$errorText
-                        $connectionSuccessful = $false
+                        $securedPasswordPassword = convertTo-SecureString -string $msGraphClientSecret -AsPlainText -Force
+
+                        $clientSecretCredential = new-object -typeName System.Management.Automation.PSCredential -argumentList $msGraphApplicationID,$securedPasswordPassword
+
+                        Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -ClientSecretCredential $clientSecretCredential -errorAction Stop
+                        $connectionSuccessful = $true
                     }
-                    else 
+                    catch
                     {
-                        out-logfile -string "Client secret authentication..."
-
-                        try {
-                            $msGraphAccessToken = getGraphToken -clientSecret $msGraphClientSecret -tenantID $tenantID -appID $msGraphApplicationID -errorAction STOP
-                            $errorText=$_
-                            out-logfile -string $errorText
-                            $global:errorMessages+=$errorText
-                            out-logfile -string "Unable to connect to Microsoft Graph.."
-                            [System.Windows.Forms.MessageBox]::Show("Unable to obtain access token.."+$errorText, 'Warning')
-                            $connectionSuccessful = $false
-                        }
-                        catch {
-                            <#Do this if a terminating exception happens#>
-                        }
-
+                        $errorText=$_
+                        out-logfile -string $errorText
+                        $errorText = CalculateError $errorText
+                        $global:errorMessages+=$errorText
+                        out-logfile -string "Unable to connect to Microsoft Graph.."
+                        [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
+                        $connectionSuccessful = $false
                     }
                 }
             }
