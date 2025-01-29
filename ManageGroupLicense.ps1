@@ -29,9 +29,24 @@ function PrintTree($printNode,$rootNodeName)
 
     foreach ($node in $printNode)
     {
-        out-logfile -string $rootNodeName
-        out-logfile -string $node.name
+        if ($rootNodeName -eq "" -or $rootNodeName -eq $NULL)
+        {
+            out-logfile -string "Root node name missing."
+        }
+        else 
+        {
+            out-logfile -string $rootNodeName
+        }
 
+        if ($node.name -eq "" or $node.name -eq $NULL)
+        {
+            out-logfile -string 'Node name missing'
+        }
+        else 
+        {
+            out-logfile -string $node.name
+        }
+        
         if ($node.checked)
         {
             out-logfile -string "IsChecked:TRUE"
@@ -41,12 +56,16 @@ function PrintTree($printNode,$rootNodeName)
             out-logfile -string "IsChecked:FALSE"
         }
 
+        out-logfile -string "Building the function object."
+
         $functionObject = New-Object PSObject -Property @{
             SkuPartNumber = $rootNodeName
             SkuPartNumber_ServicePlanName = ($rootNodeName+"_"+$node.name)
             ServicePlanName = $node.name
             EnabledNew = $node.checked
         }
+
+        out-logfile -string $functionObject
 
         $returnArray += $functionObject
     }
