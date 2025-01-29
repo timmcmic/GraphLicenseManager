@@ -225,20 +225,6 @@ Function EstablishGraphConnection
                 $LoginStatusLabel.text = ("ERROR:  Certifcate Thumbprint or Client Screct with an ApplicationID are required!")
 
             }
-            elseif(($textBox2.text -eq "") -or ($clientSecret.text -eq ""))
-            {
-                [System.Windows.Forms.MessageBox]::Show("Either a certificate thumbprint or client secret are required!", 'Warning')
-                out-logfile -string "Either a certificate thumbprint or client secret are required!"
-                $LoginStatusLabel.text = ("ERROR:  Either a certificate thumbprint or client secret are required!")
-
-            }
-            elseif($textBox3.text -eq "")
-            {
-                [System.Windows.Forms.MessageBox]::Show("Application ID is require...", 'Warning')
-                out-logfile -string "Application ID is require..."
-                $LoginStatusLabel.text = ("ERROR:  Applicatio ID Required")
-
-            }
             else
             {
                 $msGraphCertificateThumbPrint = $textBox2.Text
