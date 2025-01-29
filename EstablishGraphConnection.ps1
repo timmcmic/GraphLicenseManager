@@ -275,6 +275,7 @@ Function EstablishGraphConnection
                         [System.Windows.Forms.MessageBox]::Show("Client secret currently only supported in Global graph environment!", 'Warning')
                         out-logfile -string "Client secret currently only supported in Global graph environment!"
                         $LoginStatusLabel.text = ("ERROR:  Client secret currently only supported in Global graph environment!")
+                        $connectionSuccessful = $false
                     }
                     else 
                     {
