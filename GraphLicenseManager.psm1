@@ -11,9 +11,7 @@ function Start-GraphLicenseManager
         [Parameter(Mandatory = $false)]
         [string]$appID="",
         [Parameter(Mandatory = $false)]
-        [boolean]$allowTelemetryCollection=$TRUE,
-        [Parameter(Mandatory = $false)]
-        $accessToken=$NULL
+        [boolean]$allowTelemetryCollection=$TRUE
     )
 
     #Initialize telemetry collection.
@@ -30,7 +28,6 @@ function Start-GraphLicenseManager
     Set-Variable -Name "EntraTenantID" -Value $EntraTenantID -Scope Global
     Set-Variable -name "CertificateThumbPrint" -Value $certificateThumbprint -scope Global
     set-variable -name "AppID" -Value $appID -scope global
-    set-variable -name "accessToken" -value $accessToken -scope Global
     #Define telemetry items.
 
     $telemetryEventName = "GraphLicenseManager"
@@ -92,24 +89,6 @@ function Start-GraphLicenseManager
     GetLicenseData
 
     out-logfile -string "Validate if access token is specified."
-
-    if ($global:accessToken -ne $NULL)
-    {
-        out-logfile -string "Access token specified - check tenant ID"
-
-        if ($global:EntraTenantID -eq "")
-        {
-            out-logfile -string "When using access token please specify -EntraTenantID TENANTID" -isError:$TRUE
-        }
-        else 
-        {
-            out-logfile -string "TenantID and Access token specified - proceed."
-        }
-    }
-    else 
-    {
-        out-logfile -string "Access token not specified - continue with standard authentication."
-    }
 
     out-logfile -string "Invoking establish graph connection..."
 

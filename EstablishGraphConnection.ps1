@@ -156,6 +156,7 @@ Function EstablishGraphConnection
         out-logfile -string "Certifcate radio button selected..."
         $textBox2.enabled = $true
         $textBox3.enabled = $TRUE
+        $clientSecret.enabled = $true
         $LoginStatusLabel.text = ("Certificate Authentication Selected")
 
         out-logfile -string $global:interactiveAuth 
@@ -173,6 +174,7 @@ Function EstablishGraphConnection
         out-logfile -string "Interactive credentials radio button selected..."
         $textBox2.Enabled = $false
         $textBox3.enabled = $false 
+        $clientSecret.enabled = $FALSE
         $LoginStatusLabel.text = ("Interactive Authentication Selected")
 
         if ($global:selectedOperation -eq "Group License Manager")
@@ -212,43 +214,31 @@ Function EstablishGraphConnection
             out-logfile -string $tenantID
         }
 
-        if ($global:accessToken -eq $NULL)
+        out-logfile -string "Access token is not specified - proceed with allowing access token connection."
+
+        if (($RadioButton1.checked) -and ($tenantIDError -eq $FALSE))
         {
-            out-logfile -string "Access token is not specified - proceed with allowing access token connection."
+            out-logfile -string "Certificate / Client Secret authentication radio box selected..."
 
-            if (($RadioButton1.checked) -and ($tenantIDError -eq $FALSE))
+            if ((($textBox2.text -eq "") -and ($textBox3.text -eq "")) -or (($clientSecret.text -eq "") -and ($textBox3.text -eq "")))
             {
-                out-logfile -string "Certificate authentication radio box selected..."
+                [System.Windows.Forms.MessageBox]::Show("Certifcate Thumbprint or Client Screct with an ApplicationID are required!", 'Warning')
+                out-logfile -string "Certifcate Thumbprint or Client Screct with an ApplicationID are required!"
+                $LoginStatusLabel.text = ("ERROR:  Certifcate Thumbprint or Client Screct with an ApplicationID are required!")
 
-                if (($textBox2.text -eq "") -and ($textBox3.text -eq ""))
+            }
+            else
+            {
+                $msGraphCertificateThumbPrint = $textBox2.Text
+                $msGraphClientSecret = $clientSecret.text
+                $msGraphApplicationID = $textBox3.Text
+                out-logfile -string $msGraphCertificateThumbPrint
+                out-logfile -string $msGraphApplicationID
+                out-logfile -string "We are ready to establish the certificate authentication graph request."
+
+                if ($msGraphCertificateThumbPrint -ne "" -and $msGraphTenandID -ne "")
                 {
-                    [System.Windows.Forms.MessageBox]::Show("Certificate Thumbprint and Application ID Required...", 'Warning')
-                    out-logfile -string "Certificate Thumbprint and Application ID Required..."
-                    $LoginStatusLabel.text = ("ERROR:  Certificate Thumbprint and Application ID Required")
-
-                }
-                elseif($textBox2.text -eq "")
-                {
-                    [System.Windows.Forms.MessageBox]::Show("Certificate Thumbprint is required...", 'Warning')
-                    out-logfile -string "Certificate Thumbprint is required..."
-                    $LoginStatusLabel.text = ("ERROR:  Certificate Thumbprint Required")
-
-                }
-                elseif($textBox3.text -eq "")
-                {
-                    [System.Windows.Forms.MessageBox]::Show("Application ID is require...", 'Warning')
-                    out-logfile -string "Application ID is require..."
-                    $LoginStatusLabel.text = ("ERROR:  Applicatio ID Required")
-
-                }
-                else
-                {
-                    $msGraphCertificateThumbPrint = $textBox2.Text
-                    $msGraphApplicationID = $textBox3.Text
-                    out-logfile -string $msGraphCertificateThumbPrint
-                    out-logfile -string $msGraphApplicationID
-                    out-logfile -string "We are ready to establish the certificate authentication graph request."
-
+                    out-logfile -string "Certificate authentication..."
                     try
                     {
                         Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -certificateThumbprint $msGraphCertificateThumbPrint -ClientId $msGraphApplicationID  -errorAction Stop
@@ -265,91 +255,93 @@ Function EstablishGraphConnection
                         $connectionSuccessful = $false
                     }
                 }
-            }
-            elseif (($RadioButton2.checked) -and ($tenantIDError -eq $FALSE))
-            {
-                out-logfile -string "Interactive authentication radio box selected..."
-
-                out-logfile -string "Validate that the minimum scopes for required functions are selected."
-
-                if ($global:userPermissions -ne "None")
-                {
-                    out-logfile -string "User permissions are requested."
-
-                    $global:CalculatedScopesArray += $global:userPermissions
-                    $global:CalculatedScopesArray += $global:groupPermissions
-
-                    foreach ($member in $global:CalculatedScopesArray)
-                    {
-                        out-logfile -string $member
-                    }
-
-                    $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
-
-                    out-logfile -string "Unique scopes in case there is an overlap"
-
-                    foreach ($member in $global:CalculatedScopesArray)
-                    {
-                        out-logfile -string $member
-                    }
-
-                    out-logfile -string "Calculate Scopes Array."
-
-                    $global:calculatedScopes = $global:CalculatedScopesArray -join ","
-
-                    out-logfile -string $global:calculatedScopes
-                }
                 else 
                 {
-                    out-logfile -string "User permissions are note requested."
-
-                    $global:CalculatedScopesArray += $global:groupPermissions
-
-                    foreach ($member in $global:CalculatedScopesArray)
+                    out-logfile -string "ClientSecret authentication..."
+                    try
                     {
-                        out-logfile -string $member
+                        $securedPasswordPassword = convertTo-SecureString -string $msGraphClientSecret -AsPlainText -Force
+
+                        $clientSecretCredential = new-object -typeName System.Management.Automation.PSCredential -argumentList $msGraphApplicationID,$securedPasswordPassword
+
+                        Connect-MgGraph -tenantID $tenantID -environment $global:GraphEnvironment -ClientSecretCredential $clientSecretCredential -errorAction Stop
+                        $connectionSuccessful = $true
                     }
-
-                    $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
-
-                    out-logfile -string "Unique scopes in case there is an overlap"
-
-                    foreach ($member in $global:CalculatedScopesArray)
+                    catch
                     {
-                        out-logfile -string $member
+                        $errorText=$_
+                        out-logfile -string $errorText
+                        $errorText = CalculateError $errorText
+                        $global:errorMessages+=$errorText
+                        out-logfile -string "Unable to connect to Microsoft Graph.."
+                        [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
+                        $connectionSuccessful = $false
                     }
-
-                    out-logfile -string "Calculate Scopes Array."
-
-                    $global:calculatedScopes = $global:CalculatedScopesArray -join ","
-
-                    out-logfile -string $global:calculatedScopes
-                }
-
-                try {
-                    Connect-MgGraph -tenantID $tenantID -scopes $global:calculatedScopes -environment $global:GraphEnvironment -errorAction Stop
-                    out-logfile -string "Graph connection started successfully - close authentication form."
-                    $connectionSuccessful = $true
-                }
-                catch {
-                    $errorText=$_
-                    out-logfile -string $errorText
-                    $errorText = CalculateError $errorText
-                    $global:errorMessages+=$errorText
-                    out-logfile -string "Unable to connect to Microsoft Graph.."
-                    $LoginStatusLabel.text = ("ERROR:  Unable to connect to Microsoft Graph")
-                    [System.Windows.Forms.MessageBox]::Show("Unable to connect to Microsoft Graph.."+$errorText, 'Warning')
-                    $connectionSuccessful = $FALSE
                 }
             }
         }
-        else 
+        elseif (($RadioButton2.checked) -and ($tenantIDError -eq $FALSE))
         {
-            out-logfile -string "Access token is specified - proceed with access token."
+            out-logfile -string "Interactive authentication radio box selected..."
 
-            
+            out-logfile -string "Validate that the minimum scopes for required functions are selected."
+
+            if ($global:userPermissions -ne "None")
+            {
+                out-logfile -string "User permissions are requested."
+
+                $global:CalculatedScopesArray += $global:userPermissions
+                $global:CalculatedScopesArray += $global:groupPermissions
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
+
+                out-logfile -string "Unique scopes in case there is an overlap"
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                out-logfile -string "Calculate Scopes Array."
+
+                $global:calculatedScopes = $global:CalculatedScopesArray -join ","
+
+                out-logfile -string $global:calculatedScopes
+            }
+            else 
+            {
+                out-logfile -string "User permissions are note requested."
+
+                $global:CalculatedScopesArray += $global:groupPermissions
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                $global:CalculatedScopesArray = $global:CalculatedScopesArray | Select-Object -Unique
+
+                out-logfile -string "Unique scopes in case there is an overlap"
+
+                foreach ($member in $global:CalculatedScopesArray)
+                {
+                    out-logfile -string $member
+                }
+
+                out-logfile -string "Calculate Scopes Array."
+
+                $global:calculatedScopes = $global:CalculatedScopesArray -join ","
+
+                out-logfile -string $global:calculatedScopes
+            }
+
             try {
-                Connect-MgGraph -AccessToken $global:accessToken -errorAction Stop
+                Connect-MgGraph -tenantID $tenantID -scopes $global:calculatedScopes -environment $global:GraphEnvironment -errorAction Stop
                 out-logfile -string "Graph connection started successfully - close authentication form."
                 $connectionSuccessful = $true
             }
