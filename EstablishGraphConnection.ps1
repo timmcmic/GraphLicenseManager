@@ -661,6 +661,9 @@ Function EstablishGraphConnection
                         $userPermissionOK = $FALSE
                     }
                 }
+
+                $groupPermissionOk = $true
+                $licensePermissionsOk = $true
             }
             else 
             {
