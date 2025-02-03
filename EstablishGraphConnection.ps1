@@ -87,6 +87,7 @@ Function EstablishGraphConnection
     $licensePermissionsArray = "LicenseAssignment.ReadWrite.All","Directory.ReadWrite.All","Group.ReadWrite.All"
     $groupPermissionOK = $false
     $directoryPermissionOK = $false
+    $licensePermissionsOk = $false
 
     $SelectedOperationsBox_SelectedIndexChanged = {
         out-logfile -string $selectedOperationBox.selectedItem
@@ -324,6 +325,7 @@ Function EstablishGraphConnection
 
                 $global:CalculatedScopesArray += $global:userPermissions
                 $global:CalculatedScopesArray += $global:groupPermissions
+                $global:CalculatedScopesArray += $global:licensePermissions
 
                 foreach ($member in $global:CalculatedScopesArray)
                 {
@@ -347,9 +349,10 @@ Function EstablishGraphConnection
             }
             else 
             {
-                out-logfile -string "User permissions are note requested."
+                out-logfile -string "User permissions are not requested."
 
                 $global:CalculatedScopesArray += $global:groupPermissions
+                $global:CalculatedScopesArray += $global:licensePermissions
 
                 foreach ($member in $global:CalculatedScopesArray)
                 {
@@ -394,11 +397,117 @@ Function EstablishGraphConnection
             $Details = Get-MgContext
             $Scopes = $Details | Select -ExpandProperty Scopes
             $Scopes = $Scopes -Join ", "
-            $OrgName = (Get-MgOrganization).DisplayName
-    
+            if ($global:directoryPermissions -ne "LicenseAssignment.Read.All")
+            {
+                $OrgName = (Get-MgOrganization).DisplayName
+            }
+            
             out-logfile -string "Validate that the scopes provided to the application meet a minimum requirements."
 
-            if (($global:selectedOperation -eq "Group License Manager") -or ($global:selectedOperation -eq "Group Assignment Report"))
+            if ($global:selectedOperation -eq "Group License Manager")
+            {
+                if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
+                {
+                    $global:allowReprocessing = $true
+                }
+                else 
+                {
+                    $global:allowReprocessing = $false                
+                }
+
+                foreach ($permission in $groupPermissionsArray)
+                {
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Group Permission Found"
+                        $groupPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "Group Permission NOT Found"  
+                        $groupPermissionOK = $false                  
+                    }
+                }
+        
+                foreach ($permission in $directoryPermissionsArray)
+                {
+                    out-logfile -string $permission
+        
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "Directory Permission Found"
+                        $directoryPermissionOK = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "Directory Permission NOT Found"
+                        $directoryPermissionOK = $false
+                    }
+                }
+
+                foreach ($permission in $licensePermissionsArray)
+                {
+                    out-logfile -string $permission
+
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "License permission found"
+                        $licensePermissionsOk = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "License permission found"
+                        $licensePermissionsOK = $false
+                    }
+                }
+        
+                foreach ($permission in $userPermissionsArray)
+                {
+                    out-logfile -string $permission
+
+                    if(($scopes.contains($permission)) -and ($global:userPermissions -eq "None"))
+                    {
+                        out-logfile -string "User Permission Found and was none - resetting."
+                        $global:userPermissions = $permission
+                        $userPermissionOK = $TRUE
+                        break
+                    }
+                    elseif ($scopes.contains($permission)) 
+                    {
+                        out-logfile -string "User permission was specified and was found in scopes."
+                        $userPermissionOK = $TRUE
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "User Permission NOT Found"
+                        $userPermissionOK = $false
+                    }
+                }
+
+                <#
+
+                if (($global:userPermissions -eq "None") -and ($userPermissionOK -eq $FALSE))
+                {
+                    out-logfile -string "A user permission was not specified - see if it overlaps with another permission."
+
+                    foreach ($permission in $userPermissionsArray)
+                    {
+                        if ($scopes.contains($permission))
+                        {
+                            out-logfile -string "Permission Found - setting random user permission to show all options."
+                            $global:userPermissions = $permission
+                            $userPermissionOK = $true
+                        }
+                    }
+                }
+
+                #>
+            }
+            elseif ($global:selectedOperation -eq "Group Assignment Report")
             {
                 if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
                 {
@@ -538,7 +647,7 @@ Function EstablishGraphConnection
             out-logfile ""
             out-logfile "+-------------------------------------------------------------------------------------------------------------------+"
     
-            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE) -or ($userPermissionOK -ne $true))
+            if (($directoryPermissionOK -ne $true) -or ($groupPermissionOK -ne $TRUE) -or ($userPermissionOK -ne $true) -or ($licensePermissionsOk -ne $true))
             {
                 [System.Windows.Forms.MessageBox]::Show("The graph scopes required are not present in the request.  Suspect that the application ID does not have correct permissions consented.")
                 $global:exitSelected = $true
