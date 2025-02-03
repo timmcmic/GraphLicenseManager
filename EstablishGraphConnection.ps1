@@ -347,7 +347,7 @@ Function EstablishGraphConnection
 
                 out-logfile -string $global:calculatedScopes
             }
-            elseif
+            else
             {
                 out-logfile -string "User permissions are not requested."
 
