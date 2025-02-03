@@ -238,6 +238,32 @@ Function EstablishGraphConnection
         out-logfile -string $global:interactiveAuth
     }
 
+    validate_userPermissions = {
+        if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
+        {
+            $global:allowReprocessing = $true
+        }
+        else 
+        {
+            $global:allowReprocessing = $false                
+        }
+
+        foreach ($permission in $groupPermissionsArray)
+        {
+            if ($scopes.contains($permission))
+            {
+                out-logfile -string "Group Permission Found"
+                $groupPermissionOK = $true
+                break
+            }
+            else 
+            {
+                out-logfile -string "Group Permission NOT Found"  
+                $groupPermissionOK = $false                  
+            }
+        }
+    }
+
     $Button1_Click = {
         out-logfile -string "A directory permission is always required - add this to required scopes."
         $global:CalculatedScopesArray = @()
@@ -419,30 +445,8 @@ Function EstablishGraphConnection
 
             if ($global:selectedOperation -eq "Group License Manager")
             {
-                if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
-                {
-                    $global:allowReprocessing = $true
-                }
-                else 
-                {
-                    $global:allowReprocessing = $false                
-                }
+                validate_userPermissions
 
-                foreach ($permission in $groupPermissionsArray)
-                {
-                    if ($scopes.contains($permission))
-                    {
-                        out-logfile -string "Group Permission Found"
-                        $groupPermissionOK = $true
-                        break
-                    }
-                    else 
-                    {
-                        out-logfile -string "Group Permission NOT Found"  
-                        $groupPermissionOK = $false                  
-                    }
-                }
-        
                 foreach ($permission in $directoryPermissionsArray)
                 {
                     out-logfile -string $permission
