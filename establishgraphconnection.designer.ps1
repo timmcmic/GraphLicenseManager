@@ -23,6 +23,8 @@ $Form1 = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$Label5 = $null
 [System.Windows.Forms.TextBox]$ClientSecret = $null
 [System.Windows.Forms.Label]$Label6 = $null
+[System.Windows.Forms.Label]$Label7 = $null
+[System.Windows.Forms.ComboBox]$LicensePermissionsBox = $null
 function InitializeComponent
 {
 $Label1 = (New-Object -TypeName System.Windows.Forms.Label)
@@ -49,6 +51,8 @@ $SelectedOperationBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $Label5 = (New-Object -TypeName System.Windows.Forms.Label)
 $ClientSecret = (New-Object -TypeName System.Windows.Forms.TextBox)
 $Label6 = (New-Object -TypeName System.Windows.Forms.Label)
+$Label7 = (New-Object -TypeName System.Windows.Forms.Label)
+$LicensePermissionsBox = (New-Object -TypeName System.Windows.Forms.ComboBox)
 $StatusStrip1.SuspendLayout()
 $Form1.SuspendLayout()
 #
@@ -181,7 +185,7 @@ $LoginStatusLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList
 #
 #DirectoryPermissions
 #
-$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]224))
+$DirectoryPermissions.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]201))
 $DirectoryPermissions.Name = [System.String]'DirectoryPermissions'
 $DirectoryPermissions.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
 $DirectoryPermissions.TabIndex = [System.Int32]13
@@ -202,7 +206,7 @@ $GroupPermissions.Visible = $false
 #DirectoryPermissionsBox
 #
 $DirectoryPermissionsBox.FormattingEnabled = $true
-$DirectoryPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]609,[System.Int32]226))
+$DirectoryPermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]609,[System.Int32]201))
 $DirectoryPermissionsBox.Name = [System.String]'DirectoryPermissionsBox'
 $DirectoryPermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $DirectoryPermissionsBox.TabIndex = [System.Int32]15
@@ -270,38 +274,33 @@ $Label6.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $Label6.TabIndex = [System.Int32]22
 $Label6.Text = [System.String]'Client Secret'
 $Label6.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
-
-
-$items = "Global", "USGov", "USGovDOD" , "China"
-$EnvironmentBox.Items.AddRange($items)
-$EnvironmentBox.selectedIndex=0
-
-$directoryItems = "LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-$DirectoryPermissionsBox.Items.AddRange($directoryItems)
-$DirectoryPermissionsBox.selectedIndex = 0
-$DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
-
-$groupItems = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
-$GroupPermissionsBox.Items.AddRange($groupItems)
-$GroupPermissionsBox.selectedIndex = 0
-$GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
-
-$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All","None"
-$userPermissionsBox.items.AddRange($items2)
-$userPermissionsBox.selectedIndex = 7
-$userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
-
-$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
-$selectedOperationBox.items.addRange($operations)
-$selectedOperationBox.selectedIndex = 0
-$selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
-
+#
+#Label7
+#
+$Label7.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]445,[System.Int32]228))
+$Label7.Name = [System.String]'Label7'
+$Label7.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]158,[System.Int32]23))
+$Label7.TabIndex = [System.Int32]23
+$Label7.Text = [System.String]'License Permissions'
+$Label7.TextAlign = [System.Drawing.ContentAlignment]::MiddleRight
+#
+#LicensePermissionsBox
+#
+$LicensePermissionsBox.FormattingEnabled = $true
+$LicensePermissionsBox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]609,[System.Int32]228))
+$LicensePermissionsBox.Name = [System.String]'LicensePermissionsBox'
+$LicensePermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
+$LicensePermissionsBox.TabIndex = [System.Int32]24
+$LicensePermissionsBox.Visible = $false
+$LicensePermissionsBox.add_SelectedIndexChanged($LicensePermissionsbox_SelectedIndexChanged)
 
 #
 #Form1
 #
 $Form1.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]819,[System.Int32]365))
 $Form1.ControlBox = $false
+$Form1.Controls.Add($LicensePermissionsBox)
+$Form1.Controls.Add($Label7)
 $Form1.Controls.Add($Label6)
 $Form1.Controls.Add($ClientSecret)
 $Form1.Controls.Add($Label5)
@@ -357,5 +356,7 @@ Add-Member -InputObject $Form1 -Name SelectedOperationBox -Value $SelectedOperat
 Add-Member -InputObject $Form1 -Name Label5 -Value $Label5 -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name ClientSecret -Value $ClientSecret -MemberType NoteProperty
 Add-Member -InputObject $Form1 -Name Label6 -Value $Label6 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name Label7 -Value $Label7 -MemberType NoteProperty
+Add-Member -InputObject $Form1 -Name LicensePermissionsBox -Value $LicensePermissionsBox -MemberType NoteProperty
 }
 . InitializeComponent
