@@ -80,9 +80,10 @@ Function EstablishGraphConnection
     $global:userPermissions = "None"
     $global:selectedOperation = "Group License Manager"
 
-    $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","User.ReadWrite.All","Directory.Read.All","Directory.ReadWrite.All"
+    $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","Directory.Read.All","User.ReadWrite.All","Directory.ReadWrite.All"
     $directoryPermissionsArray = "LicenseAssignment.ReadWrite.All","LicenseAssignment.Read.All","Organization.Read.All","Directory.Read.All","Directory.ReadWrite.All"
-    $groupPermissionsArray = "LicenseAssignment.ReadWrite.All","Group.ReadWrite.All","Directory.ReadWrite.All"
+    $groupPermissionsArray = "GroupMember.Read.All","Directory.Read.All","Group.Read.All","Group.ReadWrite.All","GroupMember.ReadWrite.All"
+    $licensePermissionsArray = "LicenseAssignment.ReadWrite.All","Directory.ReadWrite.All","Group.ReadWrite.All"
     $groupPermissionOK = $false
     $directoryPermissionOK = $false
 
