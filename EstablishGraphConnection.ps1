@@ -238,7 +238,8 @@ Function EstablishGraphConnection
         out-logfile -string $global:interactiveAuth
     }
 
-    validate_userPermissions = {
+    function validate_userPermissions
+    {
         if (($scopes.contains("User.ReadWrite.All")) -or ($scopes.contains("Directory.ReadWrite.All")))
         {
             $global:allowReprocessing = $true
