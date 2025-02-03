@@ -76,8 +76,9 @@ Function EstablishGraphConnection
     $global:GraphEnvironment = "Global"
     $global:interactiveAuth = $false
     $global:directoryPermissions = "Organization.Read.All"
-    $global:groupPermissions = "LicenseAssignment.ReadWrite.All"
+    $global:groupPermissions = "GroupMember.Read.All"
     $global:userPermissions = "None"
+    $global:licensePermissions = "None"
     $global:selectedOperation = "Group License Manager"
 
     $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","Directory.Read.All","User.ReadWrite.All","Directory.ReadWrite.All"
@@ -108,7 +109,22 @@ Function EstablishGraphConnection
                 $userPermissions.text = "User Permissions"
                 $userPermissionsBox.items.remove("None")
             }
-            elseif (($selectedOperationBox.selectedItem -eq "Group License Manager") -or ($selectedOperationBox.selectedItem -eq "Group Assignment Report"))
+            elseif ($selectedOperationBox.selectedItem -eq "Group License Manager")
+            {
+                out-logfile -string "Group permissions are required."
+                $groupPermissions.show()
+                $groupPermissionsBox.show()
+                $label7.show()
+                $licensePermissionsBox.show()
+                $global:GroupPermissions = $groupPermissionsbox.selectedItem
+                $global:LicensePermissions = $licensePermissionsBox.selectedItem
+                $userPermissions.text = "User Permissions (Optional)"
+                $userPermissionsBox.items.remove("None")
+                $userPermissionsBox.items.Add("None")
+                $userPermissionsBox.selectedIndex = 7
+                $global:userPermissions = $userPermissionsBox.selectedItem
+            }
+            elseif ($selectedOperationBox.selectedItem -eq "Group Assignment Report")
             {
                 out-logfile -string "Group permissions are required."
                 $groupPermissions.show()
@@ -149,6 +165,12 @@ Function EstablishGraphConnection
         out-logfile -string $userPermissionsBox.selectedItem
         $global:userPermissions = $userPermissionsbox.selectedItem
         $loginStatusLabel.text = ("User Permissions Changed: "+$global:userPermissions)
+    }
+
+    $licensepermissionsbox_selectedIndexChanged = {
+        out-logfile -string $licensePermissionsBox.selectedItem
+        $global:licensePermissions = $licensePermissionsBox.selectedItem
+        $loginStatusLabel.text = ("License Permissions Changed: "+$global:licensePermissions)
     }
 
     $ExitButton_Click = {
