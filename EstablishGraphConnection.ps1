@@ -171,6 +171,13 @@ Function EstablishGraphConnection
     $userPermissionsBox_SelectedIndexChanged = {
         out-logfile -string $userPermissionsBox.selectedItem
         $global:userPermissions = $userPermissionsbox.selectedItem
+
+        if ($selectedOperationBox.selectedItem -eq "License Assignment Report")
+        {
+            out-logfile -string "License Assignment Report - fake Group and License Permissions"
+            $global:groupPermissions = $userPermissionsbox.selectedItem
+            $global:licensePermissions = $userPermissionsbox.selectedItem
+        }
         $loginStatusLabel.text = ("User Permissions Changed: "+$global:userPermissions)
     }
 
