@@ -292,7 +292,35 @@ $LicensePermissionsBox.Name = [System.String]'LicensePermissionsBox'
 $LicensePermissionsBox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]198,[System.Int32]21))
 $LicensePermissionsBox.TabIndex = [System.Int32]24
 $LicensePermissionsBox.Visible = $false
-$LicensePermissionsBox.add_SelectedIndexChanged($LicensePermissionsbox_SelectedIndexChanged)
+
+$items = "Global", "USGov", "USGovDOD" , "China"
+$EnvironmentBox.Items.AddRange($items)
+$EnvironmentBox.selectedIndex=0
+
+$directoryItems = "LicenseAssignment.Read.All","Directory.Read.All","Directory.ReadWrite.All","Organization.Read.All","Organization.ReadWrite.All"
+$DirectoryPermissionsBox.Items.AddRange($directoryItems)
+$DirectoryPermissionsBox.selectedIndex = 0
+$DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
+
+$groupItems = "GroupMember.Read.All","Directory.Read.All","Group.Read.All","Group.ReadWrite.All","GroupMember.ReadWrite.All"
+$GroupPermissionsBox.Items.AddRange($groupItems)
+$GroupPermissionsBox.selectedIndex = 0
+$GroupPermissionsBox.add_SelectedIndexChanged($GroupPermissionsBox_SelectedIndexChanged)
+
+$items2 = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","Directory.Read.All","*User.ReadWrite.All","*Directory.ReadWrite.All","None"
+$userPermissionsBox.items.AddRange($items2)
+$userPermissionsBox.selectedIndex = 7
+$userPermissionsbox.add_SelectedIndexChanged($userPermissionsbox_SelectedIndexChanged)
+
+$licenseItems = "LicenseAssignment.ReadWrite.All","Directory.ReadWrite.All","Group.ReadWrite.All"
+$licensePermissionsBox.items.addRange($licenseItems)
+$licensePermissiosnBox.selectedIndex = 0
+$licensePermissionsBox.add_SelectedIndexChanged($licensepermissionsbox_selectedIndexChanged)
+
+$operations = "Group License Manager","License Assignment Report","Group Assignment Report"
+$selectedOperationBox.items.addRange($operations)
+$selectedOperationBox.selectedIndex = 0
+$selectedOperationBox.add_SelectedIndexChanged($SelectedOperationsBox_SelectedIndexChanged)
 
 #
 #Form1

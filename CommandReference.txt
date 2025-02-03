@@ -14,17 +14,18 @@ Get-MgGroupMemberWithLicenseError
 
 get-MGUser
 ---Application
------GroupMember.Read.All
+-----User.Read.All
+-----User.ReadWrite.All
 -----Directory.Read.All
------Group.Read.All
------Group.ReadWrite.All
------GroupMember.ReadWrite.All
+-----Directory.ReadWrite.All
 ---User
------GroupMember.Read.All
+-----User.Read
+-----User.ReadWrite
+-----User.ReadBasic.All
+-----User.Read.All
+-----User.ReadWrite.All
 -----Directory.Read.All
------Group.Read.All
------Group.ReadWrite.All
------GroupMember.ReadWrite.All
+-----Directory.ReadWrite.All
 
 Get-MgGroupMember
 ---Application
@@ -107,3 +108,32 @@ Get-MGSubscribedSKU
 -----Directory.ReadWrite.All
 -----Oganization.Read.All
 -----Organization.ReadWrite.All
+
+
+*Organizational Level rights based off of reading subscribed SKUs.
+LicenseAssignment.Read.All
+Directory.Read.All
+Directory.ReadWrite.All
+Oganization.Read.All
+Organization.ReadWrite.All
+
+*Group permissions are based off reading group members.
+GroupMember.Read.All
+Directory.Read.All
+Group.Read.All
+Group.ReadWrite.All
+GroupMember.ReadWrite.All
+
+*User permissions are optional and based off of get user and invoke license.
+User.Read
+User.ReadWrite
+User.ReadBasic.All
+User.Read.All
+Directory.Read.All
+User.ReadWrite.All
+Directory.ReadWrite.All
+
+*Setting group licenses based off the set permissions.
+LicenseAssignment.ReadWrite.All
+Directory.ReadWrite.All
+Group.ReadWrite.All
