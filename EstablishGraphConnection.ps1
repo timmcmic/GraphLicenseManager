@@ -173,6 +173,8 @@ Function EstablishGraphConnection
         $groupPermissionsBox.hide()
         $userPermissions.hide()
         $userPermissionsBox.hide()
+        $label7.hide()
+        $licensePermissionsBox.hide()
     }
     
     $RadioButton2_CheckedChanged = {
@@ -190,6 +192,8 @@ Function EstablishGraphConnection
 
         $directoryPermissions.show()
         $directoryPermissionsBox.show()
+        $label7.show()
+        $licensePermissionsBox.show()
         $userPermissions.show()
         $userPermissionsbox.show()
         out-logfile -string $global:interactiveAuth
