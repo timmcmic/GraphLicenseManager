@@ -103,9 +103,12 @@ Function EstablishGraphConnection
                 out-logfile -string "Group permissions are not required."
                 $groupPermissions.hide()
                 $groupPermissionsBox.hide()
+                $label7.hide()
+                $licensePermissionsBox.hide()
                 $userPermissionsBox.selectedIndex = 0
                 $global:userPermissions = $userPermissionsBox.selectedItem
                 $global:groupPermissions = $global:userPermissions
+                $global:licensePermissions = $global:userPermissions
                 out-logfile -string "User permissions are required."
                 $userPermissions.text = "User Permissions"
                 $userPermissionsBox.items.remove("None")
@@ -130,7 +133,10 @@ Function EstablishGraphConnection
                 out-logfile -string "Group permissions are required."
                 $groupPermissions.show()
                 $groupPermissionsBox.show()
+                $label7.show()
+                $licensePermissionsBox.show()
                 $global:GroupPermissions = $groupPermissionsbox.selectedItem
+                $global:LicensePermissions = $licensePermissionsBox.selectedItem
                 $userPermissions.text = "User Permissions (Optional)"
                 $userPermissionsBox.items.remove("None")
                 $userPermissionsBox.items.Add("None")
@@ -547,6 +553,23 @@ Function EstablishGraphConnection
                     {
                         out-logfile -string "Directory Permission NOT Found"
                         $directoryPermissionOK = $false
+                    }
+                }
+
+                foreach ($permission in $licensePermissionsArray)
+                {
+                    out-logfile -string $permission
+
+                    if ($scopes.contains($permission))
+                    {
+                        out-logfile -string "License permission found"
+                        $licensePermissionsOk = $true
+                        break
+                    }
+                    else 
+                    {
+                        out-logfile -string "License permission found"
+                        $licensePermissionsOK = $false
                     }
                 }
         
