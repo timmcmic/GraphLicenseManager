@@ -302,7 +302,7 @@ $EnvironmentBox.selectedIndex=0
 
 $directoryItems = "LicenseAssignment.Read.All","Directory.Read.All","Directory.ReadWrite.All","Organization.Read.All","Organization.ReadWrite.All"
 $DirectoryPermissionsBox.Items.AddRange($directoryItems)
-$DirectoryPermissionsBox.selectedIndex = 0
+$DirectoryPermissionsBox.selectedIndex = 1
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
 
 $groupItems = "GroupMember.Read.All","Directory.Read.All","Group.Read.All","Group.ReadWrite.All","GroupMember.ReadWrite.All"

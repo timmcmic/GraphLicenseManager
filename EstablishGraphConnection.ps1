@@ -13,7 +13,7 @@ $EnvironmentBox.selectedIndex=0
 
 $directoryItems = "LicenseAssignment.Read.All","Directory.Read.All","Directory.ReadWrite.All","Organization.Read.All","Organization.ReadWrite.All"
 $DirectoryPermissionsBox.Items.AddRange($directoryItems)
-$DirectoryPermissionsBox.selectedIndex = 0
+$DirectoryPermissionsBox.selectedIndex = 1
 $DirectoryPermissionsBox.add_SelectedIndexChanged($DirectoryPermissionsBox_SelectedIndexChanged)
 
 $groupItems = "GroupMember.Read.All","Directory.Read.All","Group.Read.All","Group.ReadWrite.All","GroupMember.ReadWrite.All"
@@ -75,10 +75,10 @@ Function EstablishGraphConnection
     $global:referredObjectID = ""
     $global:GraphEnvironment = "Global"
     $global:interactiveAuth = $false
-    $global:directoryPermissions = "Organization.Read.All"
+    $global:directoryPermissions = "Directory.Read.All"
     $global:groupPermissions = "GroupMember.Read.All"
     $global:userPermissions = "None"
-    $global:licensePermissions = "None"
+    $global:licensePermissions = "LicenseAssignment.ReadWrite.All"
     $global:selectedOperation = "Group License Manager"
 
     $userPermissionsArray = "User.Read" , "User.ReadWrite","User.ReadBasic.All","User.Read.All","Directory.Read.All","User.ReadWrite.All","Directory.ReadWrite.All"
@@ -347,7 +347,7 @@ Function EstablishGraphConnection
 
                 out-logfile -string $global:calculatedScopes
             }
-            else 
+            elseif
             {
                 out-logfile -string "User permissions are not requested."
 
