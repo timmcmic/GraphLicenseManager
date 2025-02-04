@@ -12,7 +12,7 @@ $ReprocessUsers_Click = {
 
     out-logfile -string ("Number of users for reprocessing: "+$checkedRows.count)
 
-    if ($checkedRows.count -gt 0)
+    if ($checkedRows.count -eq 1)
     {
         $successCount = 0
         $errorCount = 0
@@ -39,6 +39,35 @@ $ReprocessUsers_Click = {
         if ($errorCount -eq 0)
         {
             [System.Windows.Forms.MessageBox]::Show("All users reprocessed successfully.  View Entra audit logs for details or refresh error view.", 'Info')
+        }
+    }
+    elseif ($checkedRows.count -gt 1)
+    {
+        foreach ($row in $checkedRows)
+        {
+            out-logfile -string ("Reprocessing user: "+$row.cells["ID"].value)
+
+            try {
+                Invoke-MGLicenseUser -userID $row.cells["ID"].value -errorAction STOP
+                out-logfile -string "User reprocessed successfully."
+                $successCount++
+            }
+            catch {
+                out-logfile -string $_
+                out-logfile -string ("Unable to process a license reprocessing: "+$row.cells["ID"].value)
+                $errorText = CalculateError $_
+                $errorCount++
+            }
+        }
+
+        if ($errorCount -eq 0)
+        {
+            [System.Windows.Forms.MessageBox]::Show("All users reprocessed successfully.  View Entra audit logs for details or refresh error view.", 'Info')
+        }
+        else 
+        {
+            out-logfile -string "Multiple users reprocessed - multiple errors countered."
+            [System.Windows.Forms.MessageBox]::Show("Multiple users reprocessed and mutliple failures - refer to Azure Audit Logs for failure results.", 'Warning')
         }
     }
     else 
