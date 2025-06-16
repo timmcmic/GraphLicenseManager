@@ -21,6 +21,8 @@ function GetLicenseData
 
     $functionDownloadLink = $functionDownloadLink.href
 
+    out-logfile -string ("Download link obtained from page: "+$functionDownloadLink)
+
     try {
         out-logfile -string "Attempting to obtain the license CSV."
         $functionCSVData = Invoke-WebRequest -Uri $functionDownloadLink -errorAction Stop

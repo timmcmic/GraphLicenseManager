@@ -74,6 +74,8 @@ function Start-GraphLicenseManager
     out-logfile -string "Telemetry collection is appreciated as it allows further development and script enhancement."
     out-logfile -string "********************************************************************************"
 
+    Test-PowerShellVersion
+
     $telemetryGraphLicenseManagerVersion = Test-PowershellModule -powershellModuleName "GraphLicenseManager" -powershellVersionTest:$TRUE
     $telemetryMSGraphAuthentication = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Authentication" -powershellVersionTest:$TRUE
     $telemetryMSGraphDirectory = Test-PowershellModule -powershellModuleName "Microsoft.Graph.Identity.DirectoryManagement" -powershellVersionTest:$TRUE
