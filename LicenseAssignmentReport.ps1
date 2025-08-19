@@ -28,7 +28,7 @@ $ExportCSV_Click = {
 
     out-logfile -string $licenseExport
 
-    if ($checkBox1.checked -eq $true)
+    if ($IncludeSkuDataCheckbox.checked -eq $true)
     {
         out-logfile -string "Generating output based on selected attributes and including all sku data."
     }
