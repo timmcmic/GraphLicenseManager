@@ -41,6 +41,8 @@ $ExportCSV_Click = {
             $global:selectedAttributes += "LicenseAssignmentStates"
             out-logfile -string $global:selectedAttributes
         }
+
+        $output = $global:licensedUsers | select-object $global:selectedAttributes
     }
     else 
     {
