@@ -8,6 +8,7 @@ $LicenseAssignmentReport = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.ToolStripStatusLabel]$ToolStripStatusLabel1 = $null
 [System.Windows.Forms.CheckedListBox]$PropertyBox = $null
 [System.Windows.Forms.Button]$RefreshButton = $null
+[System.Windows.Forms.CheckBox]$IncludeSkuDataCheckbox = $null
 function InitializeComponent
 {
 $SkuName = (New-Object -TypeName System.Windows.Forms.Label)
@@ -19,6 +20,7 @@ $StatusStrip1 = (New-Object -TypeName System.Windows.Forms.StatusStrip)
 $ToolStripStatusLabel1 = (New-Object -TypeName System.Windows.Forms.ToolStripStatusLabel)
 $PropertyBox = (New-Object -TypeName System.Windows.Forms.CheckedListBox)
 $RefreshButton = (New-Object -TypeName System.Windows.Forms.Button)
+$IncludeSkuDataCheckbox = (New-Object -TypeName System.Windows.Forms.CheckBox)
 ([System.ComponentModel.ISupportInitialize]$UserLicenseView).BeginInit()
 $StatusStrip1.SuspendLayout()
 $LicenseAssignmentReport.SuspendLayout()
@@ -73,7 +75,7 @@ $ExportCSV.add_Click($ExportCSV_Click)
 #StatusStrip1
 #
 $StatusStrip1.Items.AddRange([System.Windows.Forms.ToolStripItem[]]@($ToolStripStatusLabel1))
-$StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]597))
+$StatusStrip1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]623))
 $StatusStrip1.Name = [System.String]'StatusStrip1'
 $StatusStrip1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]22))
 $StatusStrip1.TabIndex = [System.Int32]7
@@ -104,9 +106,20 @@ $RefreshButton.Text = [System.String]'Refresh Data'
 $RefreshButton.UseVisualStyleBackColor = $true
 $RefreshButton.add_Click($RefreshButton_Click)
 #
+#IncludeSkuDataCheckbox
+#
+$IncludeSkuDataCheckbox.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]540,[System.Int32]596))
+$IncludeSkuDataCheckbox.Name = [System.String]'IncludeSkuDataCheckbox'
+$IncludeSkuDataCheckbox.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]454,[System.Int32]24))
+$IncludeSkuDataCheckbox.TabIndex = [System.Int32]10
+$IncludeSkuDataCheckbox.Text = [System.String]'Export All User Skus in Export'
+$IncludeSkuDataCheckbox.UseVisualStyleBackColor = $true
+$IncludeSkuDataCheckbox.add_CheckedChanged($CheckBox1_CheckedChanged)
+#
 #LicenseAssignmentReport
 #
-$LicenseAssignmentReport.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]619))
+$LicenseAssignmentReport.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1006,[System.Int32]645))
+$LicenseAssignmentReport.Controls.Add($IncludeSkuDataCheckbox)
 $LicenseAssignmentReport.Controls.Add($RefreshButton)
 $LicenseAssignmentReport.Controls.Add($PropertyBox)
 $LicenseAssignmentReport.Controls.Add($StatusStrip1)
@@ -131,5 +144,6 @@ Add-Member -InputObject $LicenseAssignmentReport -Name StatusStrip1 -Value $Stat
 Add-Member -InputObject $LicenseAssignmentReport -Name ToolStripStatusLabel1 -Value $ToolStripStatusLabel1 -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name PropertyBox -Value $PropertyBox -MemberType NoteProperty
 Add-Member -InputObject $LicenseAssignmentReport -Name RefreshButton -Value $RefreshButton -MemberType NoteProperty
+Add-Member -InputObject $LicenseAssignmentReport -Name IncludeSkuDataCheckbox -Value $IncludeSkuDataCheckbox -MemberType NoteProperty
 }
 . InitializeComponent

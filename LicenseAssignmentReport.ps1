@@ -1,3 +1,6 @@
+$CheckBox1_CheckedChanged = {
+    out-logfile -string "The administrator has toggled the checkbox for exporting user sku data."
+}
 $PropertyBox_SelectedIndexChanged = {
 }
 $ReportExitButton_Click = {
