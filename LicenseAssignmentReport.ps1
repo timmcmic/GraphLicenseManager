@@ -57,6 +57,8 @@ $ExportCSV_Click = {
             out-logfile -string $skuOutput
             $skuOutput = $skuOutput -join " + "
             out-logfile -string $skuOutput
+            $object.LicenseAssignmentStates = $skuOutput
+            out-logfile -string $object.LicenseAssignmentStates
         }
     }
     else 
