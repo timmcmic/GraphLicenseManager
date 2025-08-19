@@ -50,7 +50,7 @@ $ExportCSV_Click = {
 
             foreach ($license in $object.LicenseAssignmentStates)
             {
-                out-logfile -string $license
+                out-logfile -string $license.skuId
             }
         }
     }
