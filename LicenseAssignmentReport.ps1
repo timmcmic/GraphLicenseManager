@@ -184,7 +184,7 @@ function getSkuInfo
     }
     elseif($returnType -eq "SkuID")
     {
-        $sku = ($globalSkuTracking | where {$_.skuID -eq $commonName}).skucommonName
+        $sku = ($global:skuTracking | where {$_.skuID -eq $commonName}).skucommonName
         $sku = $sku | select-object -Unique
     }
 
