@@ -40,6 +40,7 @@ $ExportCSV_Click = {
         {
             $global:selectedAttributes += ",LicenseAssignmentStates"
             out-logfile -string $global:selectedAttributes
+        }
     }
     else 
     {
