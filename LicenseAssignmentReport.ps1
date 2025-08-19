@@ -46,6 +46,8 @@ $ExportCSV_Click = {
     }
     else 
     {
+        $global:selectedAttributes = $global:selectedAttributes | where {$_ -ne "LicenseAssignmentStates"}
+        out-logfile -string $global:selectedAttributes
         out-logfile -string "Generating output based on only selected attributes."
         $output = $global:licensedUsers | select-object $global:selectedAttributes
     }
