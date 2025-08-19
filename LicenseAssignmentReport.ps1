@@ -28,7 +28,16 @@ $ExportCSV_Click = {
 
     out-logfile -string $licenseExport
 
-    $output = $global:licensedUsers | select-object $global:selectedAttributes
+    if ($checkBox1.isChecked())
+    {
+        out-logfile -string "Generating output based on selected attributes and including all sku data."
+    }
+    else 
+    {
+        out-logfile -string "Generating output based on only selected attributes."
+        $output = $global:licensedUsers | select-object $global:selectedAttributes
+    }
+
 
     try {
         $output | export-csv $licenseExport -errorAction STOP
