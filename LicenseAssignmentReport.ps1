@@ -31,6 +31,15 @@ $ExportCSV_Click = {
     if ($IncludeSkuDataCheckbox.checked -eq $true)
     {
         out-logfile -string "Generating output based on selected attributes and including all sku data."
+
+        if($global:selectedAttributes.contains("LicenseAssignmentStates"))
+        {
+            out-logfile -string "Do nothing regarding license assignment states."
+        }
+        else 
+        {
+            $global:selectedAttributes += ",LicenseAssignmentStates"
+            out-logfile -string $global:selectedAttributes
     }
     else 
     {
