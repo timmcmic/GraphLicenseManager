@@ -49,7 +49,7 @@ $ExportCSV_Click = {
             foreach ($license in $object.LicenseAssignmentStates)
             {
                 out-logfile -string $license.skuId
-                $sku = getSkuInfo -returnType "SkuID" -commonName $license.skuID
+                $sku = getSkuInfo -returnType "SkuPartNumber2" -commonName $license.skuID
                 out-logfile -string $sku
             }
         }
@@ -182,9 +182,9 @@ function getSkuInfo
         $sku = ($global:skuTracking | where {$_.skucommonName -eq $commonName}).skuPartNumber
         $sku = $sku | Select-Object -Unique
     }
-    elseif($returnType -eq "SkuID")
+    elseif($returnType -eq "SkuPartNumber2")
     {
-        $sku = ($global:skuTracking | where {$_.skuID -eq $commonName}).skucommonName
+        $sku = ($global:skuTracking | where {$_.skuID -eq $commonName}).SkuPartNumber
         $sku = $sku | select-object -Unique
     }
 
