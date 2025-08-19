@@ -46,12 +46,11 @@ $ExportCSV_Click = {
 
         foreach ($object in $output)
         {
-            $skuStates = @()
+            out-logfile -string $object.LicenseAssignmentStates
 
             foreach ($license in $object.LicenseAssignmentStates)
             {
-                $sku = getSkuInfo -returnType "SkuID" -commonName $license
-                out-logfile -string $sku
+                out-logfile -string $license
             }
         }
     }
