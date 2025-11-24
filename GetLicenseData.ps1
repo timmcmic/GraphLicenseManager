@@ -36,7 +36,7 @@ function GetLicenseData
         out-logfile -string "The license CSV data was successfully obtained."
     }
     catch {
-        out-lgfile -string "Attempting to utilize basic parsing assuming IE engine is not available."
+        out-logfile -string "Attempting to utilize basic parsing assuming IE engine is not available."
 
         try {
             $functionCSVData = Invoke-WebRequest -Uri $functionDownloadLink -errorAction Stop -useBasicParsing
