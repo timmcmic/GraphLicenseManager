@@ -13,15 +13,8 @@ function GetLicenseData
     }
     catch 
     {
-        out-logfile -string "Attempting to utilize basic parsing assuming IE engine is not available."
-
-        try {
-            $functionHTMLData = invoke-WebRequest -URI $licenseDownloadURL -errorAction STOP -useBasicParsing
-        }
-        catch {
-            out-logfile -string "Unable to obtain the license HTML Data."
-            out-logfile -string $_ -isError:$TRUE
-        }
+        out-logfile -string "Unable to obtain the license HTML Data."
+        out-logfile -string $_ -isError:$TRUE
     }
 
     $functionDownloadLink = $functionHTMLData.links | where {$_.innerText -eq "Here"}
@@ -36,18 +29,10 @@ function GetLicenseData
         out-logfile -string "The license CSV data was successfully obtained."
     }
     catch {
-        out-logfile -string "Attempting to utilize basic parsing assuming IE engine is not available."
-
-        try {
-            $functionCSVData = Invoke-WebRequest -Uri $functionDownloadLink -errorAction Stop -useBasicParsing
-        }
-        catch {
-            out-logfile -string "Unable to obtain the license CSV data."
-            out-logfile -string $_ -isError:$TRUE
-
-            $errorText = $_
-            $global:ErrorMessages += $errorText
-        }
+        out-logfile -string "Unable to obtain the license CSV data."
+        out-logfile -string $_ -isError:$TRUE
+        $errorText = $_
+        $global:ErrorMessages += $errorText
     }
 
     out-logfile -string "Converting the raw data downloaded to CSV format."
